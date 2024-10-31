@@ -1,5 +1,5 @@
 <?php
-include 'conn.php';
+include 'Ehitimamachochi\assets\conn.php';
 
 // Handle form submission for updating password
 if (isset($_POST['change_password'])) {

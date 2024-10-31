@@ -1,7 +1,7 @@
 
 <?php
 // Database connection
-include 'conn.php';
+include 'Ehitimamachochi\assets\conn.php';
 
 function showAlert($icon, $title, $text) {
     echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
