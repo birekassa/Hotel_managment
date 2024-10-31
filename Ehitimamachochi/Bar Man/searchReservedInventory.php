@@ -1,7 +1,8 @@
 
 <?php
-// Include the database connection file
-include 'Ehitimamachochi\assets\conn.php';
+// Database connection
+include '../assets/conn.php';
+
 
 // Check if searchDate is provided, otherwise list all
 $searchDate = isset($_GET['searchDate']) ? $_GET['searchDate'] : null;

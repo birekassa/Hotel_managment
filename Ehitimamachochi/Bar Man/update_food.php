@@ -1,7 +1,8 @@
 
 <?php
 // Database connection
-include 'Ehitimamachochi\assets\conn.php';
+    include '../assets/conn.php';
+
 
 // Start a transaction
 $mysqli->begin_transaction();

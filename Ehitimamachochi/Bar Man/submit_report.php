@@ -3,16 +3,16 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-include 'Ehitimamachochi\assets\conn.php';
+// Database connection
+    include '../assets/conn.php';
+
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve and sanitize form data
     $reportProvider = htmlspecialchars($_POST['report_provider'], ENT_QUOTES, 'UTF-8');
     $reportedDate = htmlspecialchars($_POST['reported_date'], ENT_QUOTES, 'UTF-8');
 
-    // Database connection
-    include 'conn.php';
-
+    
     // Prepare SQL statement to insert report provider and date
     $sqlReport = "INSERT INTO report_entries (report_provider, reported_date) VALUES (?, ?)";
     $stmtReport = $conn->prepare($sqlReport);

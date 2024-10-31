@@ -1,7 +1,7 @@
 
 <?php
 // Include the database connection file
-include 'Ehitimamachochi\assets\conn.php';
+include '../assets/conn.php';
 
 // Check if "listAll" parameter is passed, indicating the user clicked "List all"
 if (isset($_GET['listAll']) && $_GET['listAll'] == 'true') {
