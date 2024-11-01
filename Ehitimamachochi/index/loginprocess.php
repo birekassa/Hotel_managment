@@ -5,7 +5,6 @@ include '../assets/conn.php';
 // Retrieve username, password, and position from the form
 $user_username = $_POST['username'];
 $user_password = $_POST['password'];
-$user_position = $_POST['position'];
 
 // Initialize error message
 $error_message = '';

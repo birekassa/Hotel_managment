@@ -1,14 +1,12 @@
 
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Load environment variables from a .env file or your environment configuration
-require_once 'vendor/autoload.php';
+//include mail config connection
+include '../assets/email_config.php';
+
 //include database connection
 include '../assets/conn.php';
 
@@ -125,17 +123,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_update->close();
 
             // Send confirmation email
-            $mail = new PHPMailer(true);
+            $mail = getMailer();
 
             try {
                 // Server settings
-                $mail->isSMTP();
-                $mail->Host       = 'smtp.gmail.com';
-                $mail->SMTPAuth   = true;
-                $mail->Username   = 'birekassa1400@gmail.com';
-                $mail->Password   = 'miuc evkj fqhx lhxj'; // Use an app password or secure method
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port       = 587;
 
                 // Recipients
                 $mail->setFrom('birekassa1400@gmail.com', 'Ehitimamachochi Hotel');

@@ -1,10 +1,8 @@
 
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+//include mail config connection
+include '../assets/email_config.php';
 
-// Load Composer's autoloader
-require 'vendor/autoload.php';
 //include database connection
 include '../assets/conn.php';
 
@@ -77,16 +75,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 displayAlert('success', 'Success!', 'Reservation canceled successfully!');
 
                 // Send confirmation email
-                $mail = new PHPMailer(true);
+                $mail = getMailer();
                 try {
-                    // Server settings
-                    $mail->isSMTP();
-                    $mail->Host       = 'smtp.gmail.com';
-                    $mail->SMTPAuth   = true;
-                    $mail->Username   = 'birekassa1400@gmail.com';
-                    $mail->Password   = 'miuc evkj fqhx lhxj'; 
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port       = 587;
 
                     // Recipients
                     $mail->setFrom('birekassa1400@gmail.com', 'Ehitimamachochi Hotel');
