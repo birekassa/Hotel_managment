@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
-include 'db_connection.php';
+//include database connection
+include '../assets/conn.php';
 
 // Fetch all unique reason values from the 'wechi' table
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['fetchHeaders'])) {

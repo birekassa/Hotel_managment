@@ -2,7 +2,7 @@
 <?php
 //include database connection
 include '../assets/conn.php';
-
+$mysqli=$conn;
 // Get and sanitize input parameters
 $item_category = filter_var($_GET['item_category'] ?? '', FILTER_SANITIZE_STRING);
 $item_type = filter_var($_GET['item_type'] ?? '', FILTER_SANITIZE_STRING);

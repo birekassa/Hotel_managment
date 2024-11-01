@@ -1,6 +1,6 @@
 <?php
 //include database connection
-include '../assets/conn.php';
+include '../../assets/conn.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     // Retrieve form data
