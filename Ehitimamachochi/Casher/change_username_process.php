@@ -1,7 +1,7 @@
 
 <?php
 //include database connection
-include 'conn.php';
+include '../assets/conn.php';
 
 // Handle form submission for updating username
 if (isset($_POST['change_username'])) {

@@ -76,13 +76,13 @@
         <div class="container my-5">
             <?php
             //include database connection
-            include 'conn.php';
+            include '../assets/conn.php';
             
             $showAlert = false;
 
             // Query to fetch employee data
             $query = "SELECT * FROM `employees`";
-            $result = $mysqli->query($query);
+            $result = $conn->query($query);
 
             // Generate the employee table
             echo '<table class="table table-striped">';
@@ -136,7 +136,7 @@
             echo '</tbody>';
             echo '</table>';
 
-            $mysqli->close();
+            $conn->close();
             ?>
 
             <!-- Check if alert needs to be shown -->

@@ -3,7 +3,7 @@
 header('Content-Type: application/json');
 
 //include database connection
-include 'conn.php';
+include '../assets/conn.php';
 
 // Retrieve the category from the request
 $category = isset($_GET['category']) ? $conn->real_escape_string($_GET['category']) : '';

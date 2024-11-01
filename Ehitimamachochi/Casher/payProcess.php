@@ -1,49 +1,12 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+// Include configuration files
+include '../assets/email_config.php';
+include '../assets/conn.php';
 
-// Load Composer's autoloader
-require 'vendor/autoload.php';
-
-// Database connection for employees
-$mysqli = new mysqli("localhost", "root", "24770267", "ehms_db");
-if ($mysqli->connect_error) {
-    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-    echo "<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                icon: 'error',
-                title: 'Connection Error',
-                text: 'Failed to connect to employee database: " . addslashes($mysqli->connect_error) . "'
-            }).then(() => {
-                window.history.back();
-            });
-        });
-    </script>";
-    exit();
-}
-
-// Database connection for bank
-$bankConn = new mysqli("localhost", "root", "24770267", "commercial_bank_of_ethiopia");
-if ($bankConn->connect_error) {
-    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-    echo "<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                icon: 'error',
-                title: 'Connection Error',
-                text: 'Failed to connect to bank database: " . addslashes($bankConn->connect_error) . "'
-            }).then(() => {
-                window.history.back();
-            });
-        });
-    </script>";
-    exit();
-}
-
+// Load SweetAlert for user notifications
 echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 
-// Function to show SweetAlert messages
+// Function to display SweetAlert messages
 function showAlert($type, $title, $message, $redirect = '') {
     echo "
         <script>
@@ -67,43 +30,36 @@ function showAlert($type, $title, $message, $redirect = '') {
     ";
 }
 
-// Function to configure PHPMailer
-function configureMailer($email, $salary) {
-    $mail = new PHPMailer(true);
+// Function to send email using PHPMailer
+function sendPaymentEmail($email, $salary) {
+    $mail = getMailer(); // Load pre-configured PHPMailer instance
     try {
-        // Server settings
-        $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = 'birekassa1400@gmail.com'; 
-        $mail->Password   = 'miuc evkj fqhx lhxj'; // Store securely (preferably use environment variables)
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
-
-        // Recipients
         $mail->setFrom('birekassa1400@gmail.com', 'Ehitimamachochi Hotel');
         $mail->addAddress($email);
 
-        // Content
         $mail->isHTML(true);
         $mail->Subject = 'Payment Processed';
-        $mail->Body    = "Dear Employee,<br><br>Your payment of $$salary has been processed.<br><br>Best regards,<br>Ehitimamachochi Hotel";
+        $mail->Body = "
+            Dear Employee,<br><br>
+            Your payment of $$salary has been processed.<br><br>
+            Best regards,<br>
+            Ehitimamachochi Hotel
+        ";
         $mail->AltBody = "Dear Employee,\n\nYour payment of $$salary has been processed.\n\nBest regards,\nEhitimamachochi Hotel";
 
         $mail->send();
         return true;
     } catch (Exception $e) {
-        return $e->getMessage(); // Return error message if any
+        return $e->getMessage(); // Return error message if email fails
     }
 }
 
-// Get parameters from POST request
+// Get parameters from POST request and validate
 $id = $_POST['id'] ?? '';
 $email = $_POST['email'] ?? '';
 $salary = $_POST['salary'] ?? '';
 $accountNo = $_POST['account_no'] ?? '';
 
-// Validate input
 if (!$id || !$email || !$salary || !$accountNo) {
     showAlert('error', 'Invalid Parameters', 'Required parameters are missing.');
     exit();
@@ -119,50 +75,44 @@ if (!is_numeric($salary)) {
     exit();
 }
 
-// Start transactions
+// Start a transaction
 $mysqli->begin_transaction();
-$bankConn->begin_transaction();
 
 try {
-    // Update payment status in employees
-    $updateQuery = "UPDATE `employees` SET `payment_status` = 1 WHERE `id` = ?";
-    $stmt = $mysqli->prepare($updateQuery);
-    if (!$stmt) {
-        throw new Exception("Failed to prepare statement: " . $mysqli->error);
+    // Update payment status in the employees table
+    $updateQuery = $mysqli->prepare("UPDATE `employees` SET `payment_status` = 1 WHERE `id` = ?");
+    if (!$updateQuery) {
+        throw new Exception("Failed to prepare update statement: " . $mysqli->error);
     }
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
+    $updateQuery->bind_param("i", $id);
+    $updateQuery->execute();
 
     // Insert deposit record into the bank database
-    $writeDeposit = "INSERT INTO `deposit` (`Account_no`, `amount`) VALUES (?, ?)";
-    $stmt = $bankConn->prepare($writeDeposit);
-    if (!$stmt) {
-        throw new Exception("Failed to prepare statement: " . $bankConn->error);
+    $writeDeposit = $bankConn->prepare("INSERT INTO `deposit` (`Account_no`, `amount`) VALUES (?, ?)");
+    if (!$writeDeposit) {
+        throw new Exception("Failed to prepare deposit statement: " . $bankConn->error);
     }
-    $stmt->bind_param("sd", $accountNo, $salary);
-    $stmt->execute();
+    $writeDeposit->bind_param("sd", $accountNo, $salary);
+    $writeDeposit->execute();
 
-    // Commit transactions
+    // Commit the transaction
     $mysqli->commit();
-    $bankConn->commit();
 
     // Send email notification
-    $emailResult = configureMailer($email, $salary);
+    $emailResult = sendPaymentEmail($email, $salary);
 
     if ($emailResult === true) {
         showAlert('success', 'Payment Processed', "Payment of $$salary has been processed, and an email has been sent to $email.", 'payment.php');
     } else {
         showAlert('warning', 'Payment Processed with Errors', "Payment processed, but email sending failed: $emailResult", 'payment.php');
     }
-
 } catch (Exception $e) {
-    // Rollback transactions if an error occurs
+    // Rollback the transaction in case of an error
     $mysqli->rollback();
-    $bankConn->rollback();
     showAlert('error', 'Transaction Failed', 'Payment processing failed: ' . $e->getMessage());
+} finally {
+    // Close database connections
+    $mysqli->close();
+    $bankConn->close();
 }
-
-// Close database connections
-$mysqli->close();
-$bankConn->close();
 ?>

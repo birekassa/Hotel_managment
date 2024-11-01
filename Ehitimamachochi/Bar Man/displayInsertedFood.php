@@ -145,6 +145,7 @@
             // Send the request
             xhr.send();
         }
+        
         // Function to fetch and display all records
         function listAllRecords() {
             // Create a new XMLHttpRequest object

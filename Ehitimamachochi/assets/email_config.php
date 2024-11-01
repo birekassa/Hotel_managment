@@ -1,10 +1,11 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
-require 'path/to/PHPMailer/src/Exception.php';
-require 'path/to/PHPMailer/src/PHPMailer.php';
-require 'path/to/PHPMailer/src/SMTP.php';
+//Ehitimamachochi\assets\mail_config\vendor\autoload.php
+require 'mail_config/vendor/Exception.php';
+require 'mail_config/vendor/PHPMailer.php';
+require 'mail_config/vendor/SMTP.php';
+require 'mail_config/vendor/autoload.php';
 
 // Configure PHPMailer
 function getMailer() {
@@ -15,7 +16,7 @@ function getMailer() {
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'birekassa1400@gmail.com';
-        $mail->Password   = 'miuc evkj fqhx lhxj'; // Use app-specific password for Gmail
+        $mail->Password   = 'miuc evkj fqhx lhxj'; // this is my app-specific password for Gmail
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
