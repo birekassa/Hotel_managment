@@ -1,7 +1,6 @@
-
 <?php
 // Database connection
-    include '../assets/conn.php';
+include '../assets/conn.php';
 
 
 // Start a transaction
@@ -11,10 +10,10 @@ try {
     // Prepare statements for fetching and updating
     $stmtFetchInsertedQuantity = $mysqli->prepare("SELECT quantity FROM inserted_foods WHERE item_name = ?");
     $stmtUpdateInsertedQuantity = $mysqli->prepare("UPDATE inserted_foods SET quantity = ? WHERE item_name = ?");
-    
+
     $stmtFetchTableQuantity = $mysqli->prepare("SELECT quantity FROM table_foods WHERE item_name = ?");
     $stmtUpdateTableQuantity = $mysqli->prepare("UPDATE table_foods SET quantity = ? WHERE item_name = ?");
-    
+
     if ($stmtFetchInsertedQuantity === false || $stmtUpdateInsertedQuantity === false || $stmtFetchTableQuantity === false || $stmtUpdateTableQuantity === false) {
         throw new Exception("Prepare failed: " . $mysqli->error);
     }
@@ -78,10 +77,14 @@ try {
     echo "Error: " . $e->getMessage();
 } finally {
     // Close the prepared statements and the connection
-    if ($stmtFetchInsertedQuantity) $stmtFetchInsertedQuantity->close();
-    if ($stmtUpdateInsertedQuantity) $stmtUpdateInsertedQuantity->close();
-    if ($stmtFetchTableQuantity) $stmtFetchTableQuantity->close();
-    if ($stmtUpdateTableQuantity) $stmtUpdateTableQuantity->close();
+    if ($stmtFetchInsertedQuantity)
+        $stmtFetchInsertedQuantity->close();
+    if ($stmtUpdateInsertedQuantity)
+        $stmtUpdateInsertedQuantity->close();
+    if ($stmtFetchTableQuantity)
+        $stmtFetchTableQuantity->close();
+    if ($stmtUpdateTableQuantity)
+        $stmtUpdateTableQuantity->close();
     $mysqli->close();
 }
 ?>

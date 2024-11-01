@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 // Database connection
-    include '../assets/conn.php';
+include '../assets/conn.php';
 
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $reportProvider = htmlspecialchars($_POST['report_provider'], ENT_QUOTES, 'UTF-8');
     $reportedDate = htmlspecialchars($_POST['reported_date'], ENT_QUOTES, 'UTF-8');
 
-    
+
     // Prepare SQL statement to insert report provider and date
     $sqlReport = "INSERT INTO report_entries (report_provider, reported_date) VALUES (?, ?)";
     $stmtReport = $conn->prepare($sqlReport);

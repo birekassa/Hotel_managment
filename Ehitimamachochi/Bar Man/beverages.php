@@ -2,7 +2,7 @@
 include '../assets/conn.php';
 
 // Fetch all beverage data from the table
-$query = "SELECT `item_name`, `category`, `quantity`, `purchase_price`, `price`, `created_at` FROM `table_beverages`";
+$query = "SELECT * FROM `table_beverages`";
 $result = $conn->query($query);
 
 $beverages = [];

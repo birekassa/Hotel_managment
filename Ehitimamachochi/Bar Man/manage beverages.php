@@ -57,14 +57,10 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php">
-                            Back
-                        </a>
+                        <a class="nav-link" href="index.php">Back</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('defaultSection')">
-                            <i class="bi bi-house-door"></i> Home
-                        </a>
+                        <a class="nav-link" href="#" onclick="showSection('defaultSection')"> <i class="bi bi-house-door"></i> Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" onclick="showSection('addBeverageSection')">
@@ -72,14 +68,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('viewBeverageSection')">
-                            <i class="bi bi-eye"></i> View Beverage
-                        </a>
+                        <a class="nav-link" href="#" onclick="showSection('viewBeverageSection')"><i class="bi bi-eye"></i> View Beverage</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('updateBeverageSection')">
-                            <i class="bi bi-pencil-square"></i> Update Beverage
-                        </a>
+                        <a class="nav-link" href="#" onclick="showSection('updateBeverageSection')"><i class="bi bi-pencil-square"></i> Update Beverage</a>
                     </li>
                 </ul>
             </div>
@@ -181,13 +173,9 @@
             <h1>View Beverage</h1>
             <p>Here you can view all beverage items currently in the menu.</p>
             <div class="d-flex justify-content-center align-items-center gap-4 my-3">
-                <button style="width: 40%;" type="button" onclick="filterCategory('soft-drink')"
-                    class="btn btn-success">Soft-Drink</button>
-                <button style="width: 40%;" type="button" onclick="filterCategory('alcohol-drink')"
-                    class="btn btn-success">Alcohol-Drink</button>
-
-                <button style="width: 40%;" type="button" onclick="filterCategory('all')" class="btn btn-secondary">List
-                    All Beverages</button>
+                <button style="width: 40%;" type="button" onclick="filterCategory('soft-drink')" class="btn btn-success">Soft-Drink</button>
+                <button style="width: 40%;" type="button" onclick="filterCategory('alcohol-drink')" class="btn btn-success">Alcohol-Drink</button>
+                <button style="width: 40%;" type="button" onclick="filterCategory('all')" class="btn btn-secondary">List All Beverages</button>
             </div>
 
             <div id="viewBeverageTableContainer" class="table-responsive">
@@ -195,19 +183,16 @@
             </div>
 
             <?php
-            // Database connection
-            $servername = "localhost";
-            $username = "root";
-            $password = "24770267";
-            $dbname = "ehms_db";
-            $mysqli = new mysqli($servername, $username, $password, $dbname);
+            // connection
+            include '../assets/conn.php';
+            $mysqli = $conn ;
 
             if ($mysqli->connect_error) {
                 die("Connection failed: " . $mysqli->connect_error);
             }
 
             // Fetch all beverage data from the table
-            $query = "SELECT item_name, category, quantity, purchase_price, price, created_at FROM table_beverages";
+            $query = "SELECT * FROM table_beverages";
             $result = $mysqli->query($query);
 
             $beverages = [];
@@ -227,7 +212,6 @@
 
         <section id="updateBeverageSection" class="container mt-5" style="display: none;">
             <h1>Update Beverage</h1>
-            
             <form action="update_beverages.php" method="POST">
                 <div class="table-responsive table-container">
                     <table class="table table-bordered" id="beverageTableUpdate">
@@ -260,13 +244,11 @@
                                     </select>
                                 </td>
                                 <!-- Purchase Price input -->
-                                <td><input type="number" name="purchase_price[]" class="form-control purchase-price-update"
-                                        readonly required></td>
+                                <td><input type="number" name="purchase_price[]" class="form-control purchase-price-update" readonly required></td>
                                 <!-- Quantity input -->
                                 <td><input type="number" name="quantity[]" class="form-control" required></td>
                                 <!-- Price input -->
-                                <td><input type="number" name="price[]" class="form-control price-update" readonly required>
-                                </td>
+                                <td><input type="number" name="price[]" class="form-control price-update" readonly required></td>
                                 <!-- Remove button -->
                                 <td><button type="button" class="btn btn-danger remove-row">Remove</button></td>
                             </tr>
@@ -274,13 +256,11 @@
                     </table>
                 </div>
                 <div class="d-flex justify-content-center align-items-center gap-4 my-3">
-                    <button style="width: 40%;" type="button" class="btn btn-success" onclick="addRow()">Add
-                        Row</button>
+                    <button style="width: 40%;" type="button" class="btn btn-success" onclick="addRow()">Add Row</button>
                     <button style="width: 40%;" type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </section>
-
     </main>
 
 

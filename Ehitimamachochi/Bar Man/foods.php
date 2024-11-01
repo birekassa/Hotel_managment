@@ -1,14 +1,7 @@
 <?php
 // Database connection
-$servername = "localhost";
-$username = "root";
-$password = "24770267";
-$dbname = "ehms_db";
-$mysqli = new mysqli($servername, $username, $password, $dbname);
-
-if ($mysqli->connect_error) {
-    die("Connection failed: " . $mysqli->connect_error);
-}
+include '../assets/conn.php';
+$mysqli = $conn ;
 
 // Fetch all food data from the table
 $query = "SELECT `item_name`, `category`, `purchase_price`, `price` FROM `table_foods`";
@@ -249,17 +242,8 @@ $mysqli->close();
             </div>
 
             <?php
-            // Database connection
-            $servername = "localhost";
-            $username = "root";
-            $password = "24770267";
-            $dbname = "ehms_db";
-            $mysqli = new mysqli($servername, $username, $password, $dbname);
-
-            if ($mysqli->connect_error) {
-                die("Connection failed: " . $mysqli->connect_error);
-            }
-
+            include '../assets/conn.php';
+            $mysqli = $conn ;
             // Fetch all food data from the table
             $query = "SELECT item_name, category, purchase_price, quantity, price FROM table_foods";
             $result = $mysqli->query($query);
