@@ -1,11 +1,9 @@
 <?php
 //include database connection
 include '../assets/conn.php';
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
-// Load Composer's autoloader
-require 'vendor/autoload.php';
+//include mail config connection
+include '../assets/email_config.php';
 
 // Function to display messages
 function displayMessage($type, $title, $message)
@@ -86,16 +84,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $conn->commit();
 
             // Send email
-            $mail = new PHPMailer(true);
+            $mail = getMailer();
             try {
-                // Server settings
-                $mail->isSMTP();
-                $mail->Host       = 'smtp.gmail.com';
-                $mail->SMTPAuth   = true;
-                $mail->Username   = 'birekassa1400@gmail.com';
-                $mail->Password   = 'miuc evkj fqhx lhxj';
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port       = 587;
 
                 // Recipients
                 $mail->setFrom('birekassa1400@gmail.com', 'Ehitimamachochi Hotel');

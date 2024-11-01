@@ -1,9 +1,7 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+//include mail config connection
+include '../assets/email_config.php';
 
-// Load PHPMailer classes and database connection
-require 'vendor/autoload.php';
 //include database connection
 include '../assets/conn.php';
 
@@ -29,17 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['View_email']) && isset
 
         if ($result->num_rows > 0) {
             $reservation = $result->fetch_assoc();
-            $mail = new PHPMailer(true);
+            $mail = getMailer();
 
             try {
-                // Server settings
-                $mail->isSMTP();
-                $mail->Host       = 'smtp.gmail.com';
-                $mail->SMTPAuth   = true;
-                $mail->Username   = 'birekassa1400@gmail.com'; // Replace with your email
-                $mail->Password   = 'miuc evkj fqhx lhxj';     // Use a secure method for the password
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port       = 587;
+                
 
                 // Recipients
                 $mail->setFrom('birekassa1400@gmail.com', 'Ehitimamachochi Hotel');

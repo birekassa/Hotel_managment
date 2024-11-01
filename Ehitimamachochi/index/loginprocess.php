@@ -1,11 +1,10 @@
 <?php
-//include database connection
+// Include database connection
 include '../assets/conn.php';
 
-// Retrieve username, password, and position from the form
+// Retrieve username and password from the form
 $user_username = $_POST['username'];
 $user_password = $_POST['password'];
-$user_position = $_POST['position'];
 
 // Initialize error message
 $error_message = '';
@@ -31,15 +30,12 @@ if ($stmt->num_rows === 0) {
     // Verify password
     if (!password_verify($user_password, $db_password)) {
         $error_message = 'Incorrect password';
-    } elseif ($user_position !== $db_position) {
-        // Verify position
-        $error_message = 'Incorrect position';
     } elseif ($is_present !== 'yes') {
         // Verify attendance
         $error_message = 'Access denied. Your attendance is marked as absent.';
     } else {
         // If all checks pass, redirect based on position
-        header("Location: ../$user_position/index.php");
+        header("Location: ../$db_position/index.php");
         exit();
     }
 }

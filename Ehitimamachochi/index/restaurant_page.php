@@ -1,4 +1,7 @@
 <?php
+//include mail config connection
+include '../assets/email_config.php';
+
 //include database connection
 include '../assets/conn.php';
 $mysqli=$conn;

@@ -17,17 +17,7 @@
 </head>
 
 <body style="font-family: 'Times New Roman';"><!-- this is the body part which is visible on browsers -->
-    <!-- <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const message = urlParams.get('message_from_room_payment_process');
 
-            if (message) {
-                alert(decodeURIComponent(message));
-                window.location.href = 'index.php'; // Redirect to index.php
-            }
-        });
-    </script> -->
     <!-- Navigation Menu -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow fixed-top mb-5 p-3">
         <div class="container-xl">
