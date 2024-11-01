@@ -6,8 +6,8 @@ use PHPMailer\PHPMailer\Exception;
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
-include 'conn.php';
+//include database connection
+include '../assets/conn.php';
 
 // Function to output SweetAlert2 script
 function showAlert($icon, $title, $text) {

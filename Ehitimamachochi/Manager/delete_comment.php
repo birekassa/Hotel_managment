@@ -2,9 +2,10 @@
 header('Content-Type: application/json');
 $response = ['success' => false, 'error' => '', 'message' => ''];
 
-// Database connection and deletion logic
+//include database connection
+include '../assets/conn.php';
 try {
-    $pdo = new PDO('mysql:host=localhost;dbname=ehms_db', 'root', '24770267');
+    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $fromUserName = $_POST['from_user_name'];

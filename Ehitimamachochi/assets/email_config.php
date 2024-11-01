@@ -1,11 +1,9 @@
 <?php
+//Ehitimamachochi\assets\mail_config\vendor\
+require 'mail_config/vendor/autoload.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-//Ehitimamachochi\assets\mail_config\vendor\autoload.php
-require 'mail_config/vendor/Exception.php';
-require 'mail_config/vendor/PHPMailer.php';
-require 'mail_config/vendor/SMTP.php';
-require 'mail_config/vendor/autoload.php';
 
 // Configure PHPMailer
 function getMailer() {

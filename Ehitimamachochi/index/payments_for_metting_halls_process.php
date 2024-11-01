@@ -9,7 +9,8 @@ ini_set('display_errors', 1);
 
 // Load environment variables from a .env file or your environment configuration
 require_once 'vendor/autoload.php';
-include 'conn.php';
+//include database connection
+include '../assets/conn.php';
 
 // Function to output SweetAlert2 script
 function showAlert($icon, $title, $text)

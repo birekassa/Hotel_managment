@@ -1,16 +1,6 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "24770267";
-$dbname = "ehms_db";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+//include database connection
+include '../assets/conn.php';
 
 // Fetch employees whose payment is due today
 $sql = "SELECT id, f_name, l_name, reg_date 

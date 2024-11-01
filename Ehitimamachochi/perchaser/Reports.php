@@ -68,12 +68,8 @@
 
                 <div id="reportsContainer" class="mt-4">
                     <?php
-                    // Database configuration
-                    $servername = "localhost";
-                    $username = "root";
-                    $password = "24770267";
-                    $dbname = "ehms_db";
-
+                   //include database connection
+                    include '../assets/conn.php';
                     try {
                         // Create a new PDO instance
                         $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -145,11 +141,8 @@
 
                 <div id="reportsContainer" class="mt-4">
                     <?php
-                    // Database configuration
-                    $servername = "localhost";
-                    $username = "root";
-                    $password = "24770267";
-                    $dbname = "ehms_db";
+                    //include database connection
+                    include '../assets/conn.php';
 
                     try {
                         // Create a new PDO instance

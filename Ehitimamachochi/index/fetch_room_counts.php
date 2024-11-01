@@ -1,5 +1,7 @@
 <?php
-include 'conn.php';
+//include database connection
+include '../assets/conn.php';
+
 $room_types = ['standard', 'deluxe', 'suite', 'luxury'];
 $counts = [];
 foreach ($room_types as $type) {

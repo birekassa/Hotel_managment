@@ -1,11 +1,7 @@
 <?php
 header('Content-Type: application/json');
-$conn = new mysqli('localhost', 'root', '24770267', 'ehms_db');
-
-if ($conn->connect_error) {
-    echo json_encode(['error' => 'Database connection failed']);
-    exit;
-}
+//include database connection
+include '../assets/conn.php';
 
 // Fetch room types and their counts where rooms are available (r_status = 'free')
 $sql = "SELECT *, COUNT(*) AS count FROM table_rooms WHERE r_status = 'free' GROUP BY r_type";

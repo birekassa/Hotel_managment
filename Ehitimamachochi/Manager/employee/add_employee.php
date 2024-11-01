@@ -6,18 +6,8 @@ use PHPMailer\PHPMailer\Exception;
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$servername = "localhost";
-$username = "root";
-$password = "24770267";
-$dbname = "ehms_db";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+//include database connection
+include '../../assets/conn.php';
 
 // Ensure the upload directories exist
 if (!file_exists('uploads/documents/')) {

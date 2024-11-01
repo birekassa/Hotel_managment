@@ -4,7 +4,8 @@ use PHPMailer\PHPMailer\Exception;
 
 // Load PHPMailer classes and database connection
 require 'vendor/autoload.php';
-include 'conn.php';
+//include database connection
+include '../assets/conn.php';
 
 // Initialize response variables
 $status = "error";

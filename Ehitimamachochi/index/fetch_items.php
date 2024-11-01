@@ -1,6 +1,6 @@
 <?php
-
-include 'conn.php';
+//include database connection
+include '../assets/conn.php';
 // Handle AJAX requests for item names and details
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['category']) && isset($_POST['type'])) {

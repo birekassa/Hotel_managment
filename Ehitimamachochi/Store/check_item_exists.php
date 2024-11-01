@@ -1,17 +1,6 @@
 <?php
-// Database configuration
-$servername = "localhost";
-$username = "root";
-$password = "24770267";
-$dbname = "ehms_db";
-
-// Create a connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+//include database connection
+include '../assets/conn.php';
 
 // Get the JSON input from the fetch request
 $data = json_decode(file_get_contents("php://input"), true);

@@ -1,12 +1,8 @@
 <?php
 header('Content-Type: application/json');
 
-$conn = new mysqli('localhost', 'root', '24770267', 'ehms_db');
-
-if ($conn->connect_error) {
-    echo json_encode(['error' => 'Database connection failed']);
-    exit;
-}
+//include database connection
+include '../assets/conn.php';
 
 if (!isset($_GET['hallType'])) {
     echo json_encode(['error' => 'No hall type provided']);

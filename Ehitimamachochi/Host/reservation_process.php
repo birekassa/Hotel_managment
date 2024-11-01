@@ -1,9 +1,7 @@
 <?php
-// Database credentials
-$servername = "localhost";
-$username = "root";
-$password = "24770267";
-$dbname = "ehms_db";
+//include database connection
+include '../assets/conn.php';
+
 
 try {
     // Create connection

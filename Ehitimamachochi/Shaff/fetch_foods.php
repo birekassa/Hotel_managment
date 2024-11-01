@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
-include 'db_connection.php';
+//include database connection
+include '../assets/conn.php';
 
 $category = $_GET['category'] ?? '';
 

@@ -1,6 +1,6 @@
 <?php
-// Database credentials
-include 'conn.php';
+//include database connection
+include '../assets/conn.php';
 
 // Handle form submission for reservation
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hall_type'])) {

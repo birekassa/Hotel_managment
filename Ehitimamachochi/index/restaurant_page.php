@@ -1,20 +1,7 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "24770267";
-$dbname = "ehms_db";
-
-// Create connection
-$mysqli = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($mysqli->connect_error) {
-    echo "<script>
-        showAlert('error', 'Error', 'Connection failed: " . $mysqli->connect_error . "');
-    </script>";
-    exit();
-}
+//include database connection
+include '../assets/conn.php';
+$mysqli=$conn;
 
 // Helper function to determine the table name based on item category
 function getTableName($item_category)
@@ -658,7 +645,8 @@ $mysqli->close();
                     <tbody id="normal_food_table_body">
                         <!-- PHP to generate table rows -->
                         <?php
-                        include 'conn.php';
+                        //include database connection
+                        include '../assets/conn.php';
 
                         $sql = "SELECT item_name,quantity, price FROM table_foods WHERE category='food'";
                         $result = $conn->query($sql);
@@ -710,7 +698,8 @@ $mysqli->close();
                     <tbody id="fast_food_table_body">
                         <!-- PHP to generate table rows -->
                         <?php
-                        include 'conn.php';
+                        //include database connection
+                        include '../assets/conn.php';
                         $sql = "SELECT item_name,quantity, price FROM table_foods WHERE category='fast_food'";
                         $result = $conn->query($sql);
 
@@ -780,7 +769,8 @@ $mysqli->close();
                     <tbody id="soft_drink_table_body">
                         <!-- PHP to generate table rows -->
                         <?php
-                        include 'conn.php';
+                        //include database connection
+                        include '../assets/conn.php';
 
                         $sql = "SELECT item_name,quantity, price FROM table_beverages WHERE category='soft-drink'";
                         $result = $conn->query($sql);
@@ -834,7 +824,8 @@ $mysqli->close();
                     <tbody id="alcohol_drink_table_body">
                         <!-- PHP to generate table rows -->
                         <?php
-                        include 'conn.php';
+                        //include database connection
+                        include '../assets/conn.php';
 
                         $sql = "SELECT item_name, quantity, price FROM table_beverages WHERE category='alcohol-drink'";
                         $result = $conn->query($sql);

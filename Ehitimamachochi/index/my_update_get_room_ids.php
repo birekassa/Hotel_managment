@@ -1,6 +1,7 @@
 <?php
-// Include your database connection
-include 'conn.php';
+//include database connection
+include '../assets/conn.php';
+
 // Get the room type from the GET request
 $room_type = $_GET['my_update_room_type'] ?? '';
 

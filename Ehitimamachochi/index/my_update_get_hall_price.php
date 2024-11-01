@@ -1,6 +1,6 @@
 <?php
-// Database credentials
-include 'conn.php';
+//include database connection
+include '../assets/conn.php';
 
 // Handle request for hall price
 if (isset($_GET['Update_hall_id'])){

@@ -1,17 +1,6 @@
 <?php
-// Database connection details
-$servername = "localhost";
-$username = "root";
-$password = "24770267";
-$dbname = "ehms_db";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+//include database connection
+include '../assets/conn.php';
 
 // Retrieve form data for attendance
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['take_attendance'])) {

@@ -2,20 +2,8 @@
 if (isset($_GET['action']) && $_GET['action'] == 'fetch') {
     $type = isset($_GET['type']) ? $_GET['type'] : '';
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "24770267";
-    $dbname = "ehms_db";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        header('Content-Type: application/json');
-        echo json_encode(['error' => 'Connection failed: ' . $conn->connect_error]);
-        exit;
-    }
+//include database connection
+include '../assets/conn.php';
 
     switch ($type) {
         case 'meeting_halls':

@@ -1,7 +1,7 @@
 
 <?php
-// Include the database connection
-include 'conn.php';
+//include database connection
+include '../assets/conn.php';
 
 try {
     // Get and trim user input from the POST request

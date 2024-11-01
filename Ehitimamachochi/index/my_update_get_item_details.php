@@ -1,6 +1,7 @@
 
 <?php
-include 'conn.php'; // Database connection using MySQLi
+//include database connection
+include '../assets/conn.php';
 
 // Get and sanitize input parameters
 $item_category = filter_var($_GET['item_category'] ?? '', FILTER_SANITIZE_STRING);

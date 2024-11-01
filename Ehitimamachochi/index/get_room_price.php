@@ -1,5 +1,6 @@
 <?php
-include 'conn.php';
+//include database connection
+include '../assets/conn.php';
 
 $room_id = $_GET['room_id'] ?? '';
 

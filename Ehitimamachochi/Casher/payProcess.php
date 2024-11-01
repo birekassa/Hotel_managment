@@ -5,44 +5,11 @@ use PHPMailer\PHPMailer\Exception;
 // Load Composer's autoloader
 require 'vendor/autoload.php';
 
-// Database connection for employees
-$mysqli = new mysqli("localhost", "root", "24770267", "ehms_db");
-if ($mysqli->connect_error) {
-    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-    echo "<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                icon: 'error',
-                title: 'Connection Error',
-                text: 'Failed to connect to employee database: " . addslashes($mysqli->connect_error) . "'
-            }).then(() => {
-                window.history.back();
-            });
-        });
-    </script>";
-    exit();
-}
-
+include '../assets/conn.php';
 // Database connection for bank
-$bankConn = new mysqli("localhost", "root", "24770267", "commercial_bank_of_ethiopia");
-if ($bankConn->connect_error) {
-    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-    echo "<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                icon: 'error',
-                title: 'Connection Error',
-                text: 'Failed to connect to bank database: " . addslashes($bankConn->connect_error) . "'
-            }).then(() => {
-                window.history.back();
-            });
-        });
-    </script>";
-    exit();
-}
+$mysqli=$conn;
 
 echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-
 // Function to show SweetAlert messages
 function showAlert($type, $title, $message, $redirect = '') {
     echo "
@@ -121,7 +88,6 @@ if (!is_numeric($salary)) {
 
 // Start transactions
 $mysqli->begin_transaction();
-$bankConn->begin_transaction();
 
 try {
     // Update payment status in employees
@@ -133,18 +99,10 @@ try {
     $stmt->bind_param("i", $id);
     $stmt->execute();
 
-    // Insert deposit record into the bank database
-    $writeDeposit = "INSERT INTO `deposit` (`Account_no`, `amount`) VALUES (?, ?)";
-    $stmt = $bankConn->prepare($writeDeposit);
-    if (!$stmt) {
-        throw new Exception("Failed to prepare statement: " . $bankConn->error);
-    }
-    $stmt->bind_param("sd", $accountNo, $salary);
     $stmt->execute();
 
     // Commit transactions
     $mysqli->commit();
-    $bankConn->commit();
 
     // Send email notification
     $emailResult = configureMailer($email, $salary);
@@ -158,11 +116,9 @@ try {
 } catch (Exception $e) {
     // Rollback transactions if an error occurs
     $mysqli->rollback();
-    $bankConn->rollback();
     showAlert('error', 'Transaction Failed', 'Payment processing failed: ' . $e->getMessage());
 }
 
 // Close database connections
 $mysqli->close();
-$bankConn->close();
 ?>

@@ -3,18 +3,8 @@
 
 header('Content-Type: application/json');
 
-$servername = "localhost";
-$username = "root";
-$password = "24770267";
-$dbname = "ehms_db";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+//include database connection
+include '../assets/conn.php';
 
 // Query to select all columns from the comments table
 $sql = "SELECT fromUserName, Date, theComment FROM comment";

@@ -4,6 +4,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+//include database connection
+include '../../assets/conn.php';
+
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve and sanitize form data
@@ -29,14 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $purchasePrice = htmlspecialchars($_POST['insert_purchase_price'], ENT_QUOTES, 'UTF-8');
     $quantity = htmlspecialchars($_POST['item_quantity'], ENT_QUOTES, 'UTF-8');
     $price = htmlspecialchars($_POST['item_price'], ENT_QUOTES, 'UTF-8');
-
-    // Database connection
-    $conn = new mysqli('localhost', 'root', '24770267', 'ehms_db');
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
 
     // Determine the table based on item type
     $table = '';

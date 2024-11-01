@@ -1,6 +1,6 @@
 <?php
-// Database credentials
-include 'conn.php';
+//include database connection
+include '../assets/conn.php';
 
 // Query to get distinct hall types
 $sql = "SELECT DISTINCT type FROM table_meeting_halls WHERE status = 'free' ORDER BY type ASC";

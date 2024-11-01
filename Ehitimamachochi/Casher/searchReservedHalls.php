@@ -1,7 +1,7 @@
 
 <?php
 //include database connection
-include 'conn.php';
+include '../assets/conn.php';
 
 // Get the search date if provided
 $searchDate = isset($_GET['searchDate']) ? $_GET['searchDate'] : '';

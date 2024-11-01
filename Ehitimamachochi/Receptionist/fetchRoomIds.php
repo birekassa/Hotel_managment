@@ -5,13 +5,8 @@ error_reporting(E_ALL);
 
 header('Content-Type: application/json');
 
-// Database connection
-$conn = new mysqli('localhost', 'root', '24770267', 'ehms_db');
-
-if ($conn->connect_error) {
-    echo json_encode(['error' => 'Database connection failed']);
-    exit;
-}
+//include database connection
+include '../assets/conn.php';
 
 // Check for the roomType parameter
 if (!isset($_GET['roomType'])) {

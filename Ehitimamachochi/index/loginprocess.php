@@ -1,6 +1,6 @@
 <?php
-
-include 'conn.php';
+//include database connection
+include '../assets/conn.php';
 
 // Retrieve username, password, and position from the form
 $user_username = $_POST['username'];

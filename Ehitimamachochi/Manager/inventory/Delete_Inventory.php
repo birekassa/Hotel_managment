@@ -1,4 +1,7 @@
 <?php
+//include database connection
+include '../assets/conn.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     // Retrieve form data
     $itemName = $_POST['item_name'];
@@ -9,31 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     $itemName = htmlspecialchars($itemName, ENT_QUOTES, 'UTF-8');
     $category = htmlspecialchars($category, ENT_QUOTES, 'UTF-8');
     $itemType = htmlspecialchars($itemType, ENT_QUOTES, 'UTF-8');
-
-    // Database connection (replace with your actual credentials)
-    $conn = new mysqli('localhost', 'root', '24770267', 'ehms_db');
-
-    // Check connection
-    if ($conn->connect_error) {
-        echo "
-            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: 'Connection failed: " . $conn->connect_error . "',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.history.back();
-                        }
-                    });
-                });
-            </script>
-        ";
-        exit();
-    }
 
     // Determine the table based on item type
     $table = '';

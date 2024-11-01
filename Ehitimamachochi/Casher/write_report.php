@@ -1,6 +1,6 @@
 <?php
 //include database connection
-include 'conn.php';
+include '../assets/conn.php';
 
 // Check connection
 if ($conn->connect_error) {

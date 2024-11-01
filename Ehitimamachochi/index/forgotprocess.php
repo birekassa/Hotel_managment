@@ -4,7 +4,8 @@ use PHPMailer\PHPMailer\Exception;
 
 // Load Composer's autoloader
 require 'vendor/autoload.php';
-include 'conn.php';  // Your database connection
+//include database connection
+include '../assets/conn.php';
 
 // Ensure SweetAlert2 is included
 echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";

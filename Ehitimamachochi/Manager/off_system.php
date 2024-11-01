@@ -1,17 +1,6 @@
 <?php
-// Database connection details
-$servername = "localhost";
-$username = "root";
-$password = "24770267";
-$dbname = "ehms_db";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+//include database connection
+include '../assets/conn.php';
 
 // SQL query to update all employees' `is_present` field to 'not'
 $sql = "UPDATE employees SET is_present = 'not'";

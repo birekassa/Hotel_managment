@@ -1,5 +1,6 @@
 <?php
-include 'conn.php';
+//include database connection
+include '../assets/conn.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 

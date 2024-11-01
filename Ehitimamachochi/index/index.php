@@ -292,26 +292,12 @@
                 <input type="password" id="password" name="password" required
                     style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
             </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label for="position" style="display: block; margin-bottom: 5px; color: #555;">Position:</label>
-                <select id="position" name="position" required
-                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-                    <option value="Admin">Admin</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Receptionist">Receptionist</option>
-                    <option value="Bar Man">Bar Man</option>
-                    <option value="Casher">Casher</option>
-                    <option value="Host">Host</option>
-                </select>
-            </div>
             <div>
                 <p>
                     <input type="checkbox" id="remember_me">
                     <label for="remember_me">Remember me</label>
                     <a href="#" style="display:flex; justify-content:right; padding-right:10%;"
-                        onclick="document.getElementById('forgotpass').style.display='block'; document.getElementById('loginform').style.display='none'; document.getElementById('log-header').innerHTML = 'Forget Using Email ';
-return false;">Forget
-                        password ?</a>
+                    onclick="document.getElementById('forgotpass').style.display='block'; document.getElementById('loginform').style.display='none'; document.getElementById('log-header').innerHTML = 'Forget Using Email '; return false;">Forget password ?</a>
                 </p>
             </div>
             <div class="button-group" style="text-align: center;">

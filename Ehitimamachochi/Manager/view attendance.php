@@ -86,25 +86,11 @@
 
         <div class="table-wrapper">
             <?php
-            // Database connection
-            $servername = "localhost";
-            $username = "root";
-            $password = "24770267";
-            $dbname = "ehms_db";
-
-            // Create connection
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            // Check connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
+            //include database connection
+            include '../assets/conn.php';
             // SQL query to get all employees and their attendance status
-            $sql = "
-                SELECT e.id, e.f_name, e.l_name, e.sex, e.age, e.email, e.phone_no, e.is_present,
-                    a.attendance_date
-                FROM employees e LEFT JOIN attendance a ON e.id = a.employee_id
+            $sql = " SELECT e.id, e.f_name, e.l_name, e.sex, e.age, e.email, e.phone_no, e.is_present,
+                    a.attendance_date FROM employees e LEFT JOIN attendance a ON e.id = a.employee_id
             ";
 
             $result = $conn->query($sql);
