@@ -44,7 +44,6 @@ if ($result->num_rows > 0) {
     
     // Generate a new 6-digit password
     $newPassword = rand(100000, 999999);
-    
     // Hash the new password
     $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
     
