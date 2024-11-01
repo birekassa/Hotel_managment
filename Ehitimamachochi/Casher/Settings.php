@@ -9,30 +9,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        .nav-item {
-            font-size: 16px;
-        }
-
-        .nav-item:hover {
-            border-bottom: 1px solid blue;
-        }
-
-        .section-header {
-            position: relative;
-        }
-
-        .back-arrow {
-            position: absolute;
-            top: 0;
-            left: -40px;
-            /* Adjust this value to position the arrow */
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="asset/setting.css" class="css">
 </head>
 
-<body style="background-color: #f4f4f4; font-family: 'Times New Roman', serif;">
+<body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-size: 1.25rem; height: 100px;">
         <div class="container-xl h-100">
             <!-- Toggle button for mobile view -->
@@ -156,7 +136,12 @@
             </div>
         </section>
     </div>
-
+    <footer class="footer bg-dark text-white text-center py-4" style="margin-top: auto;">
+        <div class="container">
+            <p style="margin: 0;">&copy; 2024 Ehototmamachochi Hotel. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
@@ -194,7 +179,4 @@
             });
         }
     </script>
-
-</body>
-
 </html>

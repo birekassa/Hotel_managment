@@ -1,53 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Management</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            min-height: 100vh;
-            background: url('bar_background.jpg') no-repeat center center fixed;
-            background-size: cover;
-            margin: 0;
-            font-family: 'Times New Roman', Times, serif;
-        }
-        .navbar {
-            background-color: #343a40;
-            height: 100px;
-        }
-        .navbar-nav {
-            flex-direction: row;
-        }
-        .nav-link {
-            color: white !important;
-        }
-        .nav-item {
-            font-size: 16px;
-        }
-        .nav-item:hover {
-            border-bottom: 1px solid blue;
-        }
-        .jumbotron {
-            background-color: rgba(255, 255, 255, 0.9);
-            color: black;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        }
-        footer {
-            background-color: #343a40;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-        }
-        .btn-disabled {
-            pointer-events: none;
-            opacity: 0.5;
-        }
-    </style>
+    <link rel="stylesheet" href="asset/payment.css" class="css">
 </head>
+
 <body>
 
     <div class="d-flex flex-column min-vh-100">
@@ -66,7 +28,8 @@
                             <a class="nav-link text-white" href="payment.php" style="margin: 0 1rem;">Pay Salary</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="Settings.php" style="margin: 0 1rem;">Account Settings</a>
+                            <a class="nav-link text-white" href="Settings.php" style="margin: 0 1rem;">Account
+                                Settings</a>
                         </li>
                     </ul>
                 </div>
@@ -77,7 +40,7 @@
             <?php
             //include database connection
             include '../assets/conn.php';
-            
+
             $showAlert = false;
 
             // Query to fetch employee data
@@ -142,7 +105,7 @@
             <!-- Check if alert needs to be shown -->
             <?php if ($showAlert): ?>
                 <script>
-                    window.onload = function() {
+                    window.onload = function () {
                         Swal.fire({
                             icon: 'warning',
                             title: 'Payment Overdue',
@@ -153,9 +116,14 @@
             <?php endif; ?>
         </div>
     </div>
-
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <footer class="footer bg-dark text-white text-center py-4" style="margin-top: auto;">
+        <div class="container">
+            <p style="margin: 0;">&copy; 2024 Ehototmamachochi Hotel. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </html>

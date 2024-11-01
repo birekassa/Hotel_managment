@@ -8,36 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Times New Roman', Times, serif;
-        }
-
-        .navbar {
-            margin-bottom: 20px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        section {
-            width: 80%;
-            margin: 0 auto;
-        }
-
-        .nav-item {
-            font-size: 16px;
-        }
-
-        .nav-item:hover {
-            border-bottom: 1px solid blue;
-        }
-    </style>
+    <link rel="stylesheet" href="asset/report.css">
 </head>
 
-<body>
+<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-size: 1.25rem; height: 100px;">
         <div class="container-xl h-100">
@@ -84,26 +58,6 @@
         </div>
     </div>
 
-    <!-- View Reports Section -->
-    <section id="ViewReports" class="hidden">
-        <button onclick="goBack()" class="btn btn-secondary mb-3">
-            <i class="bi bi-arrow-left"></i> Back
-        </button>
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                <span><i class="bi bi-bar-chart me-2"></i>Inventory Reports</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-            <a href="reservedRooms.php" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                <span><i class="bi bi-archive me-2"></i>Rooms Reports</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-            <a href="reservesdHalls.php" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                <span><i class="bi bi-building me-2"></i>Halls Reports</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-        </div>
-    </section>
 
     <!-- Write Reports Section -->
     <section id="WriteReports" class="hidden">
@@ -117,7 +71,7 @@
                     <label for="report_provider" class="me-2">Report Provider:</label>
                     <input type="text" class="form-control" name="report_provider" id="report_provider" required>
                 </div>
-                
+
                 <div class="d-flex align-items-center">
                     <label for="reported_date" class="me-2">Reported Date:</label>
                     <input type="date" class="form-control" name="reported_date" id="reported_date" readonly required>
@@ -127,7 +81,7 @@
                 <p style="margin: 0; font-weight: bold;">Report Type:</p>
                 <label for="withdrawal" style="margin-right: 10px;">Withdrawal</label>
                 <input type="radio" id="withdrawal" name="transactionType" value="Withdrawal" required>
-                
+
                 <label for="deposit" style="margin-right: 10px;">Deposit</label>
                 <input type="radio" id="deposit" name="transactionType" value="Deposit" required>
             </div>
@@ -149,96 +103,101 @@
         </form>
     </section>
 
-    <!-- JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('reported_date').value = today;
-        });
+    <footer class="footer bg-dark text-white text-center py-4" style="margin-top: auto;">
+        <div class="container">
+            <p style="margin: 0;">&copy; 2024 Ehototmamachochi Hotel. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('reported_date').value = today;
+    });
 
-        let rowCount = 0;
+    let rowCount = 0;
 
-        function addRow() {
-            rowCount++;
-            const tableBody = document.querySelector('#reportTable tbody');
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
+    function addRow() {
+        rowCount++;
+        const tableBody = document.querySelector('#reportTable tbody');
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
                 <td>${rowCount}</td>
                 <td><input type="number" name="amount[]" class="form-control" step="any" required></td>
                 <td><input type="text" name="source_from[]" class="form-control" required></td>
                 <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button></td>
             `;
-            tableBody.appendChild(newRow);
-        }
+        tableBody.appendChild(newRow);
+    }
 
-        function removeRow(button) {
-            const row = button.closest('tr');
-            row.remove();
-            updateRowNumbers();
-        }
+    function removeRow(button) {
+        const row = button.closest('tr');
+        row.remove();
+        updateRowNumbers();
+    }
 
-        function updateRowNumbers() {
-            const rows = document.querySelectorAll('#reportTable tbody tr');
-            rows.forEach((row, index) => {
-                row.querySelector('td:first-child').textContent = index + 1;
-            });
-            rowCount = rows.length;
-        }
+    function updateRowNumbers() {
+        const rows = document.querySelectorAll('#reportTable tbody tr');
+        rows.forEach((row, index) => {
+            row.querySelector('td:first-child').textContent = index + 1;
+        });
+        rowCount = rows.length;
+    }
 
-        function validateForm() {
-            const rows = document.querySelectorAll('#reportTable tbody tr');
-            let isValid = true;
-            let errorMessages = [];
+    function validateForm() {
+        const rows = document.querySelectorAll('#reportTable tbody tr');
+        let isValid = true;
+        let errorMessages = [];
 
-            rows.forEach((row, index) => {
-                const amount = row.querySelector('input[name="amount[]"]').value.trim();
-                const sourceFrom = row.querySelector('input[name="source_from[]"]').value.trim();
+        rows.forEach((row, index) => {
+            const amount = row.querySelector('input[name="amount[]"]').value.trim();
+            const sourceFrom = row.querySelector('input[name="source_from[]"]').value.trim();
 
-                let missingColumns = [];
+            let missingColumns = [];
 
-                if (!amount) missingColumns.push('Amount');
-                if (!sourceFrom) missingColumns.push('Source from');
+            if (!amount) missingColumns.push('Amount');
+            if (!sourceFrom) missingColumns.push('Source from');
 
-                if (missingColumns.length > 0) {
-                    isValid = false;
-                    errorMessages.push(`Row ${index + 1}: Missing ${missingColumns.join(', ')}`);
-                }
-            });
-
-            if (!isValid) {
-                alert('Please fill out all required fields:\n' + errorMessages.join('\n'));
-                return false; // Prevent form submission
-            }
-
-            return true; // Allow form submission
-        }
-
-        // Attach validateForm function to form's submit event
-        document.querySelector('form').addEventListener('submit', function (event) {
-            if (!validateForm()) {
-                event.preventDefault(); // Prevent form submission if validation fails
+            if (missingColumns.length > 0) {
+                isValid = false;
+                errorMessages.push(`Row ${index + 1}: Missing ${missingColumns.join(', ')}`);
             }
         });
 
-        function showSection(id) {
-            document.getElementById('mainContainer').classList.add('hidden');
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            document.getElementById(id).classList.remove('hidden');
+        if (!isValid) {
+            alert('Please fill out all required fields:\n' + errorMessages.join('\n'));
+            return false; // Prevent form submission
         }
 
-        function goBack() {
-            document.getElementById('mainContainer').classList.remove('hidden');
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.add('hidden');
-            });
-        }
-    </script>
+        return true; // Allow form submission
+    }
 
-    <!-- SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    // Attach validateForm function to form's submit event
+    document.querySelector('form').addEventListener('submit', function (event) {
+        if (!validateForm()) {
+            event.preventDefault(); // Prevent form submission if validation fails
+        }
+    });
+
+    function showSection(id) {
+        document.getElementById('mainContainer').classList.add('hidden');
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('hidden');
+        });
+        document.getElementById(id).classList.remove('hidden');
+    }
+
+    function goBack() {
+        document.getElementById('mainContainer').classList.remove('hidden');
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('hidden');
+        });
+    }
+</script>
+
 
 </html>
