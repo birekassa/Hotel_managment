@@ -8,10 +8,8 @@
     <title>Index Page</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-
     <!-- Bootstrap Icons (optional) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.min.css" rel="stylesheet">
-
     <!-- Font Awesome (if needed) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
@@ -202,7 +200,7 @@
                             </div>
                             <div>
                                 <h2 style="margin: 0;">Office Address</h2>
-                                <a id="mapLink" href="https://www.google.com/maps/place/Ehitmamachoch+Hotel"
+                                <a id="mapLink" href="https://www.google.com/maps/place/Ehitmamachoch+Hotel/@7.1987875,35.4256296,13z/data=!4m6!3m5!1s0x17a913f104bddabd:0xe94caf4f7ead4a4d!8m2!3d7.2012757!4d35.4155521!16s%2Fg%2F11tbxhd1hg?entry=ttu&g_ep=EgoyMDI0MTAyMy4wIKXMDSoASAFQAw%3D%3D"
                                     target="_blank" style="color: #000; text-decoration: none; font-size: 18px;">South
                                     West Ethiopia, Teppi, Ethimachochi Hotel</a>
                             </div>
