@@ -1,3 +1,24 @@
+<?php
+// Include database connection
+include '../assets/conn.php';
+session_start(); // Start the session
+
+// // Check if the user's position is 'casher'
+// if ($_SESSION['position'] !== 'casher' && $_SESSION['position'] !== 'Casher') {
+//     // Redirect to login page if the user is not a 'casher'
+//     header("Location: ../index/index.php");
+//     exit();
+// }
+
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    // Redirect to login page if not logged in
+    header("Location: ../index/index.php");
+    exit();
+}
+
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,13 +46,10 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item mx-3">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item mx-3">
-                        <a class="nav-link" href="foods.php">Manage Food</a>
-                    </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link" href="manage beverages.php">Manage Beverage</a>
+                        <a class="nav-link" href="view_beverages.php">View Beverage</a>
                     </li>
                     <li class="nav-item mx-3">
                         <a class="nav-link" href="reports.php">Reports</a>

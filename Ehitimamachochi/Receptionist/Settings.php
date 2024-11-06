@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-       /* Internal CSS */
+        /* Internal CSS */
         html,
         body {
             height: 100%;
@@ -40,11 +40,6 @@
 
         .navbar-nav .nav-link:hover::after {
             width: 100%;
-        }
-
-        .navbar {
-            height: 100px;
-            margin-top: 1rem;
         }
 
         .card {
@@ -87,6 +82,7 @@
         .section-header button {
             margin-left: 1rem;
         }
+
         .btn-container {
             display: flex;
             flex-wrap: wrap;
@@ -120,7 +116,7 @@
 </head>
 
 <body>
-   <!-- Navbar -->
+    <!-- Navbar -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-xl">
@@ -181,27 +177,66 @@
         <div id="system_settings" class="card">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <a href="#" class="btn btn-link me-3" onclick="goBack()">
-                        <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
-                    </a>
+                    <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
+                </a>
                 <h3 style="text-align: center; flex: 1;">System Settings</h3>
             </div>
 
-            <a href="" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                <span><i class="bi bi-house-door-fill me-2"></i>Change image for beds</span>
+            <!-- Change Image for Beds -->
+            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                onclick="toggleUpload('bedUpload')">
+                <span><i class="bi bi-house-door-fill me-2"></i>Change Image for Beds</span>
                 <i class="bi bi-chevron-right"></i>
             </a>
-            <a href="" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                <span><i class="bi bi-building me-2"></i>change image for halls</span>
+            <div id="bedUpload" class="upload-section d-none mt-2">
+                <form action="upload_photo.php" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <input type="file" class="form-control" id="bed_image" name="bed_image" accept="image/*" required>
+                    </div>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <button type="submit" class="btn btn-primary">Upload Photo</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Change Image for Halls -->
+            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                onclick="toggleUpload('hallUpload')">
+                <span><i class="bi bi-building me-2"></i>Change Image for Halls</span>
                 <i class="bi bi-chevron-right"></i>
             </a>
+            <div id="hallUpload" class="upload-section d-none mt-2">
+                <form action="upload_photo.php" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <input type="file" class="form-control" id="hall_image" name="hall_image" accept="image/*"
+                            required>
+                    </div>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <button type="submit" class="btn btn-primary">Upload Photo</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- JavaScript to toggle upload sections -->
+            <script>
+                function toggleUpload(uploadSectionId) {
+                    const uploadSection = document.getElementById(uploadSectionId);
+                    if (uploadSection.classList.contains('d-none')) {
+                        uploadSection.classList.remove('d-none');
+                    } else {
+                        uploadSection.classList.add('d-none');
+                    }
+                }
+            </script>
+
         </div>
 
         <!-- Account Settings Content -->
         <div id="account_settings" class="card">
             <div class="section-header d-flex align-items-center">
-                    <a href="#" class="btn btn-link me-3" onclick="goBack()">
-                        <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
-                    </a>
+                <a href="#" class="btn btn-link me-3" onclick="goBack()">
+                    <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
+                </a>
                 <h3 class="flex-grow-1 text-center mb-0">Account Settings</h3>
             </div>
 
@@ -229,11 +264,13 @@
                     <form action="change_username_process.php" method="post">
                         <div class="mb-3">
                             <label for="current_username" class="form-label">Current Username:</label>
-                            <input type="text" id="current_username" name="current_username" class="form-control" required>
+                            <input type="text" id="current_username" name="current_username" class="form-control"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label for="current_password" class="form-label">Current Password:</label>
-                            <input type="password" id="current_password" name="current_password" class="form-control" required>
+                            <input type="password" id="current_password" name="current_password" class="form-control"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label for="new_username" class="form-label">New Username:</label>
@@ -241,11 +278,14 @@
                         </div>
                         <div class="mb-3">
                             <label for="confirm_username" class="form-label">Confirm New Username:</label>
-                            <input type="text" id="confirm_username" name="confirm_username" class="form-control" required>
+                            <input type="text" id="confirm_username" name="confirm_username" class="form-control"
+                                required>
                         </div>
                         <div class="d-flex justify-content-center gap-2">
-                            <button type="submit" name="change_username" class="btn btn-success"><i class="bi bi-check-circle me-2"></i>Update</button>
-                            <button type="reset" class="btn btn-secondary"><i class="bi bi-x-circle me-2"></i>Clear</button>
+                            <button type="submit" name="change_username" class="btn btn-success"><i
+                                    class="bi bi-check-circle me-2"></i>Update</button>
+                            <button type="reset" class="btn btn-secondary"><i
+                                    class="bi bi-x-circle me-2"></i>Clear</button>
                         </div>
                     </form>
                 </div>
@@ -258,11 +298,13 @@
                     <form action="change_password_process.php" method="post">
                         <div class="mb-3">
                             <label for="current_username" class="form-label">Current Username:</label>
-                            <input type="text" id="current_username" name="current_username" class="form-control" required>
+                            <input type="text" id="current_username" name="current_username" class="form-control"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label for="current_password" class="form-label">Current Password:</label>
-                            <input type="password" id="current_password" name="current_password" class="form-control" required>
+                            <input type="password" id="current_password" name="current_password" class="form-control"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label for="new_password" class="form-label">New Password:</label>
@@ -270,17 +312,25 @@
                         </div>
                         <div class="mb-3">
                             <label for="confirm_password" class="form-label">Confirm New Password:</label>
-                            <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+                            <input type="password" id="confirm_password" name="confirm_password" class="form-control"
+                                required>
                         </div>
                         <div class="d-flex justify-content-center gap-2">
-                            <button type="submit" name="change_password" class="btn btn-success"><i class="bi bi-check-circle me-2"></i>Update</button>
-                            <button type="reset" class="btn btn-secondary"><i class="bi bi-x-circle me-2"></i>Clear</button>
+                            <button type="submit" name="change_password" class="btn btn-success"><i
+                                    class="bi bi-check-circle me-2"></i>Update</button>
+                            <button type="reset" class="btn btn-secondary"><i
+                                    class="bi bi-x-circle me-2"></i>Clear</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <p>&copy; 2024 Ehototmamachochi Hotel. All rights reserved. This Website is powered by MTU Department of SE
+            Group 1 Members</p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

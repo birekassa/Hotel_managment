@@ -170,32 +170,30 @@ $conn->close();
 
 
 
-   <!-- Main content -->
-<div class="container mt-5 pt-5" style="flex: 1;">
-    <h1 class="text-center mb-4">Select Meeting Halls</h1>
-    <div class="d-flex flex-wrap justify-content-center">
-        <?php
-        // Define background colors for each hall type
-        $backgroundColors = [
-            'standard' => '',
-            'lexury' => '',
-            // Add more hall types and their corresponding colors here
-        ];
-        ?>
-        <?php foreach ($hallData as $type => $data): ?>
-            <div class="card m-2" style="width: 18rem; background-color: <?php echo isset($backgroundColors[$type]) ? $backgroundColors[$type] : 'white'; ?>;">
-                <div class="card-body">
-                    <h5 class="card-title"><?php echo htmlspecialchars($type); ?></h5>
-                    <p class="card-text">Price: <?php echo htmlspecialchars($data['price']); ?> ETB</p>
-                    <p class="card-text">Available: <?php echo htmlspecialchars($data['quantity']); ?> halls</p>
-                    <button class="btn btn-primary"
-                        onclick="openReservationModal('<?php echo htmlspecialchars($type); ?>', '<?php echo htmlspecialchars($data['price']); ?>')">Reserve
-                        Now</button>
+    <!-- Main content -->
+    <div class="container mt-5 pt-5" style="flex: 1;">
+        <h1 class="text-center mb-4">Select Meeting Halls</h1>
+        <div class="d-flex flex-wrap justify-content-center">
+            <?php
+            // Define background colors for each hall type
+            $backgroundColors = [
+                'standard' => 'black',
+                'lexury' => '',
+                // Add more hall types and their corresponding colors here
+            ];
+            ?>
+            <?php foreach ($hallData as $type => $data): ?>
+                <div class="card m-2" style="width: 18rem; background-color: <?php echo isset($backgroundColors[$type]) ? $backgroundColors[$type] : 'white'; ?>;">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo htmlspecialchars($type); ?></h5>
+                        <p class="card-text">Price: <?php echo htmlspecialchars($data['price']); ?> ETB</p>
+                        <p class="card-text">Available: <?php echo htmlspecialchars($data['quantity']); ?> halls</p>
+                        <button class="btn btn-primary" onclick="openReservationModal('<?php echo htmlspecialchars($type); ?>', '<?php echo htmlspecialchars($data['price']); ?>')">Reserve Now</button>
+                    </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
-</div>
 
 
 

@@ -1,3 +1,43 @@
+<?php
+// Include database connection
+include '../assets/conn.php';
+session_start(); // Start the session
+
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    // Redirect to login page if not logged in
+    header("Location: index.php");
+    exit();
+}
+
+// Access the session variables
+$username = $_SESSION['username'];
+$position = $_SESSION['position'];
+$report_provider_name = ''; // Initialize variable
+
+// Prepare and execute statement to fetch first name, last name, and ID number based on the username
+$stmt = $conn->prepare("SELECT f_name, l_name, id FROM employees WHERE username = ?");
+if (!$stmt) {
+    die("Prepare failed: " . $conn->error);
+}
+
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$stmt->bind_result($f_name, $l_name, $id);
+$stmt->fetch();
+
+// Check if names and ID were retrieved successfully
+if ($f_name && $l_name && $id) {
+    $report_provider_name = 'ID: '.$id.',   Name : '.$f_name.' '.$l_name; // Combine first name, last name, and ID
+} else {
+    $report_provider_name = 'Unknown Provider'; // Fallback if no name or ID is found
+}
+
+// Close the statement and connection
+$stmt->close();
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +50,9 @@
     <!-- Bootstrap Icons CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        *{
+        font-family:'Times New Roman';
+        }
         .container-custom {
             width: 80%;
             margin: 0 auto;
@@ -142,7 +185,22 @@
             <div class="d-flex justify-content-between mb-3">
                 <div class="d-flex align-items-center">
                     <label for="report_provider" class="me-2">Report Provider:</label>
-                    <input type="text" class="form-control" name="report_provider" id="report_provider" required>
+                    <input type="text" class="form-control" name="report_provider" id="report_provider"value="<?php echo htmlspecialchars($report_provider_name); ?>" readonly required>
+                </div>
+                <div class="d-flex align-items-center">
+                    <select name="report_about" id="report_about" style="padding:10px;" required>
+                        <option value="">Select Report About</option>
+                        <option value="">Room Report</option>
+                        <option value="">Halls Report</option>
+                        <option value="">Other</option>
+                    </select>
+                </div>
+                <div class="d-flex align-items-center">
+                    <select name="report_type" id="report_type" style="padding:10px;" required>
+                        <option value="">Select Report Type</option>
+                        <option value="">Expense</option>
+                        <option value="">Income</option>
+                    </select>
                 </div>
                 <div class="d-flex align-items-center">
                     <label for="reported_date" class="me-2">Reported Date:</label>
@@ -169,6 +227,12 @@
             <button type="submit" class="btn btn-success">Submit</button>
         </form>
     </section>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <p>&copy; 2024 Ehototmamachochi Hotel. All rights reserved. This Website is powered by MTU Department of SE
+            Group 1 Members</p>
+    </footer>
+
 
     <!-- JavaScript -->
     <script>

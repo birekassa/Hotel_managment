@@ -200,7 +200,8 @@
                             </div>
                             <div>
                                 <h2 style="margin: 0;">Office Address</h2>
-                                <a id="mapLink" href="https://www.google.com/maps/place/Ehitmamachoch+Hotel/@7.1987875,35.4256296,13z/data=!4m6!3m5!1s0x17a913f104bddabd:0xe94caf4f7ead4a4d!8m2!3d7.2012757!4d35.4155521!16s%2Fg%2F11tbxhd1hg?entry=ttu&g_ep=EgoyMDI0MTAyMy4wIKXMDSoASAFQAw%3D%3D"
+                                <a id="mapLink"
+                                    href="https://www.google.com/maps/place/Ehitmamachoch+Hotel/@7.1987875,35.4256296,13z/data=!4m6!3m5!1s0x17a913f104bddabd:0xe94caf4f7ead4a4d!8m2!3d7.2012757!4d35.4155521!16s%2Fg%2F11tbxhd1hg?entry=ttu&g_ep=EgoyMDI0MTAyMy4wIKXMDSoASAFQAw%3D%3D"
                                     target="_blank" style="color: #000; text-decoration: none; font-size: 18px;">South
                                     West Ethiopia, Teppi, Ethimachochi Hotel</a>
                             </div>
@@ -257,98 +258,104 @@
 
 
     <!-- Login Form Modal -->
-<div id="loginModal" class="modal"
-    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
-    <div class="modal-content"
-        style="background-color: #fff; margin: 10% auto; padding: 20px; border-radius: 8px; width: 80%; max-width: 500px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); position: relative;">
-        <span class="close-button" onclick="closeModal()"
-            style="position: absolute; top: 10px; right: 10px; color: #ff6f61; font-size: 28px; font-weight: bold; cursor: pointer;"
-            onmouseover="this.style.color='#ff0000';" onmouseout="this.style.color='#ff6f61';">
-            <i class="fas fa-times"></i>
-        </span>
-        <h2 class="modal-title" style="text-align: center; margin-top: 0; color: #333;" id="log-header">Login Here</h2>
+    <div id="loginModal" class="modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+        <div class="modal-content"
+            style="background-color: #fff; margin: 10% auto; padding: 20px; border-radius: 8px; width: 80%; max-width: 500px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); position: relative;">
+            <span class="close-button" onclick="closeModal()"
+                style="position: absolute; top: 10px; right: 10px; color: #ff6f61; font-size: 28px; font-weight: bold; cursor: pointer;"
+                onmouseover="this.style.color='#ff0000';" onmouseout="this.style.color='#ff6f61';">
+                <i class="fas fa-times"></i>
+            </span>
+            <h2 class="modal-title" style="text-align: center; margin-top: 0; color: #333;" id="log-header">Login Here
+            </h2>
+            <?php
+            // Check for existing cookie
+            $username = isset($_COOKIE['username']) ? htmlspecialchars($_COOKIE['username']) : '';
+            ?>
+            <!-- Login Form -->
+            <form method="post" action="loginprocess.php" style="padding: 10px;" id="loginform">
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="username" style="display: block; margin-bottom: 5px; color: #555;">Username:</label>
+                    <input type="text" id="username" name="username" required value="<?php echo $username; ?>" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="password" style="display: block; margin-bottom: 5px; color: #555;">Password:</label>
+                    <input type="password" id="password" name="password" required
+                        style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+                <div>
+                    <p>
+                        <input type="checkbox" id="remember_me">
+                        <label for="remember_me">Remember me</label>
+                        <a href="#" style="display:flex; justify-content:right; padding-right:10%;"
+                            onclick="document.getElementById('forgotpass').style.display='block'; document.getElementById('loginform').style.display='none'; document.getElementById('log-header').innerHTML = 'Forget Using Email '; return false;">Forget
+                            password ?</a>
+                    </p>
+                </div>
+                <div class="button-group" style="text-align: center;">
+                    <button type="submit"
+                        style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin-right: 10px; width:40%;">Login</button>
+                    <button type="reset"
+                        style="background-color: #f44336; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; width:40%;">Clear</button>
+                </div>
+            </form>
 
-        <!-- Login Form -->
-        <form method="post" action="loginprocess.php" style="padding: 10px;" id="loginform">
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label for="username" style="display: block; margin-bottom: 5px; color: #555;">Username:</label>
-                <input type="text" id="username" name="username" required
-                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-            </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label for="password" style="display: block; margin-bottom: 5px; color: #555;">Password:</label>
-                <input type="password" id="password" name="password" required
-                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-            </div>
-            <div>
-                <p>
-                    <input type="checkbox" id="remember_me">
-                    <label for="remember_me">Remember me</label>
-                    <a href="#" style="display:flex; justify-content:right; padding-right:10%;"
-                    onclick="document.getElementById('forgotpass').style.display='block'; document.getElementById('loginform').style.display='none'; document.getElementById('log-header').innerHTML = 'Forget Using Email '; return false;">Forget password ?</a>
-                </p>
-            </div>
-            <div class="button-group" style="text-align: center;">
-                <button type="submit"
-                    style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin-right: 10px; width:40%;">Login</button>
-                <button type="reset"
-                    style="background-color: #f44336; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; width:40%;">Clear</button>
-            </div>
-        </form>
+            <!-- Forgot Password Section -->
+            <div class="section" id="forgotpass" style="display:none;">
+                <form action="forgotprocess.php" method="post">
+                    <label for="email" style="display: block; margin-bottom: 5px; color: #555;">Enter your
+                        email:</label>
+                    <input type="email" id="email" name="email" required
+                        style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
 
-       <!-- Forgot Password Section -->
-<div class="section" id="forgotpass" style="display:none;">
-    <form action="forgotprocess.php" method="post">
-        <label for="email" style="display: block; margin-bottom: 5px; color: #555;">Enter your email:</label>
-        <input type="email" id="email" name="email" required
-            style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-        
-        <!-- Flexbox container for the text and link -->
-        <div style="display: flex; justify-content: gap:15px; align-items: center; margin-top: 10px;">
-            <p style="margin: 0; color: #555;">If you remembered your password:</p>
-            <a href="#" style="padding-right: 10%;" onclick="document.getElementById('forgotpass').style.display='none'; document.getElementById('loginform').style.display='block';document.getElementById('log-header').innerHTML = 'Login Here'; return false;">Login</a>
+                    <!-- Flexbox container for the text and link -->
+                    <div style="display: flex; justify-content: gap:15px; align-items: center; margin-top: 10px;">
+                        <p style="margin: 0; color: #555;">If you remembered your password:</p>
+                        <a href="#" style="padding-right: 10%;"
+                            onclick="document.getElementById('forgotpass').style.display='none'; document.getElementById('loginform').style.display='block';document.getElementById('log-header').innerHTML = 'Login Here'; return false;">Login</a>
+                    </div>
+
+                    <div class="button-group" style="text-align: center; margin-top: 15px;">
+                        <button type="submit"
+                            style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin-right: 10px; width:40%;">Submit</button>
+                        <button type="reset"
+                            style="background-color: #f44336; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; width:40%;">Clear</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <div class="button-group" style="text-align: center; margin-top: 15px;">
-            <button type="submit" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin-right: 10px; width:40%;">Submit</button>
-            <button type="reset" style="background-color: #f44336; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; width:40%;">Clear</button>
-        </div>
-    </form>
-</div>
-
-
     </div>
-</div>
-<!-- End of Login Form Modal -->
+    <!-- End of Login Form Modal -->
 
-<script>
-    // Get elements
-    var loginModal = document.getElementById("loginModal");
+    <script>
+        // Get elements
+        var loginModal = document.getElementById("loginModal");
 
-    // Function to show the modal
-    function showLoginModal() {
-        loginModal.style.display = "block";
-    }
-
-    // Function to close the modal
-    function closeModal() {
-        loginModal.style.display = "none";
-    }
-
-    // Close the modal if the user clicks anywhere outside of the modal
-    window.onclick = function (event) {
-        if (event.target == loginModal) {
-            closeModal();
+        // Function to show the modal
+        function showLoginModal() {
+            loginModal.style.display = "block";
         }
-    }
 
-    // Optional: Close the modal if the user presses the Escape key
-    document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape') {
-            closeModal();
+        // Function to close the modal
+        function closeModal() {
+            loginModal.style.display = "none";
         }
-    });
-</script>
+
+        // Close the modal if the user clicks anywhere outside of the modal
+        window.onclick = function (event) {
+            if (event.target == loginModal) {
+                closeModal();
+            }
+        }
+
+        // Optional: Close the modal if the user presses the Escape key
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
 
 
 
@@ -836,7 +843,8 @@
                 </p>
                 <p style="margin-bottom: 10px;">
                     <i class="fab fa-facebook-f" style="color: #00c8ff; margin-right: 8px;"></i>
-                    <a href="https://facebook.com" style="color: white; text-decoration: none;"> Ehitimamachochi Hotel</a>
+                    <a href="https://facebook.com" style="color: white; text-decoration: none;"> Ehitimamachochi
+                        Hotel</a>
                 </p>
                 <p style="margin-bottom: 10px;">
                     <i class="fab fa-twitter" style="color: #00c8ff; margin-right: 8px;"></i>
@@ -844,12 +852,14 @@
                 </p>
                 <p style="margin-bottom: 10px;">
                     <i class="fab fa-instagram" style="color: #00c8ff; margin-right: 8px;"></i>
-                    <a href="https://instagram.com" style="color: white; text-decoration: none;"> @EhitimamachochiHotel</a>
+                    <a href="https://instagram.com" style="color: white; text-decoration: none;">
+                        @EhitimamachochiHotel</a>
                 </p>
                 <p style="margin-bottom: 10px;">
                     <i class="fas fa-map-marker-alt" style="color: #00c8ff; margin-right: 8px;"></i>
                     <a href="https://www.google.com/maps/place/Ehitmamachoch+Hotel/@7.1987875,35.4256296,13z/data=!4m6!3m5!1s0x17a913f104bddabd:0xe94caf4f7ead4a4d!8m2!3d7.2012757!4d35.4155521!16s%2Fg%2F11tbxhd1hg?entry=ttu&g_ep=EgoyMDI0MTAyMy4wIKXMDSoASAFQAw%3D%3D"
-                        style="color: white; text-decoration: none;" target="_blank">Ayermeda above post Kembridge Academy, Teppi, South West
+                        style="color: white; text-decoration: none;" target="_blank">Ayermeda above post Kembridge
+                        Academy, Teppi, South West
                         Ethiopia</a>
                 </p>
                 <p style="margin-bottom: 0;">
@@ -1063,4 +1073,5 @@
         </p>
     </footer>
 </body>
+
 </html>

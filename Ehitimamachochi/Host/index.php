@@ -1,10 +1,21 @@
 <?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-//include database connection
+// Include database connection
 include '../assets/conn.php';
+session_start(); // Start the session
+
+// // Check if the user's position is 'casher'
+// if ($_SESSION['position'] !== 'casher' && $_SESSION['position'] !== 'Casher') {
+//     // Redirect to login page if the user is not a 'casher'
+//     header("Location: ../index/index.php");
+//     exit();
+// }
+
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    // Redirect to login page if not logged in
+    header("Location: ../index/index.php");
+    exit();
+}
 
 // Set the timezone to East Africa Time (EAT)
 $timezone = new DateTimeZone('Africa/Addis_Ababa');
@@ -44,6 +55,8 @@ $totalSales = array_sum(array_column($activities, 'Total_price'));
 $stmt->close();
 $conn->close();
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,7 +78,7 @@ $conn->close();
         }
 
         .navbar-nav {
-            display: flex;
+            display: block;
             justify-content: center;
             align-items: center;
 
@@ -121,8 +134,8 @@ $conn->close();
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center w-100">
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost/New/Ehitimamachochi/Host/index.php" 
-                            role="button" aria-expanded="false"style="color: white !important;">
+                        <a class="nav-link" href="http://localhost/New/Ehitimamachochi/Host/index.php" role="button"
+                            aria-expanded="false" style="color: white !important;">
                             Home
                         </a>
                     </li>
@@ -316,18 +329,6 @@ $conn->close();
         </div>
     </div>
 
-    <script>
-        // Toggle between Fast Food and Food tabs
-        document.getElementById('fast_food_btn').addEventListener('click', function () {
-            document.getElementById('fast_food_modal').style.display = 'block';
-            document.getElementById('food_modal').style.display = 'none';
-        });
-        document.getElementById('food_btn').addEventListener('click', function () {
-            document.getElementById('food_modal').style.display = 'block';
-            document.getElementById('fast_food_modal').style.display = 'none';
-        });
-    </script>
-
     <!-- List Beverage Items Modal -->
     <div class="modal fade" id="view_beverage_modal" tabindex="-1" aria-labelledby="viewBeverageModalLabel"
         aria-hidden="true">
@@ -415,112 +416,6 @@ $conn->close();
         </div>
     </div>
 
-    <script>
-        // Toggle between Alcohol Beverage and Soft Beverage tabs
-        document.getElementById('alcohol_beverage_btn').addEventListener('click', function () {
-            document.getElementById('alcohol_beverage_modal').style.display = 'block';
-            document.getElementById('soft_beverage_modal').style.display = 'none';
-        });
-        document.getElementById('soft_beverage_btn').addEventListener('click', function () {
-            document.getElementById('soft_beverage_modal').style.display = 'block';
-            document.getElementById('alcohol_beverage_modal').style.display = 'none';
-        });
-        // Initialize with Soft Beverage as default view
-        document.getElementById('soft_beverage_modal').style.display = 'block';
-        document.getElementById('alcohol_beverage_modal').style.display = 'none';
-        // Show modal
-        document.getElementById('open_beverage_modal').addEventListener('click', function () {
-            var modal = new bootstrap.Modal(document.getElementById('view_beverage_modal'));
-            modal.show();
-        });
-    </script>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Ensure SweetAlert2 is loaded before any logic runs
-        if (typeof Swal === 'undefined') {
-            console.error('SweetAlert2 is not loaded. Ensure SweetAlert2 script is included.');
-            return;
-        }
-
-        // Select all elements with the class 'reserve-btn'
-        const reserveButtons = document.querySelectorAll('.reserve-btn');
-
-        reserveButtons.forEach(button => {
-            button.addEventListener('click', () => handleReservation(button));
-        });
-
-        function handleReservation(button) {
-            const itemName = button.dataset.item;
-            const category = button.dataset.category;
-            const price = button.dataset.price;
-
-            // Display SweetAlert2 modal to prompt the user for quantity
-            Swal.fire({
-                title: `Reserve ${itemName} (${category})`,
-                text: 'Enter the quantity to reserve:',
-                input: 'number',
-                inputLabel: 'Quantity',
-                inputPlaceholder: 'Enter quantity',
-                inputAttributes: {
-                    min: 1,
-                    step: 1
-                },
-                showCancelButton: true,
-                confirmButtonText: 'Yes, reserve it!',
-                cancelButtonText: 'No, cancel!',
-                inputValidator: (value) => {
-                    if (!value || value <= 0) {
-                        return 'Please enter a valid quantity greater than 0!';
-                    }
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Extract the quantity entered by the user
-                    const quantity = result.value;
-
-                    // Proceed to reserve the item by sending a request to the server
-                    reserveItem(itemName, category, price, quantity);
-                }
-            });
-        }
-
-        function reserveItem(itemName, category, price, quantity) {
-            // Prepare reservation details
-            const reservationDetails = {
-                item_name: itemName,
-                quantity: quantity,
-                price: price,
-                reported_date: new Date().toISOString().split('T')[0] // Format as YYYY-MM-DD
-            };
-
-            // Send reservation request to the server via fetch
-            fetch('reservation_process.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(reservationDetails)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    Swal.fire('Reserved!', `${itemName} has been successfully reserved.`, 'success');
-                } else {
-                    Swal.fire('Error!', 'There was an issue reserving the item. Please try again.', 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Reservation error:', error);
-                Swal.fire('Error!', 'An unexpected error occurred. Please try again.', 'error');
-            });
-        }
-    });
-</script>
-
-
-
-
 
     <!-- Modal for Authorize Customer -->
     <div id="Authorize_Customer_modal" class="modal"
@@ -578,24 +473,6 @@ $conn->close();
                     <span><i class="bi bi-box-arrow-right me-2"></i>Log out</span>
                     <i class="bi bi-chevron-right"></i>
                 </a>
-                <script>
-                    function confirmLogout(event) {
-                        event.preventDefault(); // Prevent the default link behavior
-                        Swal.fire({
-                            icon: 'question',
-                            title: 'Are you sure?',
-                            text: 'Do you want to log out?',
-                            showCancelButton: true,
-                            confirmButtonText: 'Yes, log out',
-                            cancelButtonText: 'Cancel'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Redirect to the specified URL
-                                window.location.href = "http://localhost/New/Ehitimamachochi/index/index.php";
-                            }
-                        });
-                    }
-                </script>
             </div>
 
             <!-- Change Username Section -->
@@ -669,53 +546,187 @@ $conn->close();
                 </div>
             </div>
         </div>
-
-        <script>
-            function showSection(id) {
-                // Get all sections
-                const sections = document.querySelectorAll('.card');
-
-                // Hide all sections
-                sections.forEach(section => {
-                    if (section.id !== id) {
-                        section.style.display = 'none';
-                    }
-                });
-
-                // Toggle the selected section
-                const selectedSection = document.getElementById(id);
-                selectedSection.style.display = (selectedSection.style.display === 'none' || selectedSection.style.display === '') ? 'block' : 'none';
-            }
-        </script>
     </div>
+</body>
 
-    <script>
-        function toggleSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            if (section.style.display === 'none' || section.style.display === '') {
-                section.style.display = 'block';
-                document.getElementById('main_content').style.display = 'none';
-            } else {
-                section.style.display = 'none'; main_content
-                document.getElementById('main_content').style.display = 'block';
+
+<script>
+    // Toggle between Fast Food and Food tabs
+    document.getElementById('fast_food_btn').addEventListener('click', function () {
+        document.getElementById('fast_food_modal').style.display = 'block';
+        document.getElementById('food_modal').style.display = 'none';
+    });
+    document.getElementById('food_btn').addEventListener('click', function () {
+        document.getElementById('food_modal').style.display = 'block';
+        document.getElementById('fast_food_modal').style.display = 'none';
+    });
+</script>
+<script>
+    // Toggle between Alcohol Beverage and Soft Beverage tabs
+    document.getElementById('alcohol_beverage_btn').addEventListener('click', function () {
+        document.getElementById('alcohol_beverage_modal').style.display = 'block';
+        document.getElementById('soft_beverage_modal').style.display = 'none';
+    });
+    document.getElementById('soft_beverage_btn').addEventListener('click', function () {
+        document.getElementById('soft_beverage_modal').style.display = 'block';
+        document.getElementById('alcohol_beverage_modal').style.display = 'none';
+    });
+    // Initialize with Soft Beverage as default view
+    document.getElementById('soft_beverage_modal').style.display = 'block';
+    document.getElementById('alcohol_beverage_modal').style.display = 'none';
+    // Show modal
+    document.getElementById('open_beverage_modal').addEventListener('click', function () {
+        var modal = new bootstrap.Modal(document.getElementById('view_beverage_modal'));
+        modal.show();
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Ensure SweetAlert2 is loaded before any logic runs
+        if (typeof Swal === 'undefined') {
+            console.error('SweetAlert2 is not loaded. Ensure SweetAlert2 script is included.');
+            return;
+        }
+
+        // Select all elements with the class 'reserve-btn'
+        const reserveButtons = document.querySelectorAll('.reserve-btn');
+
+        reserveButtons.forEach(button => {
+            button.addEventListener('click', () => handleReservation(button));
+        });
+
+        function handleReservation(button) {
+            const itemName = button.dataset.item;
+            const category = button.dataset.category;
+            const price = button.dataset.price;
+
+            // Display SweetAlert2 modal to prompt the user for quantity
+            Swal.fire({
+                title: `Reserve ${itemName} (${category})`,
+                text: 'Enter the quantity to reserve:',
+                input: 'number',
+                inputLabel: 'Quantity',
+                inputPlaceholder: 'Enter quantity',
+                inputAttributes: {
+                    min: 1,
+                    step: 1
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Yes, reserve it!',
+                cancelButtonText: 'No, cancel!',
+                inputValidator: (value) => {
+                    if (!value || value <= 0) {
+                        return 'Please enter a valid quantity greater than 0!';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Extract the quantity entered by the user
+                    const quantity = result.value;
+
+                    // Proceed to reserve the item by sending a request to the server
+                    reserveItem(itemName, category, price, quantity);
+                }
+            });
+        }
+
+        function reserveItem(itemName, category, price, quantity) {
+            // Prepare reservation details
+            const reservationDetails = {
+                item_name: itemName,
+                quantity: quantity,
+                price: price,
+                reported_date: new Date().toISOString().split('T')[0] // Format as YYYY-MM-DD
+            };
+
+            // Send reservation request to the server via fetch
+            fetch('reservation_process.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(reservationDetails)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire('Reserved!', `${itemName} has been successfully reserved.`, 'success');
+                    } else {
+                        Swal.fire('Error!', 'There was an issue reserving the item. Please try again.', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Reservation error:', error);
+                    Swal.fire('Error!', 'An unexpected error occurred. Please try again.', 'error');
+                });
+        }
+    });
+</script>
+
+<script>
+    function confirmLogout(event) {
+        event.preventDefault(); // Prevent the default link behavior
+        Swal.fire({
+            icon: 'question',
+            title: 'Are you sure?',
+            text: 'Do you want to log out?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, log out',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect to the specified URL
+                window.location.href = "http://localhost/New/Ehitimamachochi/index/index.php";
             }
+        });
+    }
+</script>
+<script>
+    function showSection(id) {
+        // Get all sections
+        const sections = document.querySelectorAll('.card');
+
+        // Hide all sections
+        sections.forEach(section => {
+            if (section.id !== id) {
+                section.style.display = 'none';
+            }
+        });
+
+        // Toggle the selected section
+        const selectedSection = document.getElementById(id);
+        selectedSection.style.display = (selectedSection.style.display === 'none' || selectedSection.style.display === '') ? 'block' : 'none';
+    }
+</script>
+<script>
+    function toggleSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section.style.display === 'none' || section.style.display === '') {
+            section.style.display = 'block';
+            document.getElementById('main_content').style.display = 'none';
+        } else {
+            section.style.display = 'none'; main_content
+            document.getElementById('main_content').style.display = 'block';
         }
-    </script>
+    }
+</script>
 
-    <script>
-        // Get the modal and button elements
-        var openModal = document.getElementById('Authorize_Customer_btn');
-        var authorizeCustomerModal = document.getElementById('Authorize_Customer_modal');
+<script>
+    // Get the modal and button elements
+    var openModal = document.getElementById('Authorize_Customer_btn');
+    var authorizeCustomerModal = document.getElementById('Authorize_Customer_modal');
 
-        // Open the modal when the button is clicked
-        openModal.onclick = function () {
-            authorizeCustomerModal.style.display = 'block';
-        }
-    </script>
+    // Open the modal when the button is clicked
+    openModal.onclick = function () {
+        authorizeCustomerModal.style.display = 'block';
+    }
+</script>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </html>

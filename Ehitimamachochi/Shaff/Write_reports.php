@@ -1,3 +1,48 @@
+<?php
+// Include database connection
+include '../assets/conn.php';
+session_start(); // Start the session
+
+// // Check if the user's position is 'casher'
+// if ($_SESSION['position'] !== 'casher' && $_SESSION['position'] !== 'Casher') {
+//     // Redirect to login page if the user is not a 'casher'
+//     header("Location: ../index/index.php");
+//     exit();
+// }
+
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    // Redirect to login page if not logged in
+    header("Location: ../index/index.php");
+    exit();
+}
+
+$position = $_SESSION['position'];
+$report_provider_name = ''; // Initialize variable
+
+// Prepare and execute statement to fetch first name, last name, and ID number based on the username
+$stmt = $conn->prepare("SELECT f_name, l_name, id FROM employees WHERE username = ?");
+if (!$stmt) {
+    die("Prepare failed: " . $conn->error);
+}
+
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$stmt->bind_result($f_name, $l_name, $id);
+$stmt->fetch();
+
+// Check if names and ID were retrieved successfully
+if ($f_name && $l_name && $id) {
+    $report_provider_name = 'ID: ' . $id . ',   Name : ' . $f_name . ' ' . $l_name; // Combine first name, last name, and ID
+} else {
+    $report_provider_name = 'Unknown Provider'; // Fallback if no name or ID is found
+}
+
+// Close the statement and connection
+$stmt->close();
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,47 +95,58 @@
                 <div class="collapse navbar-collapse h-100 d-flex align-items-center" id="navbarNav">
                     <ul class="navbar-nav d-flex justify-content-center w-100 mb-0">
                         <li class="nav-item"><a class="nav-link text-white" href="index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="Write_reports.php">Write Reports</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="View_reports.php">View Reports</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="Settings.php">Account Settings</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="Write_reports.php">Write Reports</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link text-white" href="View_reports.php">View Reports</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link text-white" href="Settings.php">Account Settings</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
 
         <!-- Category Buttons -->
-<section id="Category_btn" class="my-3">
-    <div class="d-flex justify-content-center" style="gap: 10%; text-align: center; margin: top 30px;">
-        <button class="w_r btn" style="width: 400px; height: 200px; position: relative; border: none; background-color: blue;color :white; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;" onclick="loadFoodItems('fast_food')">
-            <h1>Fast Food</h1>
-            <span class="tooltip" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.7); color: white; padding: 5px 10px; border-radius: 5px; display: none;">Fast Food</span>
-        </button>
+        <section id="Category_btn" class="my-3">
+            <div class="d-flex justify-content-center" style="gap: 10%; text-align: center; margin: top 30px;">
+                <button class="w_r btn"
+                    style="width: 400px; height: 200px; position: relative; border: none; background-color: blue;color :white; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;"
+                    onclick="loadFoodItems('fast_food')">
+                    <h1>Fast Food</h1>
+                    <span class="tooltip"
+                        style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.7); color: white; padding: 5px 10px; border-radius: 5px; display: none;">Fast
+                        Food</span>
+                </button>
 
-        <button class="w_r btn" style="width: 400px; height: 200px; position: relative; border: none; background-color: blue; color :white; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;" onclick="loadFoodItems('food')">
-            <h1>Normal Foods</h1>
-            <span class="tooltip" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.7); color: white; padding: 5px 10px; border-radius: 5px; display: none;">Normal Food</span>
-        </button>
-    </div>
-</section>
+                <button class="w_r btn"
+                    style="width: 400px; height: 200px; position: relative; border: none; background-color: blue; color :white; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;"
+                    onclick="loadFoodItems('food')">
+                    <h1>Normal Foods</h1>
+                    <span class="tooltip"
+                        style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.7); color: white; padding: 5px 10px; border-radius: 5px; display: none;">Normal
+                        Food</span>
+                </button>
+            </div>
+        </section>
 
-<script>
-    // Show tooltip on hover
-    document.querySelectorAll('.w_r').forEach(button => {
-        button.addEventListener('mouseenter', function () {
-            this.querySelector('.tooltip').style.display = 'block';
-            this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.5)';
-            this.style.transform = 'scale(1.05)';
-            this.querySelector('img').style.transform = 'scale(1.1)'; // Slightly scale the image
-        });
+        <script>
+            // Show tooltip on hover
+            document.querySelectorAll('.w_r').forEach(button => {
+                button.addEventListener('mouseenter', function () {
+                    this.querySelector('.tooltip').style.display = 'block';
+                    this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.5)';
+                    this.style.transform = 'scale(1.05)';
+                    this.querySelector('img').style.transform = 'scale(1.1)'; // Slightly scale the image
+                });
 
-        button.addEventListener('mouseleave', function () {
-            this.querySelector('.tooltip').style.display = 'none';
-            this.style.boxShadow = 'none';
-            this.style.transform = 'scale(1)';
-            this.querySelector('img').style.transform = 'scale(1)'; // Reset image scale
-        });
-    });
-</script>
+                button.addEventListener('mouseleave', function () {
+                    this.querySelector('.tooltip').style.display = 'none';
+                    this.style.boxShadow = 'none';
+                    this.style.transform = 'scale(1)';
+                    this.querySelector('img').style.transform = 'scale(1)'; // Reset image scale
+                });
+            });
+        </script>
 
         <!-- Write Reports Section (hidden by default) -->
         <section id="WriteReports" class="container-fluid report-section" style="display: none;">
@@ -102,14 +158,15 @@
                 <div class="d-flex justify-content-between mb-3">
                     <div class="d-flex align-items-center">
                         <label for="report_provider" class="me-2">your name:</label>
-                        <input type="text" class="form-control" name="report_provider" id="report_provider" required>
+                        <input type="text" class="form-control" name="report_provider" id="report_provider"
+                            value="<?php echo htmlspecialchars($report_provider_name); ?>" readonly required>
                     </div>
                     <div class="d-flex align-items-center">
                         <label for="report_type" class="me-2">Report Type:</label>
                         <select name="report_type" id="report_type" required>
                             <option value="" selected>Select report type</option>
-                            <option value="beverages">Beverages</option>
-                            <option value="other_expenditure">Other Expenditure</option>
+                            <option value="fast_food">Fast Food</option>
+                            <option value="normal_food">Normal Food</option>
                         </select>
                     </div>
                     <div class="d-flex align-items-center">
@@ -136,6 +193,8 @@
             </form>
         </section>
 
+        
+
         <script>
             // Show the Write Reports section when a category button is clicked
             document.querySelectorAll('.w_r').forEach(button => {
@@ -144,8 +203,8 @@
                     document.getElementById("Category_btn").style.display = 'none';
                 });
             });
-
             document.getElementById('reported_date').max = new Date().toISOString().split("T")[0];
+
 
             function loadFoodItems(category) {
                 const tableBody = document.querySelector('#tableBody');
@@ -155,7 +214,7 @@
                     .then(response => response.json())
                     .then(data => populateTableRows(data))
                     .catch(error => {
-                        console.error('Error fetching items:', error);
+                        console.error('Error fetching food items:', error);
                         tableBody.innerHTML = '<tr><td colspan="3" class="text-center text-danger">Failed to load items</td></tr>';
                     });
             }
@@ -163,15 +222,12 @@
             function populateTableRows(data) {
                 const tableBody = document.querySelector('#tableBody');
                 tableBody.innerHTML = '';
-
                 data.forEach(item => {
                     const row = document.createElement('tr');
-
                     // First cell with item name
                     const itemNameCell = document.createElement('td');
                     itemNameCell.textContent = item.item_name;
                     row.appendChild(itemNameCell);
-
                     // Create input cells for each header (except the first one)
                     const headerCount = document.querySelectorAll('#reportTable thead th').length;
                     for (let i = 1; i < headerCount; i++) {
@@ -183,7 +239,6 @@
                         inputCell.appendChild(input);
                         row.appendChild(inputCell);
                     }
-
                     tableBody.appendChild(row);
                 });
             }
@@ -201,7 +256,7 @@
 
             function fetchHeaders() {
                 const headerRow = document.querySelector('#reportTable thead tr');
-                headerRow.innerHTML = '<th>Name of Foods</th>'; // Reset header
+                headerRow.innerHTML = '<th>Name of Foods</th>';
                 const tableBody = document.querySelector('#tableBody');
                 tableBody.innerHTML = '<tr><td colspan="3" class="loading">Loading headers...</td></tr>';
 

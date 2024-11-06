@@ -34,38 +34,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search_date'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shaff - View Reports</title>
+    <title>Shaff Page - Ehototmamachochi Hotel</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        body {
-            font-family: 'Times New Roman', Times, serif;
+        .nav-item {
+            font-size: 16px;
         }
-        .navbar {
-            margin-bottom: 20px;
+
+        .nav-item:hover {
+            border-bottom: 1px solid blue;
         }
-        .table-container {
-            margin-top: 20px;
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        #defaultSection {
+            display: block;
+            /* Ensure the default section is visible by default */
         }
     </style>
 </head>
-<body>
-    <div>
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-size: 1.25rem;">
-            <div class="container-xl">
+
+<body style="font-family: 'Times New Roman', Times, serif;">
+
+    <div class="d-flex flex-column min-vh-100">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-size: 1.25rem; height: 100px;">
+            <div class="container-xl h-100">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand" href="index.php">Shaff Panel</a>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="collapse navbar-collapse h-100 d-flex align-items-center" id="navbarNav">
                     <ul class="navbar-nav d-flex justify-content-center w-100 mb-0">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="index.php">Home</a>
+                            <a class="nav-link text-white" href="index.php" onclick="showSection('defaultSection')">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="Write_reports.php">Write Reports</a>
@@ -111,6 +126,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search_date'])) {
         </div>
     </div>
 
+    <footer class="footer bg-dark text-white text-center py-4 mt-auto">
+        <div class="container">
+            <p style="margin: 0;">&copy; 2024 Ehototmamachochi Hotel. All rights reserved.</p>
+        </div>
+    </footer>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -129,15 +150,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search_date'])) {
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: `search_date=${date}`
             })
-            .then(response => response.json())
-            .then(data => {
-                // Clear previous results
-                tableBody.innerHTML = "";
+                .then(response => response.json())
+                .then(data => {
+                    // Clear previous results
+                    tableBody.innerHTML = "";
 
-                // Populate the table with new data
-                if (data.length > 0) {
-                    data.forEach(report => {
-                        const row = `<tr>
+                    // Populate the table with new data
+                    if (data.length > 0) {
+                        data.forEach(report => {
+                            const row = `<tr>
                             <td>${report.item_name}</td>
                             <td>${report.item_measurement}</td>
                             <td>${report.item_quantity}</td>
@@ -145,14 +166,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search_date'])) {
                             <td>${report.item_total_price}</td>
                             <td>${report.reported_date}</td>
                         </tr>`;
-                        tableBody.innerHTML += row;
-                    });
-                } else {
-                    tableBody.innerHTML = "<tr><td colspan='6'>No reports found for the selected date.</td></tr>";
-                }
-            })
-            .catch(error => console.error("Error:", error));
+                            tableBody.innerHTML += row;
+                        });
+                    } else {
+                        tableBody.innerHTML = "<tr><td colspan='6'>No reports found for the selected date.</td></tr>";
+                    }
+                })
+                .catch(error => console.error("Error:", error));
         }
     </script>
 </body>
+
 </html>

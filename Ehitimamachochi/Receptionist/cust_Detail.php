@@ -54,6 +54,9 @@ include '../assets/conn.php';
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        *{
+        font-family:'Times New Roman';
+        }
         .navbar {
             height: 100px;
         }
@@ -142,6 +145,11 @@ include '../assets/conn.php';
             </table>
         </div>
     </main>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <p>&copy; 2024 Ehototmamachochi Hotel. All rights reserved. This Website is powered by MTU Department of SE
+            Group 1 Members</p>
+    </footer>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

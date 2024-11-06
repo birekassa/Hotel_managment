@@ -1,10 +1,32 @@
+<?php
+// Include database connection
+include '../assets/conn.php';
+session_start(); // Start the session
+
+// // Check if the user's position is 'casher'
+// if ($_SESSION['position'] !== 'casher' && $_SESSION['position'] !== 'Casher') {
+//     // Redirect to login page if the user is not a 'casher'
+//     header("Location: ../index/index.php");
+//     exit();
+// }
+
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    // Redirect to login page if not logged in
+    header("Location: ../index/index.php");
+    exit();
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cashier Page - Ehototmamachochi Hotel</title>
+    <title>perchaser Page - Ehototmamachochi Hotel</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->

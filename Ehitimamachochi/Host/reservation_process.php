@@ -2,7 +2,6 @@
 //include database connection
 include '../assets/conn.php';
 
-
 try {
     // Create connection
     $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);

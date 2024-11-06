@@ -54,9 +54,10 @@
 
 <body style="font-family: 'Times New Roman', Times, serif;">
     <!-- Navbar -->
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand"  href="index.php">Bar-man panel</a>
+            <a class="navbar-brand" href="index.php">Bar-man panel</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
                 aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -64,13 +65,10 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item mx-3">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item mx-3">
-                        <a class="nav-link" href="foods.php">Manage Food</a>
-                    </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link" href="manage beverages.php">Manage Beverage</a>
+                        <a class="nav-link" href="view_beverages.php">View Beverage</a>
                     </li>
                     <li class="nav-item mx-3">
                         <a class="nav-link" href="reports.php">Reports</a>
@@ -82,6 +80,7 @@
             </div>
         </div>
     </nav>
+
 
     <div class="container mt-5" style="max-width: 600px;">
         <h2 class="text-center mb-4"><i class="bi bi-gear-fill me-2"></i>Account Settings</h2>
@@ -170,6 +169,11 @@
             </div>
         </div>
     </div>
+    <footer class="footer bg-dark text-white text-center py-4" style="margin-top: auto;">
+        <div class="container">
+            <p style="margin: 0;">&copy; 2024 Ehototmamachochi Hotel. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>

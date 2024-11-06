@@ -526,6 +526,19 @@
                                 onchange="validateDatesUpdateForm()" name="my_update_checkout_date" required>
                             <small id="errorUpdateCheckOutDate"></small>
                         </div>
+                        <!-- Terms and policy fild -->
+                        <fieldset
+                            style="border: 1px solid #ddd; padding: 15px; border-radius: 5px; margin-bottom: 20px; margin-top: 20px;">
+                            <legend style="font-weight: bold; font-size: 1.2em;">
+                                <input type="checkbox" id="termsCheckbox" required>
+                                I accept the Terms and Policy
+                            </legend>
+                            <ul style="list-style-type: disc; padding-left: 0; padding-left:10%;">
+                                <li>Reservations can be Updated within 4 hour of booking before 02:00 AM LT.</li>
+                                <li>Reservations Updated With Out Provided Date It Will Need Extra Money.</li>
+                            </ul>
+                        </fieldset>
+
                         <div class="d-flex justify-content-center gap-2">
                             <button type="submit" class="btn btn-success mt-4" style="width: 45%;">Update
                                 Reservation</button>

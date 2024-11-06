@@ -1,3 +1,25 @@
+<?php
+// Include database connection
+include '../assets/conn.php';
+session_start(); // Start the session
+
+// // Check if the user's position is 'casher'
+// if ($_SESSION['position'] !== 'casher' && $_SESSION['position'] !== 'Casher') {
+//     // Redirect to login page if the user is not a 'casher'
+//     header("Location: ../index/index.php");
+//     exit();
+// }
+
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    // Redirect to login page if not logged in
+    header("Location: ../index/index.php");
+    exit();
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +32,15 @@
     <!-- Bootstrap Icons CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
         .btn-container {
             display: flex;
             flex-wrap: wrap;
@@ -100,8 +131,15 @@
         </div>
     </main>
 
+<!-- Button to toggle the reservation content -->
+    <a class="btn btn-outline-secondary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#reservationContent" aria-expanded="false" aria-controls="reservationContent">
+        Toggle Reservation Options
+    </a>
+
     <!-- Reservation Section -->
-    <section id="reservation" class="my-5">
+<section id="reservation" class="my-5">
+    <!-- Collapsible content -->
+    <div class="collapse mt-3" id="reservationContent">
         <div class="d-flex w-50 mx-auto justify-content-between gap-2">
             <a id="roomReservationBtn" class="btn btn-primary w-100" href="rooms.php">Room Reservation</a>
             <a id="meetingHallsBtn" class="btn btn-secondary w-100" href="halls.php">Meeting Halls</a>
@@ -112,17 +150,17 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#UpdateReservationModal">Update
-                            Reservation</a></li>
+                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#UpdateReservationModal">Update Reservation</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CancelReservationModal">Cancel
-                            Reservation</a></li>
+                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CancelReservationModal">Cancel Reservation</a></li>
                 </ul>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <!-- View Reservation Modal -->
     <div class="modal fade" id="ViewReservationModal" tabindex="-1" aria-labelledby="ViewReservationLabel"

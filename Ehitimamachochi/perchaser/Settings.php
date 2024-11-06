@@ -46,7 +46,8 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: none; /* Initially hidden */
+            display: none;
+            /* Initially hidden */
         }
 
         .navbar {
@@ -95,7 +96,7 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="index.php">Shaff Panel</a>
+            <a class="navbar-brand" href="index.php">perchaser Panel</a>
             <div class="collapse navbar-collapse h-100 d-flex align-items-center" id="navbarNav">
                 <ul class="navbar-nav d-flex justify-content-center w-100 mb-0">
                     <li class="nav-item">
@@ -150,7 +151,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="current_password" class="form-label">Current Password:</label>
-                        <input type="password" id="current_password" name="current_password" class="form-control" required>
+                        <input type="password" id="current_password" name="current_password" class="form-control"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="new_username" class="form-label">New Username:</label>
@@ -161,7 +163,8 @@
                         <input type="text" id="confirm_username" name="confirm_username" class="form-control" required>
                     </div>
                     <div class="d-flex justify-content-center gap-2">
-                        <button type="submit" name="change_username" class="btn btn-success"><i class="bi bi-check-circle me-2"></i>Update</button>
+                        <button type="submit" name="change_username" class="btn btn-success"><i
+                                class="bi bi-check-circle me-2"></i>Update</button>
                         <button type="reset" class="btn btn-secondary"><i class="bi bi-x-circle me-2"></i>Clear</button>
                     </div>
                 </form>
@@ -175,11 +178,13 @@
                 <form action="change_password_process.php" method="post">
                     <div class="mb-3">
                         <label for="current_username_password" class="form-label">Current Username:</label>
-                        <input type="text" id="current_username_password" name="current_username" class="form-control" required>
+                        <input type="text" id="current_username_password" name="current_username" class="form-control"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="current_password_password" class="form-label">Current Password:</label>
-                        <input type="password" id="current_password_password" name="current_password" class="form-control" required>
+                        <input type="password" id="current_password_password" name="current_password"
+                            class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label for="new_password" class="form-label">New Password:</label>
@@ -187,16 +192,23 @@
                     </div>
                     <div class="mb-3">
                         <label for="confirm_password" class="form-label">Confirm New Password:</label>
-                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-control"
+                            required>
                     </div>
                     <div class="d-flex justify-content-center gap-2">
-                        <button type="submit" name="change_password" class="btn btn-success"><i class="bi bi-check-circle me-2"></i>Update</button>
+                        <button type="submit" name="change_password" class="btn btn-success"><i
+                                class="bi bi-check-circle me-2"></i>Update</button>
                         <button type="reset" class="btn btn-secondary"><i class="bi bi-x-circle me-2"></i>Clear</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <footer class="footer bg-dark text-white text-center py-4 mt-auto">
+        <div class="container">
+            <p style="margin: 0;">&copy; 2024 Ehototmamachochi Hotel. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -1,3 +1,24 @@
+<?php
+// Include database connection
+include '../assets/conn.php';
+session_start(); // Start the session
+
+// // Check if the user's position is 'casher'
+// if ($_SESSION['position'] !== 'casher' && $_SESSION['position'] !== 'Casher') {
+//     // Redirect to login page if the user is not a 'casher'
+//     header("Location: ../index/index.php");
+//     exit();
+// }
+
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    // Redirect to login page if not logged in
+    header("Location: ../index/index.php");
+    exit();
+}
+
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,8 +36,6 @@
         html,
         body {
             height: 100%;
-            margin: 0;
-            display: flex;
             flex-direction: column;
             font-family: 'Times New Roman', Times, serif;
         }
@@ -119,11 +138,6 @@
 
     <!-- Main Content -->
     <div class="container content">
-        <div class="jumbotron mt-5 py-5 px-5 rounded"
-            style="background-color: rgba(255, 255, 255, 0.9); color: black; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); margin-bottom: 2rem;">
-            <h1 class="display-4 text-center font-weight-bold" style="font-size: 2.5rem;">Manager Panel</h1>
-        </div>
-
         <!-- Manager Sections -->
         <div class="container my-4">
             <h2>Show Today's expense , Income and Profit</h2>
