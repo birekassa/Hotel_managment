@@ -54,9 +54,9 @@ $conn->close();
                         <li class="nav-item">
                             <a class="nav-link text-white" href="Reports.php" style="margin: 0 1rem;">Reports</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link text-white" href="payment.php" style="margin: 0 1rem;">Pay Salary</a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link text-white" href="Settings.php" style="margin: 0 1rem;">Account
                                 Settings</a>

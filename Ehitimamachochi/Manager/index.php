@@ -3,19 +3,19 @@
 include '../assets/conn.php';
 session_start(); // Start the session
 
-// // Check if the user's position is 'casher'
-// if ($_SESSION['position'] !== 'casher' && $_SESSION['position'] !== 'Casher') {
-//     // Redirect to login page if the user is not a 'casher'
+// // Check if the user's position is 'Manager'
+// if ($_SESSION['position'] !== 'Manager' && $_SESSION['position'] !== 'manager') {
+//     // Redirect to login page if the user is not a 'manager'
 //     header("Location: ../index/index.php");
 //     exit();
 // }
 
-// Check if the user is logged in
-if (!isset($_SESSION['username'])) {
-    // Redirect to login page if not logged in
-    header("Location: ../index/index.php");
-    exit();
-}
+// // Check if the user is logged in
+// if (!isset($_SESSION['username'])) {
+//     // Redirect to login page if not logged in
+//     header("Location: ../index/index.php");
+//     exit();
+// }
 
 $conn->close();
 ?>
@@ -200,272 +200,6 @@ $conn->close();
                 </div>
             </div>
         </div>
-
-        <!-- JavaScript to Calculate Profits -->
-        <script>
-            const todayProfit = 1000;
-
-            function calculateProfits() {
-                const CurrntProfit = todayProfit * 1;
-                const weeklyProfit = todayProfit * 7;
-                const monthlyProfit = todayProfit * 30;
-                const yearlyProfit = todayProfit * 365;
-
-                document.getElementById('weeklyProfit').innerText = `${weeklyProfit} ETB`;
-                document.getElementById('monthlyProfit').innerText = `${monthlyProfit} ETB`;
-                document.getElementById('yearlyProfit').innerText = `${yearlyProfit} ETB`;
-            }
-
-            // Initial calculations on page load
-            calculateProfits();
-        </script>
-
-        <!-- CSS for Styling -->
-        <style>
-            .card {
-                border-radius: 15px;
-                transition: transform 0.2s;
-            }
-
-            .card:hover {
-                transform: scale(1.02);
-            }
-
-            .profit-text {
-                font-size: 1.5rem;
-            }
-
-            .profit-circle {
-                position: relative;
-                width: 190px;
-                height: 170px;
-                border-radius: 50%;
-                background-color: #e0e0e0;
-                overflow: hidden;
-            }
-
-            .profit-percentage {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                margin: 0;
-                font-size: 3rem;
-                color: blue;
-            }
-
-            .header-blue {
-                background-color: blue;
-                color: white;
-            }
-        </style>
-
-        <div class="container mt-4">
-            <h2>Total Profit in Percent and Hotel Performance</h2>
-            <div class="row justify-content-center">
-                <!-- Profit in Percent Card -->
-                <div class="col-md-6">
-                    <div class="card mb-4 shadow" style="height: 250px; border-radius: 15px;">
-                        <div class="card-header text-center header-blue">Your Profit in Percent</div>
-                        <div class="card-body d-flex align-items-center justify-content-center flex-column">
-                            <div class="profit-circle">
-                                <div id="profitCircle"
-                                    style="position: absolute; bottom: 0; width: 100%; height: 0; background-color: #4caf50; border-radius: 50% 50% 0 0; transition: height 0.5s ease;">
-                                </div>
-                                <p id="profitPercentage" class="profit-percentage">20%</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Current Performance Card -->
-                <div class="col-md-6">
-                    <div class="card mb-4 shadow"
-                        style="height: 250px; border-radius: 15px; transition: background-color 0.5s ease, color 0.5s ease;">
-                        <div class="card-header text-center header-blue">Your Current Performance</div>
-                        <div id="performanceCard" class="card-body d-flex align-items-center justify-content-center">
-                            <p id="performanceMessage" style="font-size: 2rem;">Loading...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-
-    
-        <!-- JavaScript to dynamically update the profit percentage -->
-        <script>
-            let profit = 60; // Example profit percentage
-
-            function updateProfitDisplay() {
-                const profitCircle = document.getElementById("profitCircle");
-                const profitPercentage = document.getElementById("profitPercentage");
-                const performanceCard = document.getElementById("performanceCard");
-                const performanceMessage = document.getElementById("performanceMessage");
-
-                // Update circle height and profit percentage
-                profitCircle.style.height = `${profit}%`;
-                profitPercentage.innerText = `${profit}%`;
-
-                // Update performance message and styles based on profit
-                if (profit < 50) {
-                    performanceMessage.innerText = "Danger";
-                    performanceCard.style.backgroundColor = "#f44336"; // Red
-                    performanceCard.style.color = "#ffffff";
-                } else if (profit >= 50 && profit < 60) {
-                    performanceMessage.innerText = "GOOD";
-                    performanceCard.style.backgroundColor = "#ffeb3b"; // Yellow
-                    performanceCard.style.color = "#000000";
-                } else if (profit >= 60 && profit < 80) {
-                    performanceMessage.innerText = "VERY GOOD";
-                    performanceCard.style.backgroundColor = "#ff9800"; // Orange
-                    performanceCard.style.color = "#ffffff";
-                } else {
-                    performanceMessage.innerText = "EXCELLENT";
-                    performanceCard.style.backgroundColor = "#4caf50"; // Green
-                    performanceCard.style.color = "#ffffff";
-                }
-            }
-            // Call the function to set the initial state based on the current profit value
-            updateProfitDisplay();
-        </script>
-
-        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-
-        <?php
-        // Sample data
-        $xValues = ["Tibs", "KiKIl", "Dulet", "Key_wet", "Afagni"];
-        $yValues = [55, 49, 44, 24, 15];
-        $barColors = ["red", "green", "blue", "orange", "brown"];
-
-        // Convert PHP arrays to JSON format
-        $xValuesJson = json_encode($xValues);
-        $yValuesJson = json_encode($yValues);
-        $barColorsJson = json_encode($barColors);
-        ?>
-
-        <script>
-            const xValues = <?php echo $xValuesJson; ?>;
-            const yValues = <?php echo $yValuesJson; ?>;
-            const barColors = <?php echo $barColorsJson; ?>;
-
-            new Chart("myChart", {
-                type: "bar",
-                data: {
-                    labels: xValues,
-                    datasets: [{
-                        backgroundColor: barColors,
-                        data: yValues
-                    }]
-                },
-                options: {
-                    legend: { display: false },
-                    title: { display: true, text: "Foods Profit Graph" }
-                }
-            });
-        </script>
-        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-
-        <?php
-        // Sample data
-        $xValues = ["Tibs", "KiKIl", "Dulet", "Key_wet", "Afagni"];
-        $yValues = [55, 49, 44, 24, 15];
-        $barColors = ["red", "green", "blue", "orange", "brown"];
-
-        // Convert PHP arrays to JSON format
-        $xValuesJson = json_encode($xValues);
-        $yValuesJson = json_encode($yValues);
-        $barColorsJson = json_encode($barColors);
-        ?>
-
-        <script>
-            const xValues = <?php echo $xValuesJson; ?>;
-            const yValues = <?php echo $yValuesJson; ?>;
-            const barColors = <?php echo $barColorsJson; ?>;
-
-            new Chart("myChart", {
-                type: "bar",
-                data: {
-                    labels: xValues,
-                    datasets: [{
-                        backgroundColor: barColors,
-                        data: yValues
-                    }]
-                },
-                options: {
-                    legend: { display: false },
-                    title: { display: true, text: "Foods Profit Graph" }
-                }
-            });
-        </script>
-        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-
-        <?php
-        // Sample data
-        $xValues = ["Tibs", "KiKIl", "Dulet", "Key_wet", "Afagni"];
-        $yValues = [55, 49, 44, 24, 15];
-        $barColors = ["red", "green", "blue", "orange", "brown"];
-
-        // Convert PHP arrays to JSON format
-        $xValuesJson = json_encode($xValues);
-        $yValuesJson = json_encode($yValues);
-        $barColorsJson = json_encode($barColors);
-        ?>
-
-        <script>
-            const xValues = <?php echo $xValuesJson; ?>;
-            const yValues = <?php echo $yValuesJson; ?>;
-            const barColors = <?php echo $barColorsJson; ?>;
-
-            new Chart("myChart", {
-                type: "bar",
-                data: {
-                    labels: xValues,
-                    datasets: [{
-                        backgroundColor: barColors,
-                        data: yValues
-                    }]
-                },
-                options: {
-                    legend: { display: false },
-                    title: { display: true, text: "Foods Profit Graph" }
-                }
-            });
-        </script>
-        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-
-        <?php
-        // Sample data
-        $xValues = ["Tibs", "KiKIl", "Dulet", "Key_wet", "Afagni"];
-        $yValues = [55, 49, 44, 24, 15];
-        $barColors = ["red", "green", "blue", "orange", "brown"];
-
-        // Convert PHP arrays to JSON format
-        $xValuesJson = json_encode($xValues);
-        $yValuesJson = json_encode($yValues);
-        $barColorsJson = json_encode($barColors);
-        ?>
-
-        <script>
-            const xValues = <?php echo $xValuesJson; ?>;
-            const yValues = <?php echo $yValuesJson; ?>;
-            const barColors = <?php echo $barColorsJson; ?>;
-
-            new Chart("myChart", {
-                type: "bar",
-                data: {
-                    labels: xValues,
-                    datasets: [{
-                        backgroundColor: barColors,
-                        data: yValues
-                    }]
-                },
-                options: {
-                    legend: { display: false },
-                    title: { display: true, text: "Foods Profit Graph" }
-                }
-            });
-        </script>
     </div>
 
 
@@ -477,7 +211,6 @@ $conn->close();
             Members
         </p>
     </footer>
-
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

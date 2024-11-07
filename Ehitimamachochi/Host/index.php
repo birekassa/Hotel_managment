@@ -69,56 +69,7 @@ $conn->close();
     <!-- Bootstrap Icons CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- HTML and JavaScript -->
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            font-family: 'Times New Roman', Times, serif;
-        }
-
-        .navbar-nav {
-            display: block;
-            justify-content: center;
-            align-items: center;
-
-        }
-
-        .modal-content {
-            width: 100%;
-            margin: auto;
-        }
-
-        .modal-body {
-            padding: 0;
-            margin: 0;
-            height: calc(100% - 60px);
-            overflow-y: auto;
-        }
-
-        .section {
-            display: none;
-            /* Start with sections hidden */
-        }
-
-        .modal-header .btn-close {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-        }
-
-        .table {
-            width: 90%;
-            align-items: center;
-            margin-left: 5%;
-            ;
-        }
-
-        .nav-link:hover {
-            font-size: 18px;
-            border-bottom: 1px solid blue;
-        }
-    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
@@ -135,14 +86,12 @@ $conn->close();
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center w-100">
                     <li class="nav-item">
                         <a class="nav-link" href="http://localhost/New/Ehitimamachochi/Host/index.php" role="button"
-                            aria-expanded="false" style="color: white !important;">
-                            Home
+                            aria-expanded="false" style="color: white !important;"> Home
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="modal" data-bs-target="#view_food_modal"
-                            style="color: white !important; cursor:pointer;">
-                            Available Foods
+                            style="color: white !important; cursor:pointer;"> Available Foods
                         </a>
                     </li>
                     <li class="nav-item">
@@ -157,7 +106,7 @@ $conn->close();
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" onclick="toggleSection('Settings_section')" role="button"
+                        <a class="nav-link" href="setting.php" role="button"
                             style="color: white !important; cursor:pointer;">
                             Account Settings
                         </a>
@@ -272,13 +221,10 @@ $conn->close();
                             </thead>
                             <tbody>
                                 <?php
-                                // Database connection
-                                $host = 'localhost';
-                                $dbname = 'ehms_db';
-                                $username = 'root';
-                                $password = '24770267';
+                                // Include database connection
+                                include '../assets/conn.php';
                                 try {
-                                    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+                                    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                     // Fetch Fast Food items
                                     $stmt = $pdo->query("SELECT item_name, quantity, price FROM table_foods WHERE category='fast_food'");
@@ -297,6 +243,7 @@ $conn->close();
                             </tbody>
                         </table>
                     </div>
+                    
                     <!-- Food Content -->
                     <div id="food_modal" class="modal-content" style="display: none;">
                         <table class="table table-striped">
@@ -358,13 +305,10 @@ $conn->close();
                             </thead>
                             <tbody>
                                 <?php
-                                // Database connection
-                                $host = 'localhost';
-                                $dbname = 'ehms_db';
-                                $username = 'root';
-                                $password = '24770267';
+                                // Include database connection
+                                include '../assets/conn.php';
                                 try {
-                                    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+                                    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                     // Fetch Soft Beverage items
                                     $stmt = $pdo->query("SELECT item_name, quantity, price FROM table_beverages WHERE category='soft-drink'");
@@ -450,136 +394,8 @@ $conn->close();
             </div>
         </div>
     </div>
-
-    <div class="section" id="Settings_section" style="display:none;">
-        <div class="container mt-5" style="max-width: 600px;">
-            <h2 class="text-center mb-4"><i class="bi bi-gear-fill me-2"></i>Account Settings</h2>
-            <div id="set_option" class="list-group">
-                <a href="#"
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                    onclick="showSection('change_username')">
-                    <span><i class="bi bi-person-fill me-2"></i>Change Username</span>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-                <a href="#"
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                    onclick="showSection('change_password')">
-                    <span><i class="bi bi-lock-fill me-2"></i>Change Password</span>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-                <a href="#"
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                    onclick="confirmLogout(event)">
-                    <span><i class="bi bi-box-arrow-right me-2"></i>Log out</span>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-            </div>
-
-            <!-- Change Username Section -->
-            <div class="card mt-4" id="change_username" style="display:none;">
-                <div class="card-body">
-                    <h3 class="card-title"><i class="bi bi-person-fill me-2"></i>Change Username</h3>
-                    <form action="change_username_process.php" method="post">
-                        <div class="mb-3">
-                            <label for="current_username" class="form-label">Current Username:</label>
-                            <input type="text" id="current_username" name="current_username" class="form-control"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="current_password" class="form-label">Current Password:</label>
-                            <input type="password" id="current_password" name="current_password" class="form-control"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="new_username" class="form-label">New Username:</label>
-                            <input type="text" id="new_username" name="new_username" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="confirm_username" class="form-label">Confirm New Username:</label>
-                            <input type="text" id="confirm_username" name="confirm_username" class="form-control"
-                                required>
-                        </div>
-                        <div class="d-flex justify-content-center gap-2">
-                            <button type="submit" name="change_username" class="btn btn-success"><i
-                                    class="bi bi-check-circle me-2"></i>Update</button>
-                            <button type="reset" class="btn btn-secondary"><i
-                                    class="bi bi-x-circle me-2"></i>Clear</button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-
-            <!-- Change Password Section -->
-            <div class="card mt-4" id="change_password" style="display:none;">
-                <div class="card-body">
-                    <h3 class="card-title"><i class="bi bi-lock-fill me-2"></i>Change Password</h3>
-                    <form action="change_password_process.php" method="post">
-                        <div class="mb-3">
-                            <label for="current_username" class="form-label">Current Username:</label>
-                            <input type="text" id="current_username" name="current_username" class="form-control"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="current_password" class="form-label">Current Password:</label>
-                            <input type="password" id="current_password" name="current_password" class="form-control"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="new_password" class="form-label">New Password:</label>
-                            <input type="password" id="new_password" name="new_password" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="confirm_password" class="form-label">Confirm New Password:</label>
-                            <input type="password" id="confirm_password" name="confirm_password" class="form-control"
-                                required>
-                        </div>
-                        <div class="d-flex justify-content-center gap-3">
-                            <button type="submit" name="change_password" class="btn btn-success">
-                                <i class="bi bi-check-circle me-2"></i>Change
-                            </button>
-                            <button type="reset" class="btn btn-secondary">
-                                <i class="bi bi-x-circle me-2"></i>Clear
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
 
-
-<script>
-    // Toggle between Fast Food and Food tabs
-    document.getElementById('fast_food_btn').addEventListener('click', function () {
-        document.getElementById('fast_food_modal').style.display = 'block';
-        document.getElementById('food_modal').style.display = 'none';
-    });
-    document.getElementById('food_btn').addEventListener('click', function () {
-        document.getElementById('food_modal').style.display = 'block';
-        document.getElementById('fast_food_modal').style.display = 'none';
-    });
-</script>
-<script>
-    // Toggle between Alcohol Beverage and Soft Beverage tabs
-    document.getElementById('alcohol_beverage_btn').addEventListener('click', function () {
-        document.getElementById('alcohol_beverage_modal').style.display = 'block';
-        document.getElementById('soft_beverage_modal').style.display = 'none';
-    });
-    document.getElementById('soft_beverage_btn').addEventListener('click', function () {
-        document.getElementById('soft_beverage_modal').style.display = 'block';
-        document.getElementById('alcohol_beverage_modal').style.display = 'none';
-    });
-    // Initialize with Soft Beverage as default view
-    document.getElementById('soft_beverage_modal').style.display = 'block';
-    document.getElementById('alcohol_beverage_modal').style.display = 'none';
-    // Show modal
-    document.getElementById('open_beverage_modal').addEventListener('click', function () {
-        var modal = new bootstrap.Modal(document.getElementById('view_beverage_modal'));
-        modal.show();
-    });
-</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -589,139 +405,116 @@ $conn->close();
             return;
         }
 
+        // Toggle between Fast Food and Food tabs
+        document.getElementById('fast_food_btn').addEventListener('click', function () {
+            document.getElementById('fast_food_modal').style.display = 'block';
+            document.getElementById('food_modal').style.display = 'none';
+        });
+        document.getElementById('food_btn').addEventListener('click', function () {
+            document.getElementById('food_modal').style.display = 'block';
+            document.getElementById('fast_food_modal').style.display = 'none';
+        });
+
+        // Toggle between Alcohol Beverage and Soft Beverage tabs
+        document.getElementById('alcohol_beverage_btn').addEventListener('click', function () {
+            document.getElementById('alcohol_beverage_modal').style.display = 'block';
+            document.getElementById('soft_beverage_modal').style.display = 'none';
+        });
+        document.getElementById('soft_beverage_btn').addEventListener('click', function () {
+            document.getElementById('soft_beverage_modal').style.display = 'block';
+            document.getElementById('alcohol_beverage_modal').style.display = 'none';
+        });
+
+        // Initialize Soft Beverage modal as default view
+        document.getElementById('soft_beverage_modal').style.display = 'block';
+        document.getElementById('alcohol_beverage_modal').style.display = 'none';
+
+        // Show beverage modal when button is clicked
+        document.getElementById('open_beverage_modal').addEventListener('click', function () {
+            var modal = new bootstrap.Modal(document.getElementById('view_beverage_modal'));
+            modal.show();
+        });
+
         // Select all elements with the class 'reserve-btn'
         const reserveButtons = document.querySelectorAll('.reserve-btn');
-
         reserveButtons.forEach(button => {
             button.addEventListener('click', () => handleReservation(button));
         });
 
-        function handleReservation(button) {
-            const itemName = button.dataset.item;
-            const category = button.dataset.category;
-            const price = button.dataset.price;
+        // Open Authorize Customer modal
+        const openModal = document.getElementById('Authorize_Customer_btn');
+        const authorizeCustomerModal = document.getElementById('Authorize_Customer_modal');
+        openModal.addEventListener('click', function () {
+            authorizeCustomerModal.style.display = 'block';
+        });
+    });
 
-            // Display SweetAlert2 modal to prompt the user for quantity
-            Swal.fire({
-                title: `Reserve ${itemName} (${category})`,
-                text: 'Enter the quantity to reserve:',
-                input: 'number',
-                inputLabel: 'Quantity',
-                inputPlaceholder: 'Enter quantity',
-                inputAttributes: {
-                    min: 1,
-                    step: 1
-                },
-                showCancelButton: true,
-                confirmButtonText: 'Yes, reserve it!',
-                cancelButtonText: 'No, cancel!',
-                inputValidator: (value) => {
-                    if (!value || value <= 0) {
-                        return 'Please enter a valid quantity greater than 0!';
-                    }
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Extract the quantity entered by the user
-                    const quantity = result.value;
+    // Function to handle the reservation button click
+    function handleReservation(button) {
+        const itemName = button.dataset.item;
+        const category = button.dataset.category;
+        const price = button.dataset.price;
+        reserveItem(itemName, category, price);
+    }
 
-                    // Proceed to reserve the item by sending a request to the server
-                    reserveItem(itemName, category, price, quantity);
-                }
-            });
-        }
-
-        function reserveItem(itemName, category, price, quantity) {
+    // Function to reserve an item with prompt and SweetAlert2 for feedback
+    function reserveItem(itemName, category, price) {
+        const quantity = prompt("Enter the quantity to reserve:");
+        if (quantity > 0) {
             // Prepare reservation details
             const reservationDetails = {
                 item_name: itemName,
+                category: category,
                 quantity: quantity,
                 price: price,
                 reported_date: new Date().toISOString().split('T')[0] // Format as YYYY-MM-DD
             };
 
-            // Send reservation request to the server via fetch
+            // Send reservation details to the server
             fetch('reservation_process.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(reservationDetails)
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.success) {
-                        Swal.fire('Reserved!', `${itemName} has been successfully reserved.`, 'success');
-                    } else {
-                        Swal.fire('Error!', 'There was an issue reserving the item. Please try again.', 'error');
-                    }
+                    // Show success or error message using SweetAlert2
+                    Swal.fire(
+                        data.success ? 'Reserved!' : 'Error!',
+                        data.success ? `${itemName} has been successfully reserved.` : 'There was an issue reserving the item. Please try again.',
+                        data.success ? 'success' : 'error'
+                    );
                 })
                 .catch(error => {
                     console.error('Reservation error:', error);
                     Swal.fire('Error!', 'An unexpected error occurred. Please try again.', 'error');
                 });
+        } else {
+            alert("Please enter a valid quantity greater than 0!");
         }
-    });
-</script>
-
-<script>
-    function confirmLogout(event) {
-        event.preventDefault(); // Prevent the default link behavior
-        Swal.fire({
-            icon: 'question',
-            title: 'Are you sure?',
-            text: 'Do you want to log out?',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, log out',
-            cancelButtonText: 'Cancel'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Redirect to the specified URL
-                window.location.href = "http://localhost/New/Ehitimamachochi/index/index.php";
-            }
-        });
     }
-</script>
-<script>
+
+
+    // Show or hide specific sections
     function showSection(id) {
-        // Get all sections
-        const sections = document.querySelectorAll('.card');
-
-        // Hide all sections
-        sections.forEach(section => {
-            if (section.id !== id) {
-                section.style.display = 'none';
-            }
+        document.querySelectorAll('.card').forEach(section => {
+            section.style.display = section.id === id ? 'block' : 'none';
         });
-
-        // Toggle the selected section
-        const selectedSection = document.getElementById(id);
-        selectedSection.style.display = (selectedSection.style.display === 'none' || selectedSection.style.display === '') ? 'block' : 'none';
     }
-</script>
-<script>
+
     function toggleSection(sectionId) {
         const section = document.getElementById(sectionId);
+        const mainContent = document.getElementById('main_content');
         if (section.style.display === 'none' || section.style.display === '') {
             section.style.display = 'block';
-            document.getElementById('main_content').style.display = 'none';
+            mainContent.style.display = 'none';
         } else {
-            section.style.display = 'none'; main_content
-            document.getElementById('main_content').style.display = 'block';
+            section.style.display = 'none';
+            mainContent.style.display = 'block';
         }
     }
 </script>
 
-<script>
-    // Get the modal and button elements
-    var openModal = document.getElementById('Authorize_Customer_btn');
-    var authorizeCustomerModal = document.getElementById('Authorize_Customer_modal');
-
-    // Open the modal when the button is clicked
-    openModal.onclick = function () {
-        authorizeCustomerModal.style.display = 'block';
-    }
-</script>
 
 <!-- Bootstrap JS and dependencies -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

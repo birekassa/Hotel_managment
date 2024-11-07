@@ -11,11 +11,11 @@ session_start(); // Start the session
 // }
 
 // Check if the user is logged in
-if (!isset($_SESSION['username'])) {
-    // Redirect to login page if not logged in
-    header("Location: ../index/index.php");
-    exit();
-}
+// if (!isset($_SESSION['username'])) {
+//     // Redirect to login page if not logged in
+//     header("Location: ../index/index.php");
+//     exit();
+// }
 
 $conn->close();
 ?>
@@ -90,8 +90,9 @@ $conn->close();
                                 <i class="bi bi-house-door me-2"></i>Home
                             </a>
                         </li>
+                        <!-- Make Reservation Navigation Item -->
                         <li class="nav-item">
-                            <a class="nav-link " href="index.php?section=reservation" style="color: white !important;">
+                            <a class="nav-link" href="index.php?section=reservation" style="color: white;">
                                 <i class="bi bi-calendar-check me-2"></i>Make Reservation
                             </a>
                         </li>
@@ -131,35 +132,61 @@ $conn->close();
         </div>
     </main>
 
-<!-- Button to toggle the reservation content -->
-    <a class="btn btn-outline-secondary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#reservationContent" aria-expanded="false" aria-controls="reservationContent">
-        Toggle Reservation Options
-    </a>
 
     <!-- Reservation Section -->
-<section id="reservation" class="my-5">
-    <!-- Collapsible content -->
-    <div class="collapse mt-3" id="reservationContent">
-        <div class="d-flex w-50 mx-auto justify-content-between gap-2">
-            <a id="roomReservationBtn" class="btn btn-primary w-100" href="rooms.php">Room Reservation</a>
-            <a id="meetingHallsBtn" class="btn btn-secondary w-100" href="halls.php">Meeting Halls</a>
-            <div class="dropdown w-100">
-                <button class="btn btn-info dropdown-toggle w-100" type="button" id="manageReservationDropdown" data-bs-toggle="dropdown" aria-expanded="false"> Manage Reservation </button>
-                <ul class="dropdown-menu w-100" aria-labelledby="manageReservationDropdown">
-                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewReservationModal">View Reservation</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#UpdateReservationModal">Update Reservation</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CancelReservationModal">Cancel Reservation</a></li>
-                </ul>
+    <section id="reservation" class="my-5 d-none">
+        <div class="collapse mt-3" id="reservationContent" aria-labelledby="manageReservationDropdown">
+            <div class="d-flex w-50 mx-auto justify-content-between gap-2">
+                <a id="roomReservationBtn" class="btn btn-primary w-100" href="rooms.php">Room Reservation</a>
+                <a id="meetingHallsBtn" class="btn btn-secondary w-100" href="halls.php">Meeting Halls</a>
+                <div class="dropdown w-100">
+                    <button class="btn btn-info dropdown-toggle w-100" type="button" id="manageReservationDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">Manage Reservation</button>
+                    <ul class="dropdown-menu w-100" aria-labelledby="manageReservationDropdown">
+                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewReservationModal">View
+                                Reservation</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#UpdateReservationModal">Update Reservation</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#CancelReservationModal">Cancel Reservation</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <!-- JavaScript for Reservation Section -->
+    <script>
+        // Toggle reservation section visibility
+        function toggleReservationSection() {
+            const reservationSection = document.getElementById("reservation");
+            const defaultContent = document.getElementById("default");
+
+            reservationSection.classList.toggle("d-none");
+            defaultContent.classList.toggle("d-none");
+        }
+
+        // Show specific section by ID and hide others
+        function showSection(id) {
+            document.querySelectorAll("section, #default").forEach(section => section.classList.add("d-none"));
+            document.getElementById(id).classList.remove("d-none");
+        }
+
+        // Display section based on URL parameter
+        document.addEventListener("DOMContentLoaded", function () {
+            const section = new URLSearchParams(window.location.search).get("section");
+            if (section === "reservation") {
+                showSection("reservation");
+            }
+        });
+    </script>
+
 
 
     <!-- View Reservation Modal -->
@@ -178,7 +205,8 @@ $conn->close();
                         <label for="password">Password</label>
                         <input type="password" class="form-control">
                         <div class="d-flex justify-content-center gap-2">
-                            <button type="submit" class="btn btn-success mt-4" style="width: 45%;">cancel Reservation</button>
+                            <button type="submit" class="btn btn-success mt-4" style="width: 45%;">cancel
+                                Reservation</button>
                             <button type="reset" class="btn btn-danger mt-4" style="width: 45%;">Clear</button>
                         </div>
                     </form>
@@ -203,7 +231,8 @@ $conn->close();
                         <label for="password">Password</label>
                         <input type="password" class="form-control">
                         <div class="d-flex justify-content-center gap-2">
-                            <button type="submit" class="btn btn-success mt-4" style="width: 45%;">cancel Reservation</button>
+                            <button type="submit" class="btn btn-success mt-4" style="width: 45%;">cancel
+                                Reservation</button>
                             <button type="reset" class="btn btn-danger mt-4" style="width: 45%;">Clear</button>
                         </div>
                     </form>
@@ -228,7 +257,8 @@ $conn->close();
                         <label for="password">Password</label>
                         <input type="password" class="form-control">
                         <div class="d-flex justify-content-center gap-2">
-                            <button type="submit" class="btn btn-success mt-4" style="width: 45%;">cancel Reservation</button>
+                            <button type="submit" class="btn btn-success mt-4" style="width: 45%;">cancel
+                                Reservation</button>
                             <button type="reset" class="btn btn-danger mt-4" style="width: 45%;">Clear</button>
                         </div>
                     </form>
@@ -247,39 +277,6 @@ $conn->close();
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-        // Function to toggle between reservation section and default content
-        function toggleReservationSection() {
-            const reservationSection = document.getElementById("reservation");
-            const defaultContent = document.getElementById('default');
-
-            // Toggle visibility based on current state
-            if (reservationSection.classList.contains("d-none")) {
-                reservationSection.classList.remove("d-none");
-                defaultContent.classList.add("d-none");
-            } else {
-                reservationSection.classList.add("d-none");
-                defaultContent.classList.remove("d-none");
-            }
-        }
-
-        // Function to show a specific section based on the ID
-        function showSection(id) {
-            document.querySelectorAll('section, #default').forEach(section => {
-                section.classList.add('d-none');
-            });
-            document.getElementById(id).classList.remove('d-none');
-        }
-
-        // Run on page load to handle URL-based section display
-        document.addEventListener('DOMContentLoaded', function () {
-            const section = new URLSearchParams(window.location.search).get('section');
-            if (section === 'reservation') {
-                showSection('reservation');
-            }
-        });
-    </script>
 </body>
 
 </html>

@@ -75,9 +75,9 @@ $conn->close();
                         <a class="nav-link text-white" href="Reports.php" style="margin: 0 1rem;"><i
                                 class="fas fa-file-invoice-dollar"></i> Reports</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link text-white" href="payment.php" style="margin: 0 1rem;">Pay Salary</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link text-white" href="Settings.php" style="margin: 0 1rem;"><i
                                 class="fas fa-user-cog"></i> Account Settings</a>
@@ -109,160 +109,98 @@ $conn->close();
         <button onclick="goBack()" class="btn btn-secondary mb-3">
             <i class="bi bi-arrow-left"></i> Back
         </button>
-        <!-- in this section i need to display  -->
-        <!-- 1, expense response with its details-->
-        <!-- 2, Income Reports -->
-                <!-- income from beverags -->
-                <!-- income from foods -->
-                <!-- income from halls -->
-                <!-- income from rooms -->
-        <!-- 3, Profit Reports -->
-                <!-- room profit -->
-                <!-- hall profit -->
-                <!-- beverage profit -->
-                <!-- foods profit -->
+
         <div>
-        <!-- Expense Reports -->
-            <h2 class="mb-4">Expense Reports</h2>
-            <!-- Expense Table -->
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Category</th>
-                        <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    // Example query to fetch expenses data ordered by date (latest first)
-                    $expenseQuery = "SELECT * FROM `expenses` ORDER BY `expense_date` DESC";
-                    $expenseResult = $conn->query($expenseQuery);
-
-                    if ($expenseResult->num_rows > 0) {
-                        while ($row = $expenseResult->fetch_assoc()) {
-                            echo '<tr>';
-                            echo '<td>' . htmlspecialchars($row['expense_date']) . '</td>';
-                            echo '<td>' . htmlspecialchars($row['category']) . '</td>';
-                            echo '<td>' . htmlspecialchars($row['amount']) . '</td>';
-                            echo '</tr>';
-                        }
-                    } else {
-                        echo '<tr><td colspan="3">No expenses found</td></tr>';
-                    }
-                    ?>
-                </tbody>
-            </table>
-
-
-            <!-- Income Reports -->
-            <h2 class="mt-5 mb-4">Income Reports</h2>
-            <!-- Income Table -->
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Income Source</th>
-                        <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    // Query for income from food
-                    $foodIncomeQuery = "SELECT * FROM `income` WHERE `income_type` = 'food' ORDER BY `income_date` DESC";
-                    $foodIncomeResult = $conn->query($foodIncomeQuery);
-
-                    // Query for income from beverages
-                    $beverageIncomeQuery = "SELECT * FROM `income` WHERE `income_type` = 'beverage' ORDER BY `income_date` DESC";
-                    $beverageIncomeResult = $conn->query($beverageIncomeQuery);
-
-                    // Query for income from meeting halls
-                    $meetingHallIncomeQuery = "SELECT * FROM `income` WHERE `income_type` = 'meeting_hall' ORDER BY `income_date` DESC";
-                    $meetingHallIncomeResult = $conn->query($meetingHallIncomeQuery);
-
-                    // Query for income from rooms
-                    $roomIncomeQuery = "SELECT * FROM `income` WHERE `income_type` = 'room' ORDER BY `income_date` DESC";
-                    $roomIncomeResult = $conn->query($roomIncomeQuery);
-
-                    // Display income from all sources
-                    while ($row = $foodIncomeResult->fetch_assoc()) {
-                        echo '<tr><td>' . htmlspecialchars($row['income_date']) . '</td><td>Food</td><td>' . htmlspecialchars($row['amount']) . '</td></tr>';
-                    }
-                    while ($row = $beverageIncomeResult->fetch_assoc()) {
-                        echo '<tr><td>' . htmlspecialchars($row['income_date']) . '</td><td>Beverage</td><td>' . htmlspecialchars($row['amount']) . '</td></tr>';
-                    }
-                    while ($row = $meetingHallIncomeResult->fetch_assoc()) {
-                        echo '<tr><td>' . htmlspecialchars($row['income_date']) . '</td><td>Meeting Hall</td><td>' . htmlspecialchars($row['amount']) . '</td></tr>';
-                    }
-                    while ($row = $roomIncomeResult->fetch_assoc()) {
-                        echo '<tr><td>' . htmlspecialchars($row['income_date']) . '</td><td>Room</td><td>' . htmlspecialchars($row['amount']) . '</td></tr>';
-                    }
-                    ?>
-                </tbody>
-            </table>
-
-
-
-            <!-- Profit Reports -->
-            <h2 class="mt-5 mb-4">Profit Reports</h2>
-            <!-- Profit Table -->
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Category</th>
-                        <th>Profit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    // Example queries for profit calculations (income - expense) for each category
-                    // Food Profit
-                    $foodProfitQuery = "SELECT SUM(i.amount) AS food_income, SUM(e.amount) AS food_expense 
-                                    FROM `income` i
-                                    LEFT JOIN `expenses` e ON i.income_date = e.expense_date
-                                    WHERE i.income_type = 'food'";
-                    $foodProfitResult = $conn->query($foodProfitQuery);
-                    $foodProfit = $foodProfitResult->fetch_assoc();
-                    $foodProfitAmount = $foodProfit['food_income'] - $foodProfit['food_expense'];
-
-                    // Beverage Profit
-                    $beverageProfitQuery = "SELECT SUM(i.amount) AS beverage_income, SUM(e.amount) AS beverage_expense 
-                                        FROM `income` i
-                                        LEFT JOIN `expenses` e ON i.income_date = e.expense_date
-                                        WHERE i.income_type = 'beverage'";
-                    $beverageProfitResult = $conn->query($beverageProfitQuery);
-                    $beverageProfit = $beverageProfitResult->fetch_assoc();
-                    $beverageProfitAmount = $beverageProfit['beverage_income'] - $beverageProfit['beverage_expense'];
-
-                    // Meeting Hall Profit
-                    $meetingHallProfitQuery = "SELECT SUM(i.amount) AS meeting_hall_income, SUM(e.amount) AS meeting_hall_expense 
-                                            FROM `income` i
-                                            LEFT JOIN `expenses` e ON i.income_date = e.expense_date
-                                            WHERE i.income_type = 'meeting_hall'";
-                    $meetingHallProfitResult = $conn->query($meetingHallProfitQuery);
-                    $meetingHallProfit = $meetingHallProfitResult->fetch_assoc();
-                    $meetingHallProfitAmount = $meetingHallProfit['meeting_hall_income'] - $meetingHallProfit['meeting_hall_expense'];
-
-                    // Room Profit
-                    $roomProfitQuery = "SELECT SUM(i.amount) AS room_income, SUM(e.amount) AS room_expense 
-                                    FROM `income` i
-                                    LEFT JOIN `expenses` e ON i.income_date = e.expense_date
-                                    WHERE i.income_type = 'room'";
-                    $roomProfitResult = $conn->query($roomProfitQuery);
-                    $roomProfit = $roomProfitResult->fetch_assoc();
-                    $roomProfitAmount = $roomProfit['room_income'] - $roomProfit['room_expense'];
-
-                    // Displaying profits for each category
-                    echo '<tr><td>Food</td><td>' . number_format($foodProfitAmount, 2) . '</td></tr>';
-                    echo '<tr><td>Beverages</td><td>' . number_format($beverageProfitAmount, 2) . '</td></tr>';
-                    echo '<tr><td>Meeting Halls</td><td>' . number_format($meetingHallProfitAmount, 2) . '</td></tr>';
-                    echo '<tr><td>Rooms</td><td>' . number_format($roomProfitAmount, 2) . '</td></tr>';
-                    ?>
-                </tbody>
-            </table>
+            <h1>//display all expense in table add arranges in date and put recent data at top</h1>
+            <h2>//display all income in atable table assume we have 3 types of income</h2>
+            <p>
+                1, income from food
+                2, income from beverages
+                3, income from metting halls
+                4, income from rooms
+            </p>
+            <p>
+            <ul>
+                <li>1, of food</li>
+                <li>2, of beverages</li>
+                <li>3, of metting halls</li>
+                <li>4, of from rooms</li>
+            </ul>
+            </p>
+        </div>
+        <div>
+            <h1>//display all expense in table add arranges in date and put recent data at top</h1>
+            <h2>//display all income in atable table assume we have 3 types of income</h2>
+            <p>
+                1, income from food
+                2, income from beverages
+                3, income from metting halls
+                4, income from rooms
+            </p>
+            <p>
+            <ul>
+                <li>1, of food</li>
+                <li>2, of beverages</li>
+                <li>3, of metting halls</li>
+                <li>4, of from rooms</li>
+            </ul>
+            </p>
+        </div>
+        <div>
+            <h1>//display all expense in table add arranges in date and put recent data at top</h1>
+            <h2>//display all income in atable table assume we have 3 types of income</h2>
+            <p>
+                1, income from food
+                2, income from beverages
+                3, income from metting halls
+                4, income from rooms
+            </p>
+            <p>
+            <ul>
+                <li>1, of food</li>
+                <li>2, of beverages</li>
+                <li>3, of metting halls</li>
+                <li>4, of from rooms</li>
+            </ul>
+            </p>
+        </div>
+        <div>
+            <h1>//display all expense in table add arranges in date and put recent data at top</h1>
+            <h2>//display all income in atable table assume we have 3 types of income</h2>
+            <p>
+                1, income from food
+                2, income from beverages
+                3, income from metting halls
+                4, income from rooms
+            </p>
+            <p>
+            <ul>
+                <li>1, of food</li>
+                <li>2, of beverages</li>
+                <li>3, of metting halls</li>
+                <li>4, of from rooms</li>
+            </ul>
+            </p>
+        </div>
+        <div>
+            <h1>//display all expense in table add arranges in date and put recent data at top</h1>
+            <h2>//display all income in atable table assume we have 3 types of income</h2>
+            <p>
+                1, income from food
+                2, income from beverages
+                3, income from metting halls
+                4, income from rooms
+            </p>
+            <p>
+            <ul>
+                <li>1, of food</li>
+                <li>2, of beverages</li>
+                <li>3, of metting halls</li>
+                <li>4, of from rooms</li>
+            </ul>
+            </p>
         </div>
     </section>
-
 
 
     <!-- Write Reports Section -->
