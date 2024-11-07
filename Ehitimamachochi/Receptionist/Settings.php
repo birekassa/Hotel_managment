@@ -133,7 +133,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="index.php?section=reservation" style="color: white !important;">
+                            <a class="nav-link " href="makeReservation.php" style="color: white !important;">
                                 <i class="bi bi-calendar-check me-2"></i>Make Reservation
                             </a>
                         </li>

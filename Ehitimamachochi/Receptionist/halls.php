@@ -10,6 +10,15 @@
     <!-- Bootstrap Icons CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
         .btn-container {
             display: flex;
             flex-wrap: wrap;
@@ -22,49 +31,63 @@
             margin-bottom: 1rem;
         }
 
-        #loading {
+        .d-none {
             display: none;
-            text-align: center;
-            font-weight: bold;
+        }
+
+        .navbar {
+            height: 100px;
+        }
+
+        .nav-item {
+            margin: 10px;
+        }
+
+        .nav-item:hover {
+            font-size: 17px;
+            border-bottom: 1px blue solid;
+            background-color: #333;
         }
     </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">
 
-    <!-- Navbar -->
+     <!-- Navbar -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-xl">
+                <a class="navbar-brand mx-auto" href="index.php">Receptionalist Panel</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
                     aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbar">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <div class="collapse navbar-collapse justify-content-center" id="navbar">
+                    <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php">
+                            <a class="nav-link" href="index.php" style="color: white !important;">
                                 <i class="bi bi-house-door me-2"></i>Home
                             </a>
                         </li>
+                        <!-- Make Reservation Navigation Item -->
                         <li class="nav-item">
-                            <a class="nav-link"  href="index.php?section=reservation">
+                            <a class="nav-link" href="makeReservation.php" style="color: white;">
                                 <i class="bi bi-calendar-check me-2"></i>Make Reservation
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="cust_Detail.php">
+                            <a class="nav-link " href="cust_Detail.php" style="color: white !important;">
                                 <i class="bi bi-people me-2"></i>Customer Details
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Reports.php">
+                            <a class="nav-link " href="Reports.php" style="color: white !important;">
                                 <i class="bi bi-bar-chart-line me-2"></i>Reports
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Settings.php">
+                            <a class="nav-link" href="Settings.php" style="color: white !important;">
                                 <i class="bi bi-gear me-2"></i>Account Settings
                             </a>
                         </li>
@@ -73,6 +96,7 @@
             </div>
         </nav>
     </header>
+
 
     <!-- Loading Indicator -->
     <div id="loading">Loading...</div>

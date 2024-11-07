@@ -31,7 +31,6 @@ session_start(); // Start the session
 
 <body>
     <!-- Navbar -->
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #343a40; height: 100px;">
         <a class="navbar-brand" href="#" style="padding-left:20px;">Ehitimamachochi Hotel Host </a>
         <div class="container-xl h-100 d-flex align-items-center">
@@ -41,33 +40,23 @@ session_start(); // Start the session
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbar">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center w-100">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center w-100 bg-dark">
                     <li class="nav-item">
                         <a class="nav-link" href="http://localhost/New/Ehitimamachochi/Host/index.php" role="button"
                             aria-expanded="false" style="color: white !important;"> Home
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#view_food_modal"
-                            style="color: white !important; cursor:pointer;"> Available Foods
-                        </a>
+                        <a href="Available_Foods.php" class="nav-link"  id="" style="color: white !important; cursor:pointer;"> Available Foods </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="open_beverage_modal" style="color: white !important; cursor:pointer;">
-                            Available Beverages
-                        </a>
+                        <a href="Available_Beverages.php" class="nav-link" id="" style="color: white !important; cursor:pointer;"> Available Beverages</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="Authorize_Customer_btn"
-                            style="color: white !important; cursor:pointer;">
-                            Authorize Customer
-                        </a>
+                        <a href="AuthorizeCustomer.php" class="nav-link" id="" style="color: white !important; cursor:pointer;"> Authorize Customer </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="setting.php" role="button"
-                            style="color: white !important; cursor:pointer;">
-                            Account Settings
-                        </a>
+                        <a class="nav-link" href="setting.php" role="button" style="color: white !important; cursor:pointer;"> Account Settings </a>
                     </li>
                 </ul>
             </div>
