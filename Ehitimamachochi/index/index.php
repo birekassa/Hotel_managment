@@ -273,6 +273,7 @@
             // Check for existing cookie
             $username = isset($_COOKIE['username']) ? htmlspecialchars($_COOKIE['username']) : '';
             ?>
+            
             <!-- Login Form -->
             <form method="post" action="loginprocess.php" style="padding: 10px;" id="loginform">
                 <div class="form-group" style="margin-bottom: 15px;">
@@ -1061,17 +1062,17 @@
         window.onload = showAlert;
     </script>
 
-    <!-- the following are Popper.js (required for Bootstrap's JavaScript components) -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-
     <footer
         style="padding: 30px; background-color: #333; color: #f8f9fa; text-align: center; font-family: 'Times New Roman', serif; font-size: 14px; border-top: 3px solid #00c8ff;">
         <p style="margin: 0; line-height: 1.5;">
             &copy; 2024 EHITIMAMACHOCHI HOTEL. All rights reserved.<br>Powered by MTU Department of SE Group 1 Members
         </p>
     </footer>
+     <!-- the following are Popper.js (required for Bootstrap's JavaScript components) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

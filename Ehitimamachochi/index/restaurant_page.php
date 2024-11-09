@@ -401,6 +401,21 @@ $mysqli->close();
                                 }
                             </script>
                         </div>
+                         <!-- Terms and policy fild -->
+                        <fieldset
+                            style="border: 1px solid #ddd; padding: 15px; border-radius: 5px; margin-bottom: 20px; margin-top: 20px;">
+                            <legend style="font-weight: bold; font-size: 1.2em;">
+                                <input type="checkbox" id="termsCheckbox" required>
+                                I accept the Terms and Policy
+                            </legend>
+                            <ul style="list-style-type: disc; padding-left: 0; padding-left:10%;">
+                                <li>Reservations can be canceled before 02:00 PM local time.</li>
+                                <li>Reservations can be canceled within 1 hour of booking.</li>
+                                <li>You will receive half of 75% of your payment, either in person or by contacting
+                                    us
+                                    through the phone.</li>
+                            </ul>
+                        </fieldset>
 
                         <!-- Form Actions -->
                         <div class="d-flex justify-content-center gap-2">
@@ -956,6 +971,21 @@ $mysqli->close();
                                     class="form-control" required>
                             </div>
                         </div>
+                         <!-- Terms and policy fild -->
+                        <fieldset
+                            style="border: 1px solid #ddd; padding: 15px; border-radius: 5px; margin-bottom: 20px; margin-top: 20px;">
+                            <legend style="font-weight: bold; font-size: 1.2em;">
+                                <input type="checkbox" id="termsCheckbox" required>
+                                I accept the Terms and Policy
+                            </legend>
+                            <ul style="list-style-type: disc; padding-left: 0; padding-left:10%;">
+                                <li>Reservations can be canceled before 02:00 PM local time.</li>
+                                <li>Reservations can be canceled within 1 hour of booking.</li>
+                                <li>You will receive half of 75% of your payment, either in person or by contacting
+                                    us
+                                    through the phone.</li>
+                            </ul>
+                        </fieldset>
 
                         <!-- Buttons -->
                         <div class="col-12" style="display: flex; justify-content: center; gap: 5%; width: 90%;">

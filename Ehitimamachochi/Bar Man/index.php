@@ -4,21 +4,25 @@ include '../assets/conn.php';
 session_start(); // Start the session
 
 // // Check if the user's position is 'casher'
-// if ($_SESSION['position'] !== 'casher' && $_SESSION['position'] !== 'Casher') {
+// if ($_SESSION['position'] !== 'BARMAN' && $_SESSION['position'] !== 'Casher') {
 //     // Redirect to login page if the user is not a 'casher'
 //     header("Location: ../index/index.php");
 //     exit();
 // }
 
-// Check if the user is logged in
+// // Check if the user is logged in
 // if (!isset($_SESSION['username'])) {
 //     // Redirect to login page if not logged in
 //     header("Location: ../index/index.php");
 //     exit();
 // }
 
-$conn->close();
-?>
+// $conn->close();
+
+// ?>
+
+<script>
+</script>
 <!DOCTYPE html>
 <html lang="en">
 

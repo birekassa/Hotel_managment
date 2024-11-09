@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve username and password from the form
     $user_username = $_POST['username'];
     $user_password = $_POST['password'];
+    
     $remember_me = isset($_POST['remember_me']); // Check if "Remember Me" is checked
 
     // Prepare and execute statement to check username and retrieve password and position
@@ -40,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Verify attendance
             $error_message = 'Access denied. Your attendance is marked as absent.';
         } else {
+        
             // If all checks pass, set session variables
             $_SESSION['username'] = $user_username; // Store username in session
             $_SESSION['position'] = $db_position;    // Store position in session
