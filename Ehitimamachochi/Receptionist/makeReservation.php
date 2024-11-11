@@ -1,6 +1,54 @@
 <?php
 // Include database connection
 include '../assets/conn.php';
+
+// Initialize arrays and total counters
+$Reports = [];
+$hall_report = [];
+$Total_no_of_reserved_rooms = 0;
+$Total_no_of_reserved_halls = 0;
+
+// Fetch inventory data for rooms
+$sql = "SELECT * FROM `rooms_reports` WHERE 1";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $Reports[] = $row;
+    }
+}
+
+// Calculate total number of reserved rooms
+foreach ($Reports as $roomReport) {
+    $Total_no_of_reserved_rooms += $roomReport['no_of_reserved_room'];
+}
+
+// Fetch inventory data for halls
+$hall_sql = "SELECT * FROM `halls_reports` WHERE 1";
+$result = $conn->query($hall_sql);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $hall_report[] = $row;
+    }
+}
+
+// Calculate total number of reserved halls
+foreach ($hall_report as $hall_reports) {
+    $Total_no_of_reserved_halls += $hall_reports['no_of_reserved_room'];
+}
+
+// Close the connection
+$conn->close();
+
+// // Output total values (optional)
+// echo "Total reserved rooms: " . $Total_no_of_reserved_rooms . "<br>";
+// echo "Total reserved halls: " . $Total_no_of_reserved_halls . "<br>";
+?>
+
+
+
+<?php
+// Include database connection
+include '../assets/conn.php';
 session_start(); // Start the session
 
 // // Check if the user's position is 'casher'
@@ -121,23 +169,26 @@ $conn->close();
 
     <!-- Main Content -->
     <main class="flex-grow-1 d-block" id="default" style="margin-top:10px; ">
-        <div style="margin:30px;" >
-            <div class="d-flex flex-column flex-md-row w-80 w-md-50 mx-auto justify-content-between gap-2">
-                <a id="roomReservationBtn" class="btn btn-primary w-100 " href="rooms.php">Room Reservation</a>
-                <a id="meetingHallsBtn" class="btn btn-secondary w-100" href="halls.php">Meeting Halls</a>
-                <div class="dropdown w-100">
-                    <button class="btn btn-info dropdown-toggle w-100" type="button" id="manageReservationDropdown"
+        <div class="my-4">
+            <div class="d-flex flex-column flex-md-row w-75 mx-auto justify-content-between gap-2">
+                <a id="roomReservationBtn" class="btn btn-primary w-75 py-3" href="rooms.php">Room Reservation</a>
+                <a id="meetingHallsBtn" class="btn btn-secondary w-75 py-3" href="halls.php">Meeting Halls</a>
+                <div class="dropdown w-75">
+                    <button class="btn btn-info dropdown-toggle w-100 py-3" type="button" id="manageReservationDropdown"
                         data-bs-toggle="dropdown" aria-expanded="false">Manage Reservation</button>
                     <ul class="dropdown-menu w-100" aria-labelledby="manageReservationDropdown">
-                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewReservationModal">View Reservation</a></li>
+                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewReservationModal">View
+                                Reservation</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#UpdateReservationModal">Update Reservation</a></li>
+                        <li><a class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#UpdateReservationModal">Update Reservation</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CancelReservationModal">Cancel Reservation</a></li>
+                        <li><a class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#CancelReservationModal">Cancel Reservation</a></li>
                     </ul>
                 </div>
             </div>
@@ -152,30 +203,102 @@ $conn->close();
                         <div class="card shadow">
                             <div class="card-header header-blue">Reserved Rooms Information</div>
                             <div class="card-body text-center">
-                                <p class="text">Number of Reserved</p>
-                                <h2>Rooms</h2>
-                                <h1>34</h1>
+                                <h3>Today's Reserved Rooms</h3>
+                                <h1 class="text-center" style="font-size: 44px;" id="reservedRooms">
+                                    <span class="bg-black text-danger p-0" style="padding-left: 0px; padding-right: 0px;">0</span>
+                                </h1>
+
+                                <script>
+                                    // Set the final number to animate towards
+                                    const target = <?php echo $Total_no_of_reserved_rooms; ?>;
+                                    const element = document.getElementById("reservedRooms");
+                                    let current = 0;
+
+                                    // Function to animate the counter
+                                    function animateCounter() {
+                                        if (current < target) {
+                                            current++;
+                                            element.innerHTML = current; // Update the content of the h1 element
+                                        } else {
+                                            clearInterval(counterInterval); // Stop the counter when it reaches the target
+                                        }
+                                    }
+
+                                    // Set the interval for updating the count (100 ms for smooth animation)
+                                    const counterInterval = setInterval(animateCounter, 100); 
+                                </script>
+
+                                <!-- Button to toggle More Details -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="collapse"
+                                    data-bs-target="#demo">
+                                    More Details
+                                </button>
+
+                                <div id="demo" class="collapse">
+                                    <p style="padding-top:20px; color:blue;">This is details of reserved rooms</p>
+
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Room Type</th>
+                                                <th>Number of Reserved Rooms</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($Reports as $roomReport): ?>
+                                                <tr>
+                                                    <td><?= htmlspecialchars($roomReport['room_type']) ?></td>
+                                                    <td><?= htmlspecialchars($roomReport['no_of_reserved_room']) ?></td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+
                             </div>
                         </div>
                     </div>
+
 
                     <div class="col-md-6 mb-4">
                         <div class="card shadow">
                             <div class="card-header header-blue">Reserved Halls Information</div>
                             <div class="card-body text-center">
-                                <p id="gebi" class="text-yellow">Number of Reserved</p>
-                                <h2>Rooms</h2>
-                                <h1>23</h1>
+                                <h3>Today's Reserved Halls</h3>
+                                <h1><?php echo $Total_no_of_reserved_halls; ?> </h1>
+                                <!-- Button to toggle More Details -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="collapse"
+                                    data-bs-target="#hall_demo">
+                                    More Details
+                                </button>
+
+                                <div id="hall_demo " class="collapse">
+                                    <p style="padding-top:20px; color:blue;">This is details of reserved rooms</p>
+
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Room Type</th>
+                                                <th>Number of Reserved Rooms</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($Reports as $roomReport): ?>
+                                                <tr>
+                                                    <td><?= htmlspecialchars($roomReport['room_type']) ?></td>
+                                                    <td><?= htmlspecialchars($roomReport['no_of_reserved_room']) ?></td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
     </main>
 
     <!-- Reservation Section -->

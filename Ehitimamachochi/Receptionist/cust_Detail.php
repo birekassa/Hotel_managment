@@ -116,35 +116,49 @@ include '../assets/conn.php';
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="container mt-5">
-        <h1 class="mb-4 text-center">Reservation Information</h1>
-        <div class="d-flex mb-4">
-            <button class="btn btn-primary me-2" onclick="fetchData('meeting_halls')">From Hall Reservations</button>
-            <button class="btn btn-primary" onclick="fetchData('rooms')">From Room Reservations</button>
-            <input type="date" placeholder="please entetr date !"> <button>search</button>
+   <!-- Main Content -->
+<main class="container mt-5">
+    <h1 class="mb-4 text-center">Reservation Information</h1>
+
+    <!-- Search Section -->
+    <div class="d-flex mb-4 justify-content-between align-items-center">
+        <div class="btn-group" role="group">
+            <button class="btn btn-primary me-2" onclick="fetchData('meeting_halls')">Hall Reservations</button>
+            <button class="btn btn-primary" onclick="fetchData('rooms')">Room Reservations</button>
         </div>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead class="table-light">
-                    <tr>
-                        <th>Full Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Kebele ID</th>
-                        <th>Reservation ID</th>
-                        <th>Price</th>
-                        <th>Check-In Date</th>
-                        <th>Check-Out Date</th>
-                        <th>Assigned By</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <!-- Table rows will be dynamically inserted here -->
-                </tbody>
-            </table>
+
+        <!-- Date Filter -->
+        <div class="d-flex align-items-center">
+            <input type="date" class="form-control me-2" placeholder="Enter Date" />
+            <button class="btn btn-success">Search</button>
         </div>
-    </main>
+    </div>
+
+    <!-- Table Section -->
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Kebele ID</th>
+                    <th>Reservation ID</th>
+                    <th>Price</th>
+                    <th>Check-In Date</th>
+                    <th>Check-Out Date</th>
+                    <th>Assigned By</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Table rows will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </div>
+</main>
+
+
+
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3 mt-auto">
         <p>&copy; 2024 Ehototmamachochi Hotel. All rights reserved. This Website is powered by MTU Department of SE

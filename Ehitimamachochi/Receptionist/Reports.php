@@ -1,6 +1,39 @@
 <?php
 // Include database connection
 include '../assets/conn.php';
+
+// Initialize arrays
+$Reports = [];
+$hall_report = [];
+
+// Fetch inventory data for rooms
+$sql = "SELECT * FROM `rooms_reports` WHERE 1";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $Reports[] = $row;
+    }
+}
+
+// Fetch inventory data for halls
+$hall_sql = "SELECT * FROM `halls_reports` WHERE 1";
+$result = $conn->query($hall_sql);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $hall_report[] = $row;
+    }
+}
+
+// Close the connection
+$conn->close();
+?>
+
+
+
+
+<?php
+// Include database connection
+include '../assets/conn.php';
 session_start(); // Start the session
 
 // Check if the user is logged in
@@ -182,84 +215,114 @@ session_start(); // Start the session
         <button onclick="goBack('ViewReports')" class="btn btn-secondary mb-3">
             <i class="bi bi-arrow-left"></i> Back
         </button>
+<!-- Search Bar Section -->
+    <div class="d-flex justify-content-between mb-4">
+        <div class="d-flex">
+            <input type="text" class="form-control me-2" placeholder="Search" />
+            <button class="btn btn-primary">
+                <i class="bi bi-search me-2"></i>Search
+            </button>
+        </div>
+        <div class="d-flex">
+            <button class="btn btn-outline-secondary me-2">
+                <i class="bi bi-chevron-left me-2"></i>Previous
+            </button>
+            <button class="btn btn-outline-secondary">
+                Next<i class="bi bi-chevron-right me-2"></i>
+            </button>
+        </div>
+    </div>
 
-        <div>
-            <input type="text" placeholder="search"> <button onclick="">Search </button>
-        </div>
-         <div class="col">
-                <button class="btn-sucess-end" style=" text-end">previous </button>
-                <button class="btn-sucess-start" style="text-start">next</button>
-            </div>
-        <div>
-            <table class="table table-hover">
-                <thead>
+    <!-- Report Table Section -->
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Room Type</th>
+                    <th>No of Reserved Rooms</th>
+                    <th>Reserved Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($Reports as $roomReport): ?>
                     <tr>
-                        <th>Room Type</th>
-                        <th>No of Reserved Rooms </th>
-                        <th>Reserved Date</th>
+                        <td><?= htmlspecialchars($roomReport['room_type']) ?></td>
+                        <td><?= htmlspecialchars($roomReport['no_of_reserved_room']) ?></td>
+                        <td><?= htmlspecialchars($roomReport['reserved_date']) ?></td>
                     </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Standared</td>
-                        <td>40</td>
-                        <td>20/12/2014</td>
-                    </tr>
-                    <tr>
-                        <td>Luxury</td>
-                        <td>34</td>
-                        <td>11/12/2024</td>
-                    </tr>
-                    <tr>
-                        <td>deluxe</td>
-                        <td>23</td>
-                        <td>11/12/2023</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- More Details Button & Collapse Section -->
+    <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-info" data-bs-toggle="collapse" data-bs-target="#demo">
+            <i class="bi bi-info-circle me-2"></i> More Details
+        </button>
+    </div>
+
+    <div id="demo" class="collapse mt-3">
+        <p>This is the detailed information of the reserved room.</p>
+    </div>
     </section>
+
+
 
     <!-- Halls Report Section -->
     <section id="view_hall_report" class="container-custom hidden">
         <button onclick="goBack('ViewReports')" class="btn btn-secondary mb-3">
             <i class="bi bi-arrow-left"></i> Back
         </button>
-        <div>
-            <input type="text" placeholder="search"><button>Search</button>
+        <!-- Search Bar Section -->
+     <div class="d-flex justify-content-between mb-4">
+        <div class="d-flex">
+            <input type="text" class="form-control me-2" placeholder="Search" />
+            <button class="btn btn-primary">
+                <i class="bi bi-search me-2"></i>Search
+            </button>
         </div>
-        <div>
-            <div class="col">
-                <button class="btn-sucess-end" style=" text-end">previous </button>
-                <button class="btn-sucess-start" style="text-start">next</button>
-            </div>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Hall Type</th>
-                        <th>No of Reserved Halls</th>
-                        <th>Reservation Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Stabdard</td>
-                        <td>21</td>
-                        <td>09/07/2020</td>
-                    </tr>
-                    <tr>
-                        <td>Dekuxe</td>
-                        <td>15</td>
-                        <td>03/05/2024</td>
-                    </tr>
-                    <tr>
-                        <td>suite</td>
-                        <td>78</td>
-                        <td>07/01/2015</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="d-flex">
+            <button class="btn btn-outline-secondary me-2">
+                <i class="bi bi-chevron-left me-2"></i>Previous
+            </button>
+            <button class="btn btn-outline-secondary">
+                Next <i class="bi bi-chevron-right me-2"></i>
+            </button>
         </div>
+    </div>
+
+    <!-- Hall Report Table Section -->
+    <div class="table-responsive mb-4">
+        <table class="table table-hover table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Hall Type</th>
+                    <th>No of Reserved Halls</th>
+                    <th>Reserved Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($hall_report as $hall_reports): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($hall_reports['hall_type']) ?></td>
+                        <td><?= htmlspecialchars($hall_reports['number_of_reserved_halls']) ?></td>
+                        <td><?= htmlspecialchars($hall_reports['hall_reserved_date']) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <!-- Button to Toggle More Details -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#hallDetails">
+            <i class="bi bi-info-circle me-2"></i>More Details
+        </button>
+
+        <!-- Collapsible Details Section -->
+        <div id="hallDetails" class="collapse mt-3">
+            <p>This is halls details.</p>
+        </div>
+    </div>
     </section>
 
     <script>

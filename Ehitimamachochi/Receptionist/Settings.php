@@ -163,18 +163,23 @@
         <!-- Default Settings Menu -->
         <div id="default_set">
             <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                onclick="showSection('system_settings')">
-                <span style="justify-content:cenetr;"><i class="bi bi-tools me-2"></i>Manage Room</span>
+                onclick="showSection('manage_room_settings')">
+                <span><i class="bi bi-bed me-2"></i>Manage Room</span>
+                <i class="bi bi-chevron-right"></i>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                onclick="showSection('manage_hall_settings')">
+                <span><i class="bi bi-door-open me-2"></i>Manage Halls</span>
                 <i class="bi bi-chevron-right"></i>
             </a>
             <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
                 onclick="showSection('account_settings')">
-                <span style="justify-content:cenetr;"><i class="bi bi-person-gear me-2"></i>Account Settings</span>
+                <span><i class="bi bi-gear me-2"></i>Account Settings</span>
                 <i class="bi bi-chevron-right"></i>
             </a>
         </div>
 
-        <div id="system_settings" class="card">
+        <div id="manage_room_settings" class="card">
             <div class="d-flex justify-content-between align-items-center">
                 <a href="#" class="btn btn-link me-3" onclick="goBack()">
                     <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
@@ -189,12 +194,26 @@
                 <i class="bi bi-chevron-right"></i>
             </a>
             <div id="addRoomUpload" class="upload-section d-none mt-2">
-                <form action="upload_photo.php" method="POST" enctype="multipart/form-data">
-                    <!-- Form fields go here -->
-                    <div class="d-flex justify-content-center align-items-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
+                <div class="d-flex justify-content-center mb-3">
+                    <form action="add_room.php" method="POST" enctype="multipart/form-data"
+                        style="width: 80%; margin:10px; ">
+                        <select style="width: 100%; margin-bottom: 10px; padding:5px;" required>
+                            <option value="">Select Room Type:</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Deluxe">Deluxe</option>
+                            <option value="Suite">Suite</option>
+                            <option value="Luxury">Luxury</option>
+                        </select>
+                        <input type="number" name="insert_room_quantity" id="insert_room_quantity"
+                            placeholder="Room Quantity" style="width: 100%; margin-bottom: 10px;">
+                        <input type="number" name="insert_room_price" id="insert_room_price" placeholder="Room Price"
+                            style="width: 100%; margin-bottom: 10px;">
+                        <div class="d-flex justify-content-between mt-3 gap-3">
+                            <button type="reset" class="btn btn-danger" style="width: 40%;">Reset</button>
+                            <button type="submit" class="btn btn-primary" style="width: 40%;">Submit</button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <!-- Update Room Form -->
@@ -204,15 +223,26 @@
                 <i class="bi bi-chevron-right"></i>
             </a>
             <div id="updateRoomUpload" class="upload-section d-none mt-2">
-                <form action="upload_photo.php" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <input type="file" class="form-control" id="room_image" name="room_image" accept="image/*"
-                            required>
-                    </div>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
+                <div class="d-flex justify-content-center mb-3">
+                    <form action="add_room.php" method="POST" enctype="multipart/form-data"
+                        style="width: 80%; margin:10px; ">
+                        <select style="width: 100%; margin-bottom: 10px; padding:5px;" required>
+                            <option value="">Select Room Type:</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Deluxe">Deluxe</option>
+                            <option value="Suite">Suite</option>
+                            <option value="Luxury">Luxury</option>
+                        </select>
+                        <input type="number" name="insert_room_quantity" id="insert_room_quantity"
+                            placeholder="Room Quantity" style="width: 100%; margin-bottom: 10px;">
+                        <input type="number" name="insert_room_price" id="insert_room_price" placeholder="Room Price"
+                            style="width: 100%; margin-bottom: 10px;">
+                        <div class="d-flex justify-content-between mt-3 gap-3">
+                            <button type="reset" class="btn btn-danger" style="width: 40%;">Reset</button>
+                            <button type="submit" class="btn btn-primary" style="width: 40%;">Submit</button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <!-- Remove Room -->
@@ -222,11 +252,26 @@
                 <i class="bi bi-chevron-right"></i>
             </a>
             <div id="removeRoomUpload" class="upload-section d-none mt-2">
-                <form action="upload_photo.php" method="POST" enctype="multipart/form-data">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
+                <div class="d-flex justify-content-center mb-3">
+                    <form action="add_room.php" method="POST" enctype="multipart/form-data"
+                        style="width: 80%; margin:10px; ">
+                        <select style="width: 100%; margin-bottom: 10px; padding:5px;" required>
+                            <option value="">Select Room Type:</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Deluxe">Deluxe</option>
+                            <option value="Suite">Suite</option>
+                            <option value="Luxury">Luxury</option>
+                        </select>
+                        <input type="number" name="insert_room_quantity" id="insert_room_quantity"
+                            placeholder="Room Quantity" style="width: 100%; margin-bottom: 10px;">
+                        <input type="number" name="insert_room_price" id="insert_room_price" placeholder="Room Price"
+                            style="width: 100%; margin-bottom: 10px;">
+                        <div class="d-flex justify-content-between mt-3 gap-3">
+                            <button type="reset" class="btn btn-danger" style="width: 40%;">Reset</button>
+                            <button type="submit" class="btn btn-primary" style="width: 40%;">Submit</button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <!-- Change Image for Rooms -->
@@ -236,25 +281,156 @@
                 <i class="bi bi-chevron-right"></i>
             </a>
             <div id="changeImageUpload" class="upload-section d-none mt-2">
-                <form action="upload_photo.php" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="room_type">Room Type</label>
-                        <select name="room_type" id="room_type" class="form-select">
-                            <option value="" selected disabled>Select Room Type</option>
-                            <option value="standard">Standard</option>
-                            <option value="deluxe">Deluxe</option>
-                            <option value="suite">Suite</option>
-                            <option value="luxury">Luxury</option>
+                <div class="d-flex justify-content-center mb-3">
+                    <form action="add_room.php" method="POST" enctype="multipart/form-data"
+                        style="width: 80%; margin: 10px;">
+                        <select style="width: 100%; margin-bottom: 10px; padding:5px;">
+                            <option value="">Select Room Type:</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Deluxe">Deluxe</option>
+                            <option value="Suite">Suite</option>
+                            <option value="Luxury">Luxury</option>
                         </select>
-                        <input type="file" class="form-control mt-2" id="new_room_image" name="new_room_image"
-                            accept="image/*" required>
-                    </div>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <button type="submit" class="btn btn-primary">Upload Photo</button>
-                    </div>
-                </form>
+                        <input type="file" name="insert_room_price" id="insert_room_price"
+                            style="width: 100%; margin-bottom: 10px;">
+                        <div class="d-flex justify-content-between mt-3 gap-3">
+                            <button type="reset" class="btn btn-danger" style="width: 40%;">Reset</button>
+                            <button type="submit" class="btn btn-primary" style="width: 40%;">Submit</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
+
+
+
+
+
+        <div id="manage_hall_settings" class="card">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="#" class="btn btn-link me-3" onclick="goBack()">
+                    <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
+                </a>
+                <h3 class="text-center flex-grow-1">Manage Halls</h3>
+            </div>
+            <!-- Add hall Form -->
+            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                onclick="toggleUpload('addRoomUpload')">
+                <span><i class="bi bi-plus-circle-fill me-2"></i>Add Halls</span>
+                <i class="bi bi-chevron-right"></i>
+            </a>
+            <div id="addRoomUpload" class="upload-section d-none mt-2">
+                <div class="d-flex justify-content-center mb-3">
+                    <form action="add_room.php" method="POST" enctype="multipart/form-data"
+                        style="width: 80%; margin:10px; ">
+                        <select style="width: 100%; margin-bottom: 10px; padding:5px;" required>
+                            <option value="">Select Hall Type:</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Deluxe">Deluxe</option>
+                            <option value="Suite">Suite</option>
+                            <option value="Luxury">Luxury</option>
+                        </select>
+                        <input type="number" name="insert_room_quantity" id="insert_room_quantity"
+                            placeholder="Room Quantity" style="width: 100%; margin-bottom: 10px;">
+                        <input type="number" name="insert_room_price" id="insert_room_price" placeholder="Room Price"
+                            style="width: 100%; margin-bottom: 10px;">
+                        <div class="d-flex justify-content-between mt-3 gap-3">
+                            <button type="reset" class="btn btn-danger" style="width: 40%;">Reset</button>
+                            <button type="submit" class="btn btn-primary" style="width: 40%;">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <!-- Update Room Form -->
+            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                onclick="toggleUpload('updateRoomUpload')">
+                <span><i class="bi bi-pencil-square me-2"></i>Update Hall</span>
+                <i class="bi bi-chevron-right"></i>
+            </a>
+            <div id="updateRoomUpload" class="upload-section d-none mt-2">
+                <div class="d-flex justify-content-center mb-3">
+                    <form action="add_room.php" method="POST" enctype="multipart/form-data"
+                        style="width: 80%; margin:10px; ">
+                        <select style="width: 100%; margin-bottom: 10px; padding:5px;" required>
+                            <option value="">Select Hall Type:</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Deluxe">Deluxe</option>
+                            <option value="Suite">Suite</option>
+                            <option value="Luxury">Luxury</option>
+                        </select>
+                        <input type="number" name="insert_room_quantity" id="insert_room_quantity"
+                            placeholder="Room Quantity" style="width: 100%; margin-bottom: 10px;">
+                        <input type="number" name="insert_room_price" id="insert_room_price" placeholder="Room Price"
+                            style="width: 100%; margin-bottom: 10px;">
+                        <div class="d-flex justify-content-between mt-3 gap-3">
+                            <button type="reset" class="btn btn-danger" style="width: 40%;">Reset</button>
+                            <button type="submit" class="btn btn-primary" style="width: 40%;">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Remove Room -->
+            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                onclick="toggleUpload('removeRoomUpload')">
+                <span><i class="bi bi-x-circle-fill me-2"></i>Remove Hall</span>
+                <i class="bi bi-chevron-right"></i>
+            </a>
+            <div id="removeRoomUpload" class="upload-section d-none mt-2">
+                <div class="d-flex justify-content-center mb-3">
+                    <form action="add_room.php" method="POST" enctype="multipart/form-data"
+                        style="width: 80%; margin:10px; ">
+                        <select style="width: 100%; margin-bottom: 10px; padding:5px;" required>
+                            <option value="">Select Hall Type:</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Deluxe">Deluxe</option>
+                            <option value="Suite">Suite</option>
+                            <option value="Luxury">Luxury</option>
+                        </select>
+                        <input type="number" name="insert_room_quantity" id="insert_room_quantity"
+                            placeholder="Room Quantity" style="width: 100%; margin-bottom: 10px;">
+                        <input type="number" name="insert_room_price" id="insert_room_price" placeholder="Room Price"
+                            style="width: 100%; margin-bottom: 10px;">
+                        <div class="d-flex justify-content-between mt-3 gap-3">
+                            <button type="reset" class="btn btn-danger" style="width: 40%;">Reset</button>
+                            <button type="submit" class="btn btn-primary" style="width: 40%;">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Change Image for Rooms -->
+            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                onclick="toggleUpload('changeImageUpload')">
+                <span><i class="bi bi-image-fill me-2"></i>Change Image For Hall</span>
+                <i class="bi bi-chevron-right"></i>
+            </a>
+            <div id="changeImageUpload" class="upload-section d-none mt-2">
+                <div class="d-flex justify-content-center mb-3">
+                    <form action="add_room.php" method="POST" enctype="multipart/form-data"
+                        style="width: 80%; margin:10px; ">
+                        <select style="width: 100%; margin-bottom: 10px; padding:5px;" required>
+                            <option value="">Select Hall Type:</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Deluxe">Deluxe</option>
+                            <option value="Suite">Suite</option>
+                            <option value="Luxury">Luxury</option>
+                        </select>
+                        <input type="number" name="insert_room_price" id="insert_room_price" placeholder="Room Price"
+                            style="width: 100%; margin-bottom: 10px;">
+                        <div class="d-flex justify-content-between mt-3 gap-3">
+                            <button type="reset" class="btn btn-danger" style="width: 40%;">Reset</button>
+                            <button type="submit" class="btn btn-primary" style="width: 40%;">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
 
         <script>
             function toggleUpload(sectionId) {
@@ -267,100 +443,95 @@
                 });
             }
         </script>
-
-
     </div>
 
     <!-- Account Settings Content -->
-    <div id="account_settings" class="card">
-        <div class="section-header d-flex align-items-center">
-            <a href="#" class="btn btn-link me-3" onclick="goBack()">
-                <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
-            </a>
-            <h3 class="flex-grow-1 text-center mb-0">Account Settings</h3>
-        </div>
-
-
-        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-            onclick="toggleForm('change_username_form')">
-            <span><i class="bi bi-person-fill me-2"></i>Change Username</span>
-            <i class="bi bi-chevron-right"></i>
+<div id="account_settings" class="card mx-auto" style="width: 50%;">
+    <div class="section-header d-flex align-items-center">
+        <a href="#" class="btn btn-link me-3" onclick="goBack()">
+            <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
         </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-            onclick="toggleForm('change_password_form')">
-            <span><i class="bi bi-lock-fill me-2"></i>Change Password</span>
-            <i class="bi bi-chevron-right"></i>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-            onclick="confirmLogout()">
-            <span><i class="bi bi-box-arrow-right me-2"></i>Log out</span>
-            <i class="bi bi-chevron-right"></i>
-        </a>
+        <h3 class="flex-grow-1 text-center mb-0">Account Settings</h3>
+    </div>
 
-        <!-- Change Username Form -->
-        <div id="change_username_form" class="card">
-            <div class="card-body">
-                <h3 class="card-title"><i class="bi bi-person-fill me-2"></i>Change Username</h3>
-                <form action="change_username_process.php" method="post">
-                    <div class="mb-3">
-                        <label for="current_username" class="form-label">Current Username:</label>
-                        <input type="text" id="current_username" name="current_username" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="current_password" class="form-label">Current Password:</label>
-                        <input type="password" id="current_password" name="current_password" class="form-control"
-                            required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="new_username" class="form-label">New Username:</label>
-                        <input type="text" id="new_username" name="new_username" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="confirm_username" class="form-label">Confirm New Username:</label>
-                        <input type="text" id="confirm_username" name="confirm_username" class="form-control" required>
-                    </div>
-                    <div class="d-flex justify-content-center gap-2">
-                        <button type="submit" name="change_username" class="btn btn-success"><i
-                                class="bi bi-check-circle me-2"></i>Update</button>
-                        <button type="reset" class="btn btn-secondary"><i class="bi bi-x-circle me-2"></i>Clear</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+        onclick="toggleForm('change_username_form')">
+        <span><i class="bi bi-person-fill me-2"></i>Change Username</span>
+        <i class="bi bi-chevron-right"></i>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+        onclick="toggleForm('change_password_form')">
+        <span><i class="bi bi-lock-fill me-2"></i>Change Password</span>
+        <i class="bi bi-chevron-right"></i>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+        onclick="confirmLogout()">
+        <span><i class="bi bi-box-arrow-right me-2"></i>Log out</span>
+        <i class="bi bi-chevron-right"></i>
+    </a>
 
-        <!-- Change Password Form -->
-        <div id="change_password_form" class="card">
-            <div class="card-body">
-                <h3 class="card-title"><i class="bi bi-lock-fill me-2"></i>Change Password</h3>
-                <form action="change_password_process.php" method="post">
-                    <div class="mb-3">
-                        <label for="current_username" class="form-label">Current Username:</label>
-                        <input type="text" id="current_username" name="current_username" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="current_password" class="form-label">Current Password:</label>
-                        <input type="password" id="current_password" name="current_password" class="form-control"
-                            required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="new_password" class="form-label">New Password:</label>
-                        <input type="password" id="new_password" name="new_password" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="confirm_password" class="form-label">Confirm New Password:</label>
-                        <input type="password" id="confirm_password" name="confirm_password" class="form-control"
-                            required>
-                    </div>
-                    <div class="d-flex justify-content-center gap-2">
-                        <button type="submit" name="change_password" class="btn btn-success"><i
-                                class="bi bi-check-circle me-2"></i>Update</button>
-                        <button type="reset" class="btn btn-secondary"><i class="bi bi-x-circle me-2"></i>Clear</button>
-                    </div>
-                </form>
-            </div>
+    <!-- Change Username Form -->
+    <div id="change_username_form" class="card mx-auto mt-3" style="width: 90%;">
+        <div class="card-body">
+            <h3 class="card-title text-center"><i class="bi bi-person-fill me-2"></i>Change Username</h3>
+            <form action="change_username_process.php" method="post">
+                <div class="mb-3">
+                    <label for="current_username" class="form-label">Current Username:</label>
+                    <input type="text" id="current_username" name="current_username" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="current_password" class="form-label">Current Password:</label>
+                    <input type="password" id="current_password" name="current_password" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="new_username" class="form-label">New Username:</label>
+                    <input type="text" id="new_username" name="new_username" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="confirm_username" class="form-label">Confirm New Username:</label>
+                    <input type="text" id="confirm_username" name="confirm_username" class="form-control" required>
+                </div>
+                <div class="d-flex justify-content-center gap-2">
+                    <button type="submit" name="change_username" class="btn btn-success"><i
+                            class="bi bi-check-circle me-2"></i>Update</button>
+                    <button type="reset" class="btn btn-secondary"><i class="bi bi-x-circle me-2"></i>Clear</button>
+                </div>
+            </form>
         </div>
     </div>
+
+    <!-- Change Password Form -->
+    <div id="change_password_form" class="card mx-auto mt-3" style="width: 80%;">
+        <div class="card-body">
+            <h3 class="card-title text-center"><i class="bi bi-lock-fill me-2"></i>Change Password</h3>
+            <form action="change_password_process.php" method="post">
+                <div class="mb-3">
+                    <label for="current_username" class="form-label">Current Username:</label>
+                    <input type="text" id="current_username" name="current_username" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="current_password" class="form-label">Current Password:</label>
+                    <input type="password" id="current_password" name="current_password" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="new_password" class="form-label">New Password:</label>
+                    <input type="password" id="new_password" name="new_password" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="confirm_password" class="form-label">Confirm New Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+                </div>
+                <div class="d-flex justify-content-center gap-2">
+                    <button type="submit" name="change_password" class="btn btn-success"><i
+                            class="bi bi-check-circle me-2"></i>Update</button>
+                    <button type="reset" class="btn btn-secondary"><i class="bi bi-x-circle me-2"></i>Clear</button>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
+
+
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3 mt-auto">
         <p>&copy; 2024 Ehototmamachochi Hotel. All rights reserved. This Website is powered by MTU Department of SE
