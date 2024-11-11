@@ -11,11 +11,11 @@ session_start(); // Start the session
 // }
 
 // Check if the user is logged in
-if (!isset($_SESSION['username'])) {
-    // Redirect to login page if not logged in
-    header("Location: ../index/index.php");
-    exit();
-}
+// if (!isset($_SESSION['username'])) {
+//     // Redirect to login page if not logged in
+//     header("Location: ../index/index.php");
+//     exit();
+// }
 
 $position = $_SESSION['position'];
 $report_provider_name = ''; // Initialize variable
