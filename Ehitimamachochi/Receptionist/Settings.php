@@ -158,12 +158,13 @@
             </div>
         </nav>
     </header>
+
     <div class="container">
         <!-- Default Settings Menu -->
         <div id="default_set">
             <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
                 onclick="showSection('system_settings')">
-                <span style="justify-content:cenetr;"><i class="bi bi-tools me-2"></i>System Settings</span>
+                <span style="justify-content:cenetr;"><i class="bi bi-tools me-2"></i>Manage Room</span>
                 <i class="bi bi-chevron-right"></i>
             </a>
             <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
@@ -173,158 +174,192 @@
             </a>
         </div>
 
-        <!-- System Settings Content -->
         <div id="system_settings" class="card">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="d-flex justify-content-between align-items-center">
                 <a href="#" class="btn btn-link me-3" onclick="goBack()">
                     <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
                 </a>
-                <h3 style="text-align: center; flex: 1;">System Settings</h3>
+                <h3 class="text-center flex-grow-1">Manage Rooms</h3>
             </div>
 
-            <!-- Change Image for Beds -->
+            <!-- Add Room Form -->
             <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                onclick="toggleUpload('bedUpload')">
-                <span><i class="bi bi-house-door-fill me-2"></i>Change Image for Beds</span>
+                onclick="toggleUpload('addRoomUpload')">
+                <span><i class="bi bi-plus-circle-fill me-2"></i>Add Room</span>
                 <i class="bi bi-chevron-right"></i>
             </a>
-            <div id="bedUpload" class="upload-section d-none mt-2">
+            <div id="addRoomUpload" class="upload-section d-none mt-2">
                 <form action="upload_photo.php" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <input type="file" class="form-control" id="bed_image" name="bed_image" accept="image/*" required>
-                    </div>
-                    <div style="display: flex; justify-content: center; align-items: center;">
-                        <button type="submit" class="btn btn-primary">Upload Photo</button>
+                    <!-- Form fields go here -->
+                    <div class="d-flex justify-content-center align-items-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
 
-            <!-- Change Image for Halls -->
+            <!-- Update Room Form -->
             <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                onclick="toggleUpload('hallUpload')">
-                <span><i class="bi bi-building me-2"></i>Change Image for Halls</span>
+                onclick="toggleUpload('updateRoomUpload')">
+                <span><i class="bi bi-pencil-square me-2"></i>Update Room</span>
                 <i class="bi bi-chevron-right"></i>
             </a>
-            <div id="hallUpload" class="upload-section d-none mt-2">
+            <div id="updateRoomUpload" class="upload-section d-none mt-2">
                 <form action="upload_photo.php" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
-                        <input type="file" class="form-control" id="hall_image" name="hall_image" accept="image/*"
+                        <input type="file" class="form-control" id="room_image" name="room_image" accept="image/*"
                             required>
                     </div>
-                    <div style="display: flex; justify-content: center; align-items: center;">
-                        <button type="submit" class="btn btn-primary">Upload Photo</button>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
 
-            <!-- JavaScript to toggle upload sections -->
-            <script>
-                function toggleUpload(uploadSectionId) {
-                    const uploadSection = document.getElementById(uploadSectionId);
-                    if (uploadSection.classList.contains('d-none')) {
-                        uploadSection.classList.remove('d-none');
+            <!-- Remove Room -->
+            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                onclick="toggleUpload('removeRoomUpload')">
+                <span><i class="bi bi-x-circle-fill me-2"></i>Remove Room</span>
+                <i class="bi bi-chevron-right"></i>
+            </a>
+            <div id="removeRoomUpload" class="upload-section d-none mt-2">
+                <form action="upload_photo.php" method="POST" enctype="multipart/form-data">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Change Image for Rooms -->
+            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                onclick="toggleUpload('changeImageUpload')">
+                <span><i class="bi bi-image-fill me-2"></i>Change Image for Room</span>
+                <i class="bi bi-chevron-right"></i>
+            </a>
+            <div id="changeImageUpload" class="upload-section d-none mt-2">
+                <form action="upload_photo.php" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="room_type">Room Type</label>
+                        <select name="room_type" id="room_type" class="form-select">
+                            <option value="" selected disabled>Select Room Type</option>
+                            <option value="standard">Standard</option>
+                            <option value="deluxe">Deluxe</option>
+                            <option value="suite">Suite</option>
+                            <option value="luxury">Luxury</option>
+                        </select>
+                        <input type="file" class="form-control mt-2" id="new_room_image" name="new_room_image"
+                            accept="image/*" required>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <button type="submit" class="btn btn-primary">Upload Photo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            function toggleUpload(sectionId) {
+                document.querySelectorAll('.upload-section').forEach(section => {
+                    if (section.id === sectionId) {
+                        section.classList.toggle('d-none');
                     } else {
-                        uploadSection.classList.add('d-none');
+                        section.classList.add('d-none');
                     }
-                }
-            </script>
+                });
+            }
+        </script>
 
+
+    </div>
+
+    <!-- Account Settings Content -->
+    <div id="account_settings" class="card">
+        <div class="section-header d-flex align-items-center">
+            <a href="#" class="btn btn-link me-3" onclick="goBack()">
+                <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
+            </a>
+            <h3 class="flex-grow-1 text-center mb-0">Account Settings</h3>
         </div>
 
-        <!-- Account Settings Content -->
-        <div id="account_settings" class="card">
-            <div class="section-header d-flex align-items-center">
-                <a href="#" class="btn btn-link me-3" onclick="goBack()">
-                    <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
-                </a>
-                <h3 class="flex-grow-1 text-center mb-0">Account Settings</h3>
-            </div>
 
+        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            onclick="toggleForm('change_username_form')">
+            <span><i class="bi bi-person-fill me-2"></i>Change Username</span>
+            <i class="bi bi-chevron-right"></i>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            onclick="toggleForm('change_password_form')">
+            <span><i class="bi bi-lock-fill me-2"></i>Change Password</span>
+            <i class="bi bi-chevron-right"></i>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            onclick="confirmLogout()">
+            <span><i class="bi bi-box-arrow-right me-2"></i>Log out</span>
+            <i class="bi bi-chevron-right"></i>
+        </a>
 
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                onclick="toggleForm('change_username_form')">
-                <span><i class="bi bi-person-fill me-2"></i>Change Username</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                onclick="toggleForm('change_password_form')">
-                <span><i class="bi bi-lock-fill me-2"></i>Change Password</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                onclick="confirmLogout()">
-                <span><i class="bi bi-box-arrow-right me-2"></i>Log out</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-
-            <!-- Change Username Form -->
-            <div id="change_username_form" class="card">
-                <div class="card-body">
-                    <h3 class="card-title"><i class="bi bi-person-fill me-2"></i>Change Username</h3>
-                    <form action="change_username_process.php" method="post">
-                        <div class="mb-3">
-                            <label for="current_username" class="form-label">Current Username:</label>
-                            <input type="text" id="current_username" name="current_username" class="form-control"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="current_password" class="form-label">Current Password:</label>
-                            <input type="password" id="current_password" name="current_password" class="form-control"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="new_username" class="form-label">New Username:</label>
-                            <input type="text" id="new_username" name="new_username" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="confirm_username" class="form-label">Confirm New Username:</label>
-                            <input type="text" id="confirm_username" name="confirm_username" class="form-control"
-                                required>
-                        </div>
-                        <div class="d-flex justify-content-center gap-2">
-                            <button type="submit" name="change_username" class="btn btn-success"><i
-                                    class="bi bi-check-circle me-2"></i>Update</button>
-                            <button type="reset" class="btn btn-secondary"><i
-                                    class="bi bi-x-circle me-2"></i>Clear</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Change Password Form -->
-            <div id="change_password_form" class="card">
-                <div class="card-body">
-                    <h3 class="card-title"><i class="bi bi-lock-fill me-2"></i>Change Password</h3>
-                    <form action="change_password_process.php" method="post">
-                        <div class="mb-3">
-                            <label for="current_username" class="form-label">Current Username:</label>
-                            <input type="text" id="current_username" name="current_username" class="form-control"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="current_password" class="form-label">Current Password:</label>
-                            <input type="password" id="current_password" name="current_password" class="form-control"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="new_password" class="form-label">New Password:</label>
-                            <input type="password" id="new_password" name="new_password" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="confirm_password" class="form-label">Confirm New Password:</label>
-                            <input type="password" id="confirm_password" name="confirm_password" class="form-control"
-                                required>
-                        </div>
-                        <div class="d-flex justify-content-center gap-2">
-                            <button type="submit" name="change_password" class="btn btn-success"><i
-                                    class="bi bi-check-circle me-2"></i>Update</button>
-                            <button type="reset" class="btn btn-secondary"><i
-                                    class="bi bi-x-circle me-2"></i>Clear</button>
-                        </div>
-                    </form>
-                </div>
+        <!-- Change Username Form -->
+        <div id="change_username_form" class="card">
+            <div class="card-body">
+                <h3 class="card-title"><i class="bi bi-person-fill me-2"></i>Change Username</h3>
+                <form action="change_username_process.php" method="post">
+                    <div class="mb-3">
+                        <label for="current_username" class="form-label">Current Username:</label>
+                        <input type="text" id="current_username" name="current_username" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="current_password" class="form-label">Current Password:</label>
+                        <input type="password" id="current_password" name="current_password" class="form-control"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="new_username" class="form-label">New Username:</label>
+                        <input type="text" id="new_username" name="new_username" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm_username" class="form-label">Confirm New Username:</label>
+                        <input type="text" id="confirm_username" name="confirm_username" class="form-control" required>
+                    </div>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="submit" name="change_username" class="btn btn-success"><i
+                                class="bi bi-check-circle me-2"></i>Update</button>
+                        <button type="reset" class="btn btn-secondary"><i class="bi bi-x-circle me-2"></i>Clear</button>
+                    </div>
+                </form>
             </div>
         </div>
+
+        <!-- Change Password Form -->
+        <div id="change_password_form" class="card">
+            <div class="card-body">
+                <h3 class="card-title"><i class="bi bi-lock-fill me-2"></i>Change Password</h3>
+                <form action="change_password_process.php" method="post">
+                    <div class="mb-3">
+                        <label for="current_username" class="form-label">Current Username:</label>
+                        <input type="text" id="current_username" name="current_username" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="current_password" class="form-label">Current Password:</label>
+                        <input type="password" id="current_password" name="current_password" class="form-control"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="new_password" class="form-label">New Password:</label>
+                        <input type="password" id="new_password" name="new_password" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Confirm New Password:</label>
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-control"
+                            required>
+                    </div>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="submit" name="change_password" class="btn btn-success"><i
+                                class="bi bi-check-circle me-2"></i>Update</button>
+                        <button type="reset" class="btn btn-secondary"><i class="bi bi-x-circle me-2"></i>Clear</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     </div>
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3 mt-auto">

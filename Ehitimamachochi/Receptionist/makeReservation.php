@@ -84,7 +84,7 @@ $conn->close();
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-center" id="navbar">
-                    <ul class="navbar-nav mb-2 mb-lg-0">
+                    <ul class="navbar-nav mb-2 mb-lg-0 bg-dark">
                         <li class="nav-item">
                             <a class="nav-link" href="index.php" style="color: white !important;">
                                 <i class="bi bi-house-door me-2"></i>Home
@@ -120,32 +120,63 @@ $conn->close();
 
 
     <!-- Main Content -->
-    <main class="flex-grow-1 d-block" id="default" style="margin-top:10px;">
-        <div class="d-flex w-50 mx-auto justify-content-between gap-2">
-            <a id="roomReservationBtn" class="btn btn-primary w-100" href="rooms.php">Room Reservation</a>
-            <a id="meetingHallsBtn" class="btn btn-secondary w-100" href="halls.php">Meeting Halls</a>
-            <div class="dropdown w-100">
-                <button class="btn btn-info dropdown-toggle w-100" type="button" id="manageReservationDropdown"
-                    data-bs-toggle="dropdown" aria-expanded="false">Manage Reservation</button>
-                <ul class="dropdown-menu w-100" aria-labelledby="manageReservationDropdown">
-                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewReservationModal">View
-                            Reservation</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#UpdateReservationModal">Update
-                            Reservation</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CancelReservationModal">Cancel
-                            Reservation</a></li>
-                </ul>
+    <main class="flex-grow-1 d-block" id="default" style="margin-top:10px; ">
+        <div style="margin:30px;" >
+            <div class="d-flex flex-column flex-md-row w-80 w-md-50 mx-auto justify-content-between gap-2">
+                <a id="roomReservationBtn" class="btn btn-primary w-100 " href="rooms.php">Room Reservation</a>
+                <a id="meetingHallsBtn" class="btn btn-secondary w-100" href="halls.php">Meeting Halls</a>
+                <div class="dropdown w-100">
+                    <button class="btn btn-info dropdown-toggle w-100" type="button" id="manageReservationDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">Manage Reservation</button>
+                    <ul class="dropdown-menu w-100" aria-labelledby="manageReservationDropdown">
+                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewReservationModal">View Reservation</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#UpdateReservationModal">Update Reservation</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CancelReservationModal">Cancel Reservation</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
+
+
+
+        <div class="container-fluid container-center mt-10px " style="margin-top:10px;">
+            <div class="table-center">
+                <div class="row justify-content-center align-items-center" style="width: 80%; margin: auto;">
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow">
+                            <div class="card-header header-blue">Reserved Rooms Information</div>
+                            <div class="card-body text-center">
+                                <p class="text">Number of Reserved</p>
+                                <h2>Rooms</h2>
+                                <h1>34</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow">
+                            <div class="card-header header-blue">Reserved Halls Information</div>
+                            <div class="card-body text-center">
+                                <p id="gebi" class="text-yellow">Number of Reserved</p>
+                                <h2>Rooms</h2>
+                                <h1>23</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
     </main>
-
-
 
     <!-- Reservation Section -->
     <section id="reservation" class="my-5 d-none">

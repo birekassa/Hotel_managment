@@ -94,9 +94,6 @@ session_start(); // Start the session
             background-color: #333;
         }
     </style>
-    <style>
-
-    </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">
@@ -185,30 +182,38 @@ session_start(); // Start the session
         <button onclick="goBack('ViewReports')" class="btn btn-secondary mb-3">
             <i class="bi bi-arrow-left"></i> Back
         </button>
+
+        <div>
+            <input type="text" placeholder="search"> <button onclick="">Search </button>
+        </div>
+         <div class="col">
+                <button class="btn-sucess-end" style=" text-end">previous </button>
+                <button class="btn-sucess-start" style="text-start">next</button>
+            </div>
         <div>
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Email</th>
+                        <th>Room Type</th>
+                        <th>No of Reserved Rooms </th>
+                        <th>Reserved Date</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>john@example.com</td>
+                        <td>Standared</td>
+                        <td>40</td>
+                        <td>20/12/2014</td>
                     </tr>
                     <tr>
-                        <td>Mary</td>
-                        <td>Moe</td>
-                        <td>mary@example.com</td>
+                        <td>Luxury</td>
+                        <td>34</td>
+                        <td>11/12/2024</td>
                     </tr>
                     <tr>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
+                        <td>deluxe</td>
+                        <td>23</td>
+                        <td>11/12/2023</td>
                     </tr>
                 </tbody>
             </table>
@@ -221,29 +226,36 @@ session_start(); // Start the session
             <i class="bi bi-arrow-left"></i> Back
         </button>
         <div>
+            <input type="text" placeholder="search"><button>Search</button>
+        </div>
+        <div>
+            <div class="col">
+                <button class="btn-sucess-end" style=" text-end">previous </button>
+                <button class="btn-sucess-start" style="text-start">next</button>
+            </div>
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Email</th>
+                        <th>Hall Type</th>
+                        <th>No of Reserved Halls</th>
+                        <th>Reservation Date</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>john@example.com</td>
+                        <td>Stabdard</td>
+                        <td>21</td>
+                        <td>09/07/2020</td>
                     </tr>
                     <tr>
-                        <td>Mary</td>
-                        <td>Moe</td>
-                        <td>mary@example.com</td>
+                        <td>Dekuxe</td>
+                        <td>15</td>
+                        <td>03/05/2024</td>
                     </tr>
                     <tr>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
+                        <td>suite</td>
+                        <td>78</td>
+                        <td>07/01/2015</td>
                     </tr>
                 </tbody>
             </table>
