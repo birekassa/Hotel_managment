@@ -15,42 +15,7 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #343a40; height: 100px;">
-        <a class="navbar-brand" href="#" style="padding-left: 20px;">Ehitimamachochi Hotel Host</a>
-        <div class="container-xl h-100 d-flex align-items-center">
-            <!-- Toggler Button for Mobile View -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"
-                style="border-color: white;">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Navbar Links (collapsed on small screens) -->
-            <div class="collapse navbar-collapse" id="navbar">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-start w-100 bg-dark">
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://localhost/New/Ehitimamachochi/Host/index.php" role="button"
-                            aria-expanded="false" style="color: white !important;">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="Available_Foods.php" class="nav-link" id="" style="color: white !important;">Available
-                            Foods</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="Available_Beverages.php" class="nav-link" id=""
-                            style="color: white !important;">Available Beverages</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="AuthorizeCustomer.php" class="nav-link" id=""
-                            style="color: white !important;">Authorize Customer</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="setting.php" role="button" style="color: white !important;">Account
-                            Settings</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php include 'asset/navbar.php' ?>
 
 
 
@@ -75,9 +40,25 @@
             </div>
         </form>
     </div>
+    <!-- footer -->
+    <?php include '../assets/footer.php'; ?>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function showSection(sectionId) {
+        document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+        document.getElementById(sectionId).style.display = 'block';
+    }
+
+    function confirmLogout() {
+        if (confirm("Are you sure you want to log out?")) {
+            window.location.href = "logout.php";
+        }
+    }
+</script>
 
 </html>
