@@ -4,87 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings Page</title>
+    <title>Bar Management - Ehototmamachochi Hotel</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Bootstrap Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="asset/index.css" class="css">
     <style>
+        /* Ensures the footer is at the bottom of the page */
         body {
-            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
-
-        .navbar {
-            margin-bottom: 0;
-            background-color: #343a40;
-            height: 100px;
-            /* align-items: center; */
-            gap: 10px;
+        main {
+            flex: 1;
         }
-
-        .navbar-nav .nav-link {
-            color: #ffffff !important;
-        }
-
-        .nav-link:hover {
-            font-size: 18px;
-        }
-
-        .navbar-nav .nav-link.active {
-            color: #ff5722 !important;
-        }
-
-        .navbar-nav {
-            justify-content: center;
-            /* Center-align the nav items */
-            width: 100%;
-            /* Ensure the ul takes full width to center items properly */
-            gap: 10px;
-        }
-
-        .nav-item {
-            margin: 10px;
-        }
-
-        .nav-item:hover {
-            font-size: 17px;
-            border-bottom: 1px blue solid;
-            background-color: #333;
+        footer {
+            margin-top: auto;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 1rem 0;
         }
     </style>
 </head>
 
-<body style="font-family: 'Times New Roman', Times, serif;">
-    <!-- Navbar -->
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">Bar-man panel</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item mx-3">
-                        <a class="nav-link" href="index.php">Home</a>
-                    </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link" href="view_beverages.php">View Beverage</a>
-                    </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link" href="reports.php">Reports</a>
-                    </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link" href="Settings.php">Settings</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<body>
 
+    <?php include 'asset/navbar.php'; ?>
 
+     <!-- this is the main content of the page -->
     <div class="container mt-5" style="max-width: 600px;">
         <h2 class="text-center mb-4"><i class="bi bi-gear-fill me-2"></i>Account Settings</h2>
-
         <div id="set_option" class="list-group">
             <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
                 onclick="showSection('change_username')">
@@ -169,50 +120,12 @@
             </div>
         </div>
     </div>
-    <footer class="footer bg-dark text-white text-center py-4" style="margin-top: auto;">
-        <div class="container">
-            <p style="margin: 0;">&copy; 2024 Ehototmamachochi Hotel. All rights reserved.</p>
-        </div>
-    </footer>
 
+
+    <?php include '../assets/footer.php'; ?>
+
+    <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-    <script>
-        function showSection(id) {
-            // Get all sections
-            const sections = document.querySelectorAll('.card');
-
-            // Hide all sections
-            sections.forEach(section => {
-                if (section.id !== id) {
-                    section.style.display = 'none';
-                }
-            });
-
-            // Toggle the selected section
-            const selectedSection = document.getElementById(id);
-            selectedSection.style.display = (selectedSection.style.display === 'none' || selectedSection.style.display === '') ? 'block' : 'none';
-        }
-
-        function confirmLogout(event) {
-            event.preventDefault(); // Prevent the default link behavior
-
-            Swal.fire({
-                icon: 'question',
-                title: 'Are you sure?',
-                text: 'Do you want to log out?',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, log out',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Redirect to the specified URL
-                    window.location.href = "http://localhost/New/Ehitimamachochi%20hotel%20information%20managmnet%20System/index.php";
-                }
-            });
-        }
-    </script>
-
 </body>
 
 </html>

@@ -32,7 +32,12 @@ session_start(); // Start the session
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;
+          
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
+        
 
         .navbar-nav {
             justify-content: center;
@@ -68,31 +73,7 @@ session_start(); // Start the session
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">Bar-man panel</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php"> <i class="bi bi-house-door"></i> Home</a>
-                    </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link" href="view_beverages.php">View Beverage</a>
-                    </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link" href="reports.php">Reports</a>
-                    </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link" href="Settings.php">Settings</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php include 'asset/navbar.php'; ?>
 
 
     <!-- Main content -->
@@ -144,11 +125,7 @@ session_start(); // Start the session
         </section>
     </main>
 
-    <footer class="footer bg-dark text-white text-center py-4" style="margin-top: auto;">
-        <div class="container">
-            <p style="margin: 0;">&copy; 2024 Ehototmamachochi Hotel. All rights reserved.</p>
-        </div>
-    </footer>
+    <?php include '../assets/footer.php'; ?>
 
     <!-- JavaScript to handle row addition, removal, and dynamic data update -->
     <script>

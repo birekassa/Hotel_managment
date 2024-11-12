@@ -1,22 +1,50 @@
 <?php
 // Include database connection
 include '../assets/conn.php';
-session_start(); // Start the session
 
-// // Check if the user's position is 'casher'
-// if ($_SESSION['position'] !== 'casher' && $_SESSION['position'] !== 'Casher') {
-//     // Redirect to login page if the user is not a 'casher'
-//     header("Location: ../index/index.php");
-//     exit();
-// }
+// Initialize arrays
+$Reports = [];
+$hall_report = [];
+
+// Fetch inventory data for rooms
+$sql = "SELECT * FROM `rooms_reports` WHERE 1";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $Reports[] = $row;
+    }
+}
+
+// Fetch inventory data for halls
+$hall_sql = "SELECT * FROM `halls_reports` WHERE 1";
+$result = $conn->query($hall_sql);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $hall_report[] = $row;
+    }
+}
+
+// Close the connection
+$conn->close();
+?>
+
+
+
+
+<?php
+// Include database connection
+include '../assets/conn.php';
+session_start(); // Start the session
 
 // Check if the user is logged in
 // if (!isset($_SESSION['username'])) {
 //     // Redirect to login page if not logged in
-//     header("Location: ../index/index.php");
+//     header("Location: index/index.php");
 //     exit();
 // }
 
+// // Access the session variables
+// $username = $_SESSION['username'];
 // $position = $_SESSION['position'];
 // $report_provider_name = ''; // Initialize variable
 
@@ -33,7 +61,7 @@ session_start(); // Start the session
 
 // // Check if names and ID were retrieved successfully
 // if ($f_name && $l_name && $id) {
-//     $report_provider_name = 'ID: ' . $id . ',   Name : ' . $f_name . ' ' . $l_name; // Combine first name, last name, and ID
+//     $report_provider_name = 'ID: '.$id.',   Name : '.$f_name.' '.$l_name; // Combine first name, last name, and ID
 // } else {
 //     $report_provider_name = 'Unknown Provider'; // Fallback if no name or ID is found
 // }
@@ -41,7 +69,7 @@ session_start(); // Start the session
 // // Close the statement and connection
 // $stmt->close();
 // $conn->close();
-// ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,141 +85,362 @@ session_start(); // Start the session
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <?php include 'asset/navbar.php'; ?>
+
+    <!-- Main Container -->
+    <div id="mainContainer" class="container-custom">
         <div class="container">
-            <a class="navbar-brand" href="index.php">Bar-man panel</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item mx-3">
-                        <a class="nav-link" href="index.php">Home</a>
-                    </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link" href="view_beverages.php">View Beverage</a>
-                    </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link" href="reports.php">Reports</a>
-                    </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link" href="Settings.php">Settings</a>
-                    </li>
-                </ul>
+            <div class="list-group">
+                <!-- View Reports -->
+                <a href="#"
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                    onclick="showSection('ViewReports')">
+                    <span><i class="bi bi-file-earmark-text me-2"></i>View Reports</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+                <!-- Write Reports -->
+                <a href="#"
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                    onclick="showSection('WriteReports')">
+                    <span><i class="bi bi-pencil me-2"></i>Write Reports</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
             </div>
         </div>
-    </nav>
-
-
-
-<div class="content">
-    <!-- Main Container Section (Visible only on page load and when back is clicked) -->
-    <div id="mainContainer" class="container-fluid d-flex justify-content-center align-items-center" style="height: 60vh; width: 100vh;" >
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" onclick="showIstockedSection()">
-                <span><i class="bi bi-file-earmark-text me-2"></i>View Instocked Item Reports from store</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" onclick="showSoldSection()">
-                <span><i class="bi bi-pencil me-2"></i> View Sold Item Reports </span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-        </div>
     </div>
 
-    <!-- Container for Instocked Beverage Information (Initially Hidden) -->
-    <div id="instockedSection" class="container" style="display: none;">
-        <!-- Back Button -->
-        <button onclick="showMainContainer()" class="btn btn-secondary mb-3">
-            <i class="bi bi-arrow-left"></i> Back
-        </button>
-        <h1>INSTOCKED BEVERAGE INFORMATION</h1>
-        <div>
-            <input type="text" placeholder="Search by name or date" id="searchInput">
-            <button onclick="searchBeverage()">Search</button>
+    <!-- View Reports Section -->
+    <section id="ViewReports" class="container-custom hidden">
+        <div class="container">
+            <button onclick="goBack('mainContainer')" class="btn btn-secondary mb-3">
+                <i class="bi bi-arrow-left"></i> Back
+            </button>
+            <div class="list-group">
+                <a href="#"
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                    onclick="showSection('view_room_report')">
+                    <span><i class="bi bi-archive me-2"></i>Received Items reports </span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+                <a href="#"
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                    onclick="showSection('view_hall_report')">
+                    <span><i class="bi bi-building me-2"></i>Sold Items reports</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </div>
         </div>
-        <div class="d-flex justify-content-between mt-3">
-            <button onclick="loadNextDay()" id="nextDayButton" class="btn btn-primary">Previous Page</button>
-            <button onclick="loadPreviousDay()" class="btn btn-primary">Next Page</button>
+    </section>
+
+
+    <!--View Rooms Report Section -->
+    <section id="view_room_report" class=" container-custom  hidden">
+        <div class="container">
+            <button onclick="goBack('ViewReports')" class="btn btn-secondary mb-3">
+                <i class="bi bi-arrow-left"></i> Back
+            </button>
+            <!-- Search Bar Section -->
+            <div class="d-flex justify-content-between mb-4">
+                <div class="d-flex">
+                    <input type="text" class="form-control me-2" placeholder="Search" />
+                    <button class="btn btn-primary">
+                        <i class="bi bi-search me-2"></i>Search
+                    </button>
+                </div>
+                <div class="d-flex">
+                    <button class="btn btn-outline-secondary me-2">
+                        <i class="bi bi-chevron-left me-2"></i>Previous
+                    </button>
+                    <button class="btn btn-outline-secondary">
+                        Next<i class="bi bi-chevron-right me-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Report Table Section -->
+            <div class="table-responsive">
+                <table class="table" style="width:100%; margin-bottom:30px;">
+                    <thead>
+                        <tr>
+                            <th>Beverage Name</th>
+                            <th>Beverage Type</th>
+                            <th>Measurement</th>
+                            <th>Quantity</th>
+                            <th>Date Added</th>
+                            <th>Added By</th>
+                        </tr>
+                    </thead>
+                    <tbody id="beverageTableBody"></tbody>
+                </table>
+            </div>
+
+            <!-- More Details Button & Collapse Section -->
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-info" data-bs-toggle="collapse" data-bs-target="#demo">
+                    <i class="bi bi-info-circle me-2"></i> More Details
+                </button>
+            </div>
+
+            <div id="demo" class="collapse mt-3">
+                <p>This is the detailed information of the reserved room.</p>
+            </div>
         </div>
-        <div class="table-responsive">
-            <table class="table" style="width:100%; margin-bottom:30px;">
-                <thead>
-                    <tr>
-                        <th>Beverage Name</th>
-                        <th>Beverage Type</th>
-                        <th>Measurement</th>
-                        <th>Quantity</th>
-                        <th>Date Added</th>
-                        <th>Added By</th>
-                    </tr>
-                </thead>
-                <tbody id="beverageTableBody"></tbody>
-            </table>
+    </section>
+
+
+
+    <!-- Halls Report Section -->
+    <section id="view_hall_report" class="container-custom hidden">
+        <div class="container">
+            <button onclick="goBack('ViewReports')" class="btn btn-secondary mb-3">
+                <i class="bi bi-arrow-left"></i> Back
+            </button>
+            <!-- Search Bar Section -->
+            <div class="d-flex justify-content-between mb-4">
+                <div class="d-flex">
+                    <input type="text" class="form-control me-2" placeholder="Search" />
+                    <button class="btn btn-primary">
+                        <i class="bi bi-search me-2"></i>Search
+                    </button>
+                </div>
+                <div class="d-flex">
+                    <button class="btn btn-outline-secondary me-2">
+                        <i class="bi bi-chevron-left me-2"></i>Previous
+                    </button>
+                    <button class="btn btn-outline-secondary">
+                        Next <i class="bi bi-chevron-right me-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hall Report Table Section -->
+            <div class="table-responsive">
+                <table class="table" style="width:100%; margin-bottom:30px;">
+                    <thead>
+                        <tr>
+                            <th>Beverage Name</th>
+                            <th>Beverage Type</th>
+                            <th>Quantity Sold</th>
+                            <th>Date Sold</th>
+                            <th>Other Info</th>
+                        </tr>
+                    </thead>
+                    <tbody id="soldBeverageTableBody"></tbody>
+                </table>
+            </div>
+            <!-- Button to Toggle More Details -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#hallDetails">
+                <i class="bi bi-info-circle me-2"></i>More Details
+            </button>
+
+            <!-- Collapsible Details Section -->
+            <div id="hallDetails" class="collapse mt-3">
+                <p>This is halls details.</p>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Container for Sold Beverage Information (Initially Hidden) -->
-    <div id="soldSection" class="container" style="display: none;">
-        <!-- Back Button -->
-        <button onclick="showMainContainer()" class="btn btn-secondary mb-3">
-            <i class="bi bi-arrow-left"></i> Back
-        </button>
-        <h1>Sold Beverage Information</h1>
-        <div>
-            <input type="text" placeholder="Search by name or date" id="searchInput">
-            <button onclick="searchBeverage()">Search</button>
+    <script>
+        // Function to show a specific section and hide all others
+        function showSection(sectionId) {
+            // Hide all sections
+            const allSections = document.querySelectorAll('.container-custom, .report-section');
+            allSections.forEach(section => section.classList.add('hidden'));
+
+            // Show the selected section
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.remove('hidden');
+            }
+        }
+
+        // Function to go back to the previous section
+        function goBack(previousSectionId) {
+            showSection(previousSectionId);
+        }
+    </script>
+
+    <!-- CSS to hide the sections by default -->
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .container-custom,
+        .report-section {
+            margin-top: 20px;
+        }
+    </style>
+
+
+
+
+    <!-- Write Reports Section -->
+    <section id="WriteReports" class="container-custom hidden">
+        <div class="container">
+            <button onclick="goBack('mainContainer')" class="btn btn-secondary mb-3">
+                <i class="bi bi-arrow-left"></i> Back
+            </button>
+            <form action="submit_report.php" method="post">
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="d-flex align-items-center">
+                        <label for="report_provider" class="me-2">Report Provider:</label>
+                        <input type="text" class="form-control" name="report_provider" id="report_provider"
+                            value="<?php echo htmlspecialchars($report_provider_name); ?>" readonly required>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <select name="report_about" id="report_about" style="padding:10px;" required>
+                            <option value="">Select Report About</option>
+                            <option value="">Room Report</option>
+                            <option value="">Halls Report</option>
+                            <option value="">Other</option>
+                        </select>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <select name="report_type" id="report_type" style="padding:10px;" required>
+                            <option value="">Select Report Type</option>
+                            <option value="">Expense</option>
+                            <option value="">Income</option>
+                        </select>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <label for="reported_date" class="me-2">Reported Date:</label>
+                        <input type="date" class="form-control" name="reported_date" id="reported_date" readonly
+                            required>
+                    </div>
+                </div>
+                <table id="reportTable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>List</th>
+                            <th>Measurement</th>
+                            <th>Quantity</th>
+                            <th>Single Price</th>
+                            <th>Total Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dynamic rows will be added here -->
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-primary" onclick="addRow()">Add Row</button>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
         </div>
-        <div class="d-flex justify-content-between mt-3">
-            <button onclick="loadNextDay()" id="nextDayButton" class="btn btn-primary">Previous Page</button>
-            <button onclick="loadPreviousDay()" class="btn btn-primary">Next Page</button>
-        </div>
-        <div class="table-responsive">
-            <table class="table" style="width:100%; margin-bottom:30px;">
-                <thead>
-                    <tr>
-                        <th>Beverage Name</th>
-                        <th>Beverage Type</th>
-                        <th>Quantity Sold</th>
-                        <th>Date Sold</th>
-                        <th>Other Info</th>
-                    </tr>
-                </thead>
-                <tbody id="soldBeverageTableBody"></tbody>
-            </table>
-        </div>
-    </div>
-</div>
+    </section>
 
-<script>
-// Function to show the main container and hide other sections
-function showMainContainer() {
-    // Show the main container and hide both sections
-    document.getElementById('mainContainer').style.display = 'flex';  // Show main container (centered)
-    document.getElementById('instockedSection').style.display = 'none'; // Hide instocked section
-    document.getElementById('soldSection').style.display = 'none'; // Hide sold section
-}
-
-// Function to show the Instocked Section and hide others
-function showIstockedSection() {
-    // Hide the main container and show the instocked section
-    document.getElementById('mainContainer').style.display = 'none'; // Hide main container
-    document.getElementById('instockedSection').style.display = 'block'; // Show instocked section
-    document.getElementById('soldSection').style.display = 'none'; // Hide sold section
-}
-
-// Function to show the Sold Section and hide others
-function showSoldSection() {
-    // Hide the main container and show the sold section
-    document.getElementById('mainContainer').style.display = 'none'; // Hide main container
-    document.getElementById('instockedSection').style.display = 'none'; // Hide instocked section
-    document.getElementById('soldSection').style.display = 'block'; // Show sold section
-}
-</script>
+    <?php include '../assets/footer.php'; ?>
 
 
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('reported_date').value = today;
+        });
 
+        let rowCount = 0;
+
+        function addRow() {
+            rowCount++;
+            const tableBody = document.querySelector('#reportTable tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${rowCount}</td>
+                <td><input type="text" name="list[]" class="form-control" required></td>
+                <td><input type="text" name="measurement[]" class="form-control" required></td>
+                <td><input type="number" name="quantity[]" class="form-control" step="any" required></td>
+                <td><input type="number" name="single_price[]" class="form-control" step="any" required></td>
+                <td><input type="number" name="total_price[]" class="form-control" step="any" readonly></td>
+                <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button></td>
+            `;
+            tableBody.appendChild(newRow);
+
+            // Add event listener to update total price when quantity or single price changes
+            newRow.querySelector('input[name="quantity[]"]').addEventListener('input', updateTotalPrice);
+            newRow.querySelector('input[name="single_price[]"]').addEventListener('input', updateTotalPrice);
+        }
+
+        function removeRow(button) {
+            const row = button.closest('tr');
+            row.remove();
+            updateRowNumbers();
+        }
+
+        function updateRowNumbers() {
+            const rows = document.querySelectorAll('#reportTable tbody tr');
+            rows.forEach((row, index) => {
+                row.querySelector('td:first-child').textContent = index + 1;
+            });
+            rowCount = rows.length;
+        }
+
+        function updateTotalPrice(event) {
+            const row = event.target.closest('tr');
+            const quantity = parseFloat(row.querySelector('input[name="quantity[]"]').value) || 0;
+            const singlePrice = parseFloat(row.querySelector('input[name="single_price[]"]').value) || 0;
+            const totalPrice = quantity * singlePrice;
+            row.querySelector('input[name="total_price[]"]').value = totalPrice.toFixed(2);
+        }
+
+        function validateForm() {
+            const rows = document.querySelectorAll('#reportTable tbody tr');
+            let isValid = true;
+            let errorMessages = [];
+
+            rows.forEach((row, index) => {
+                const list = row.querySelector('input[name="list[]"]').value.trim();
+                const measurement = row.querySelector('input[name="measurement[]"]').value.trim();
+                const quantity = row.querySelector('input[name="quantity[]"]').value.trim();
+                const singlePrice = row.querySelector('input[name="single_price[]"]').value.trim();
+                const totalPrice = row.querySelector('input[name="total_price[]"]').value.trim();
+
+                let missingColumns = [];
+
+                if (!list) missingColumns.push('List');
+                if (!measurement) missingColumns.push('Measurement');
+                if (!quantity) missingColumns.push('Quantity');
+                if (!singlePrice) missingColumns.push('Single Price');
+                if (!totalPrice) missingColumns.push('Total Price');
+
+                if (missingColumns.length > 0) {
+                    isValid = false;
+                    errorMessages.push(`Row ${index + 1}: Missing ${missingColumns.join(', ')}`);
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill out all required fields:\n' + errorMessages.join('\n'));
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
+
+        // Attach validateForm function to form's submit event
+        document.querySelector('form').addEventListener('submit', function (event) {
+            if (!validateForm()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(id).classList.remove('hidden');
+            document.getElementById('mainContainer').classList.add('hidden');
+        }
+
+        function goBack() {
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById('mainContainer').classList.remove('hidden');
+        }
+    </script>
 
     <script>
 
@@ -283,15 +532,7 @@ function showSoldSection() {
         // Initialize by loading today's data or the most recent available data
         fetchDataForDate(currentDate);
     </script>
-
-
-    <footer class="footer bg-dark text-white text-center py-4" style="margin-top: auto;">
-        <div class="container">
-            <p style="margin: 0;">&copy; 2024 Ehototmamachochi Hotel. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- JavaScript -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

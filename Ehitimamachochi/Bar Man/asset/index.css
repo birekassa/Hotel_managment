@@ -3,6 +3,8 @@
             min-height: 100vh;
             margin: 0;
             font-family: 'Times New Roman', Times, serif;
+            display: flex;
+            flex-direction: column;
         }
 
         .navbar {
