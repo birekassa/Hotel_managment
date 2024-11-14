@@ -1,3 +1,14 @@
+<?php
+// Function to get hotel information from the assets folder
+function getHotelInfo() {
+    $jsonData = file_get_contents('../assets/hotel_config.json'); // Ensure this path is correct
+    return json_decode($jsonData, true);
+}
+
+// Get the hotel information
+$hotelInfo = getHotelInfo();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- this is also the head part which is not visible-->
@@ -141,7 +152,7 @@
                             <div>
                                 <h2 style="margin: 0;">Phone</h2>
                                 <a id="phoneLink" href="tel:+251917828062"
-                                    style="color: #000; text-decoration: none; font-size: 18px;">+251 917 828 062</a>
+                                    style="color: #000; text-decoration: none; font-size: 18px;"><span><?php echo htmlspecialchars($hotelInfo['phone']); ?></span></a>
                             </div>
                         </div>
 
@@ -153,7 +164,7 @@
                             <div>
                                 <h2 style="margin: 0;">Email Address</h2>
                                 <a id="emailLink" href="mailto:contact@ehitimamachochihotel.com"
-                                    style="color: #000; text-decoration: none; font-size: 18px;">contact@ehitimamachochihotel.com</a>
+                                    style="color: #000; text-decoration: none; font-size: 18px;"><span><?php echo htmlspecialchars($hotelInfo['email']); ?></span></a>
                             </div>
                         </div>
 
@@ -203,7 +214,7 @@
                                 <a id="mapLink"
                                     href="https://www.google.com/maps/place/Ehitmamachoch+Hotel/@7.1987875,35.4256296,13z/data=!4m6!3m5!1s0x17a913f104bddabd:0xe94caf4f7ead4a4d!8m2!3d7.2012757!4d35.4155521!16s%2Fg%2F11tbxhd1hg?entry=ttu&g_ep=EgoyMDI0MTAyMy4wIKXMDSoASAFQAw%3D%3D"
                                     target="_blank" style="color: #000; text-decoration: none; font-size: 18px;">South
-                                    West Ethiopia, Teppi, Ethimachochi Hotel</a>
+                                  <span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span> <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span></a>
                             </div>
                         </div>
 
@@ -328,6 +339,35 @@
         </div>
     </div>
     <!-- End of Login Form Modal -->
+    <div class="loader" id="loader"></div>
+ <style>
+        /* Loader style */
+        .loader {
+            display: none; /* Hide initially */
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+<script>
+    // Show loader on form submission
+    document.getElementById('loginForm').addEventListener('submit', function() {
+        document.getElementById('loader').style.display = 'block';
+    });
+</script>
 
     <script>
         // Get elements
@@ -372,7 +412,7 @@
         <div class="container">
             <h1 class="display-4"
                 style="color: #007bff; font-weight: bold; font-family: 'Times New Roman', serif;  text-align: center;">
-                Welcome to Ehitimamachochi Hotel
+               Welcome <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span>
             </h1>
             <hr class="my-4" style="border-top: 2px solid #000000;">
             <h2 style="font-size: 24px; font-weight: bold; font-family: 'Times New Roman', serif; color: #000000;">
@@ -519,7 +559,7 @@
 
             <!-- Left-Aligned Text with Margin -->
             <p class="lead" style="margin-bottom: 1rem; text-align: left; margin-left: 20px;">
-                Enjoy traditional Ethiopian dishes at Ehitimamachochi Hotel in Teppi town. Our menu offers a real taste
+                Enjoy traditional Ethiopian dishes at <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span> in <span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span>. Our menu offers a real taste
                 of local cuisine.
             </p>
             <p style="margin-bottom: 1rem; text-align: left; margin-left: 20px;">
@@ -671,7 +711,7 @@
                     </ul>
                 </div>
             </div>
-            <p> Each beer offers a unique taste of Ethiopian brewing tradition. Visit us at Ehitimamachochi Hotel and
+            <p> Each beer offers a unique taste of Ethiopian brewing tradition. Visit us at <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span> and
                 enjoy a memorable experience!</p>
             <!-- Centered Button -->
             <div style="text-align: center; margin-top: 1rem;">
@@ -742,7 +782,7 @@
                     </p>
 
                     <p style="font-size: 18px; color: #000; margin-bottom: 18px;">
-                        Book your meeting hall today and enjoy our professional service at Ehitimamachochi Hotel.
+                        Book your meeting hall today and enjoy our professional service at <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span>.
                     </p>
                 </div>
                 <!-- Centered Button for Reservation -->
@@ -796,21 +836,17 @@
             <div
                 style="flex: 1; min-width: 25%; background-color: #222; color: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); font-family: 'Times New Roman', serif; font-size: 12px;">
                 <h2 style="color: #007bff; text-align: center; font-size: 18px;">About Us</h2>
-                <p>Welcome to <strong>EHITIMAMACHOCHI HOTEL</strong>, a charming getaway nestled in Teppi, South West
-                    Ethiopia.</p>
-                <p>Established on <strong>September 2, 2014</strong>, we are located near Ayermeda, above Post Kembridge
+                <p>Welcome to <strong><span><?php echo htmlspecialchars($hotelInfo['name']); ?></span></strong>, a charming getaway nestled in <span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span>.</p>
+                <p>Established on <strong>September 2, 2014</strong>, we are located near<span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span>
                     Academy.</p>
                 <p>Enjoy weddings, relaxation, and live music concerts at our venue.</p>
             </div>
 
             <!-- Our Services -->
-            <div
-                style="flex: 1; min-width: 25%; background-color: #222; color: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); font-family: 'Times New Roman', serif; font-size: 12px;">
+            <div style="flex: 1; min-width: 25%; background-color: #222; color: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); font-family: 'Times New Roman', serif; font-size: 12px;">
                 <h2 style="color: #007bff; text-align: center; font-size: 18px;">Our Services</h2>
-                <a href="#"
-                    style="display: flex; align-items: center; color: white; text-decoration: none; padding: 10px; border-bottom: 1px solid #444;">
-                    <i class="fas fa-house-user" style="color: #00c8ff; margin-right: 8px;"></i>
-                    Room Reservation
+                <a href="#"style="display: flex; align-items: center; color: white; text-decoration: none; padding: 10px; border-bottom: 1px solid #444;">
+                    <i class="fas fa-house-user" style="color: #00c8ff; margin-right: 8px;"></i> Room Reservation
                 </a>
                 <a href="#"
                     style="display: flex; align-items: center; color: white; text-decoration: none; padding: 10px; border-bottom: 1px solid #444;">
@@ -835,33 +871,28 @@
                 <h2 style="color: #007bff; text-align: center; font-size: 18px;">Contact Us</h2>
                 <p style="margin-bottom: 10px;">
                     <i class="fas fa-phone" style="color: #00c8ff; margin-right: 8px;"></i>
-                    <a href="tel:+251917828062" style="color: white; text-decoration: none;">+251 917 828 062</a>
+                    <a href="tel:+251917828062" style="color: white; text-decoration: none;"><span><?php echo htmlspecialchars($hotelInfo['phone']); ?></span></a>
                 </p>
                 <p style="margin-bottom: 10px;">
                     <i class="fas fa-envelope" style="color: #00c8ff; margin-right: 8px;"></i>
-                    <a href="mailto:Ehitimamachochi@gmail.com"
-                        style="color: white; text-decoration: none;">Ehitimamachochi@gmail.com</a>
+                    <a href="mailto:Ehitimamachochi@gmail.com" style="color: white; text-decoration: none;"><span><?php echo htmlspecialchars($hotelInfo['email']); ?></span></a>
                 </p>
                 <p style="margin-bottom: 10px;">
                     <i class="fab fa-facebook-f" style="color: #00c8ff; margin-right: 8px;"></i>
-                    <a href="https://facebook.com" style="color: white; text-decoration: none;"> Ehitimamachochi
-                        Hotel</a>
+                    <a href="https://facebook.com" style="color: white; text-decoration: none;"> <span><?php echo htmlspecialchars($hotelInfo['facebook']); ?></span></a>
                 </p>
                 <p style="margin-bottom: 10px;">
                     <i class="fab fa-twitter" style="color: #00c8ff; margin-right: 8px;"></i>
-                    <a href="https://twitter.com" style="color: white; text-decoration: none;">@EhitimamachochiHotel</a>
+                    <a href="https://twitter.com" style="color: white; text-decoration: none;"><span><?php echo htmlspecialchars($hotelInfo['twitter']); ?></span></a>
                 </p>
                 <p style="margin-bottom: 10px;">
                     <i class="fab fa-instagram" style="color: #00c8ff; margin-right: 8px;"></i>
-                    <a href="https://instagram.com" style="color: white; text-decoration: none;">
-                        @EhitimamachochiHotel</a>
+                    <a href="https://instagram.com" style="color: white; text-decoration: none;"><span><?php echo htmlspecialchars($hotelInfo['instagram']); ?></span></a>
                 </p>
                 <p style="margin-bottom: 10px;">
                     <i class="fas fa-map-marker-alt" style="color: #00c8ff; margin-right: 8px;"></i>
                     <a href="https://www.google.com/maps/place/Ehitmamachoch+Hotel/@7.1987875,35.4256296,13z/data=!4m6!3m5!1s0x17a913f104bddabd:0xe94caf4f7ead4a4d!8m2!3d7.2012757!4d35.4155521!16s%2Fg%2F11tbxhd1hg?entry=ttu&g_ep=EgoyMDI0MTAyMy4wIKXMDSoASAFQAw%3D%3D"
-                        style="color: white; text-decoration: none;" target="_blank">Ayermeda above post Kembridge
-                        Academy, Teppi, South West
-                        Ethiopia</a>
+                        style="color: white; text-decoration: none;" target="_blank"><span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span><span><?php echo htmlspecialchars($hotelInfo['town']); ?></span><span><?php echo htmlspecialchars($hotelInfo['regin']); ?></span><span><?php echo htmlspecialchars($hotelInfo['Countery']); ?></span></a>
                 </p>
                 <p style="margin-bottom: 0;">
                     <i class="fas fa-question-circle" style="color: #00c8ff; margin-right: 8px;"></i>

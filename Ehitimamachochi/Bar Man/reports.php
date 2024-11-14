@@ -87,158 +87,469 @@ session_start(); // Start the session
     <!-- Navbar -->
     <?php include 'asset/navbar.php'; ?>
 
-    <!-- Main Container -->
-    <div id="mainContainer" class="container-custom">
-        <div class="container">
-            <div class="list-group">
-                <!-- View Reports -->
-                <a href="#"
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                    onclick="showSection('ViewReports')">
-                    <span><i class="bi bi-file-earmark-text me-2"></i>View Reports</span>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-                <!-- Write Reports -->
-                <a href="#"
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                    onclick="showSection('WriteReports')">
-                    <span><i class="bi bi-pencil me-2"></i>Write Reports</span>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-            </div>
+<!-- Main Container -->
+<div id="mainContainer" class="container-custom">
+    <div class="container">
+        <div class="list-group">
+            <!-- View Reports (Dropdown) -->
+<!-- View Reports (Dropdown) -->
+<a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 rounded-3 mb-2 bg-light"
+   data-bs-toggle="collapse" data-bs-target="#viewReportsContent" aria-expanded="false" aria-controls="viewReportsContent">
+    <span><i class="bi bi-file-earmark-text me-2"></i><strong>View Reports</strong></span>
+    <i class="bi bi-chevron-down"></i>
+</a>
+
+<!-- Collapsible Dropdown Content -->
+<div id="viewReportsContent" class="collapse">
+    <div class="list-group ms-3">
+        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 mb-2 bg-light"
+           onclick="showSection('view_received_report')">
+            <span><i class="bi bi-archive me-2"></i>Received Items Reports</span>
+            <i class="bi bi-chevron-right"></i>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 mb-2 bg-light"
+           onclick="showSection('view_sold_report')">
+            <span><i class="bi bi-building me-2"></i>Sold Items Reports</span>
+            <i class="bi bi-chevron-right"></i>
+        </a>
+    </div>
+</div>
+
+
+            <!-- Write Reports -->
+            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 rounded-3 mb-2 bg-light"
+                onclick="showSection('new_inserted_WriteReports')">
+                <span><i class="bi bi-pencil me-2"></i><strong>Write Reports</strong></span>
+                <i class="bi bi-chevron-right"></i>
+            </a>
         </div>
     </div>
-
-    <!-- View Reports Section -->
-    <section id="ViewReports" class="container-custom hidden">
-        <div class="container">
-            <button onclick="goBack('mainContainer')" class="btn btn-secondary mb-3">
-                <i class="bi bi-arrow-left"></i> Back
-            </button>
-            <div class="list-group">
-                <a href="#"
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                    onclick="showSection('view_room_report')">
-                    <span><i class="bi bi-archive me-2"></i>Received Items reports </span>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-                <a href="#"
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                    onclick="showSection('view_hall_report')">
-                    <span><i class="bi bi-building me-2"></i>Sold Items reports</span>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+</div>
 
 
-    <!--View Rooms Report Section -->
-    <section id="view_room_report" class=" container-custom  hidden">
+
+
+
+
+
+    <!-- View Received Report Section -->
+    <section id="view_received_report" class="container-custom hidden">
         <div class="container">
             <button onclick="goBack('ViewReports')" class="btn btn-secondary mb-3">
                 <i class="bi bi-arrow-left"></i> Back
             </button>
+
             <!-- Search Bar Section -->
             <div class="d-flex justify-content-between mb-4">
-                <div class="d-flex">
-                    <input type="text" class="form-control me-2" placeholder="Search" />
-                    <button class="btn btn-primary">
+                <div class="d-flex flex-grow-1 gap-2">
+                    <input type="date" id="searchDate" class="form-control" placeholder="Search by date">
+                    <button class="btn btn-primary btn-custom" onclick="searchByDate()">
                         <i class="bi bi-search me-2"></i>Search
                     </button>
                 </div>
-                <div class="d-flex">
-                    <button class="btn btn-outline-secondary me-2">
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-secondary btn-custom" onclick="goToPreviousPage()">
                         <i class="bi bi-chevron-left me-2"></i>Previous
                     </button>
-                    <button class="btn btn-outline-secondary">
-                        Next<i class="bi bi-chevron-right me-2"></i>
+                    <button class="btn btn-outline-secondary btn-custom" onclick="goToNextPage()">
+                        Next<i class="bi bi-chevron-right ms-2"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Report Table Section -->
-            <div class="table-responsive">
-                <table class="table" style="width:100%; margin-bottom:30px;">
-                    <thead>
-                        <tr>
-                            <th>Beverage Name</th>
-                            <th>Beverage Type</th>
-                            <th>Measurement</th>
-                            <th>Quantity</th>
-                            <th>Date Added</th>
-                            <th>Added By</th>
-                        </tr>
-                    </thead>
-                    <tbody id="beverageTableBody"></tbody>
-                </table>
+            <style>
+                .btn-custom {
+                    width: 20%;
+                    min-width: 120px;
+                    /* Ensures readability on smaller screens */
+                }
+
+                /* Adds padding and a subtle shadow for a more modern look */
+                .btn-custom {
+                    padding: 10px 0;
+                    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+                    transition: background-color 0.3s, box-shadow 0.3s;
+                }
+
+                /* Hover effect for buttons */
+                .btn-custom:hover {
+                    background-color: #007bff !important;
+                    color: white !important;
+                    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+                }
+
+                .form-control {
+                    max-width: 60%;
+                }
+            </style>
+
+
+            <!-- Tab Styling -->
+            <style>
+                .tab {
+                    float: left;
+                    border: 1px solid #ccc;
+                    background-color: #f1f1f1;
+                    width: 30%;
+                    height: 300px;
+                }
+
+                .tab button {
+                    display: block;
+                    background-color: inherit;
+                    color: black;
+                    padding: 22px 16px;
+                    width: 100%;
+                    border: none;
+                    outline: none;
+                    text-align: left;
+                    cursor: pointer;
+                    transition: 0.3s;
+                    font-size: 17px;
+                    gap:5px;
+                    
+                }
+
+                .tab button:hover {
+                    background-color: #ddd;
+                }
+
+                .tab button.active {
+                    background-color: #ccc;
+                }
+
+                .tabcontent {
+                    float: left;
+                    padding: 0px 12px;
+                    border: 1px solid #ccc;
+                    width: 70%;
+                    border-left: none;
+                    height: 300px;
+                    display: none;
+                }
+
+                .tabcontent.active {
+                    display: block;
+                }
+                
+            </style>
+
+            <!-- Tabs and Content Sections -->
+            <div class="tab">
+                <button class="tablinks" onclick="openTab(event, 'SoftBeverage')" id="defaultOpen">Soft
+                    Beverage</button>
+                <button class="tablinks" onclick="openTab(event, 'AlcoholBeverage')">Alcohol Beverage</button>
+                <button class="tablinks" onclick="openTab(event, 'BothBeverage')">Both Beverages</button>
             </div>
 
-            <!-- More Details Button & Collapse Section -->
-            <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-info" data-bs-toggle="collapse" data-bs-target="#demo">
-                    <i class="bi bi-info-circle me-2"></i> More Details
-                </button>
+            <div id="SoftBeverage" class="tabcontent">
+                <!-- Report Table Section for Soft Beverage -->
+                <div class="table-responsive">
+                    <table class="table" style="width:100%; margin-bottom:30px;">
+                        <thead>
+                            <tr>
+                                <th>Beverage Name</th>
+                                <th>Beverage Type</th>
+                                <th>Measurement</th>
+                                <th>Quantity</th>
+                                <th>Date Added</th>
+                                <th>Added By</th>
+                            </tr>
+                        </thead>
+                        <tbody id="softBeverageTableBody"></tbody>
+                    </table>
+                </div>
             </div>
 
-            <div id="demo" class="collapse mt-3">
-                <p>This is the detailed information of the reserved room.</p>
+            <div id="AlcoholBeverage" class="tabcontent">
+                <!-- Report Table Section for Alcohol Beverage -->
+                <div class="table-responsive">
+                    <table class="table" style="width:100%; margin-bottom:30px;">
+                        <thead>
+                            <tr>
+                                <th>Beverage Name</th>
+                                <th>Beverage Type</th>
+                                <th>Measurement</th>
+                                <th>Quantity</th>
+                                <th>Date Added</th>
+                                <th>Added By</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alcoholBeverageTableBody"></tbody>
+                    </table>
+                </div>
             </div>
+
+            <div id="BothBeverage" class="tabcontent">
+                <!-- Report Table Section for Both Beverages -->
+                <div class="table-responsive">
+                    <table class="table" style="width:100%; margin-bottom:30px;">
+                        <thead>
+                            <tr>
+                                <th>Beverage Name</th>
+                                <th>Beverage Type</th>
+                                <th>Measurement</th>
+                                <th>Quantity</th>
+                                <th>Date Added</th>
+                                <th>Added By</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bothBeverageTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- JavaScript for Tabs and Search -->
+            <script>
+                // Function to open selected tab and add 'active' class to the button
+                function openTab(evt, tabName) {
+                    const tabcontent = document.getElementsByClassName("tabcontent");
+                    for (let i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+
+                    const tablinks = document.getElementsByClassName("tablinks");
+                    for (let i = 0; i < tablinks.length; i++) {
+                        tablinks[i].classList.remove("active");
+                    }
+
+                    document.getElementById(tabName).style.display = "block";
+                    evt.currentTarget.classList.add("active");
+                }
+
+                // Click on default tab to open it
+                document.getElementById("defaultOpen").click();
+
+                // Placeholder functions for search and pagination
+                function searchByDate() {
+                    const searchDate = document.getElementById("searchDate").value;
+                    console.log("Searching by date:", searchDate);
+                    // Implement search functionality here
+                }
+
+                function goToPreviousPage() {
+                    console.log("Going to previous page");
+                    // Implement previous page functionality here
+                }
+
+                function goToNextPage() {
+                    console.log("Going to next page");
+                    // Implement next page functionality here
+                }
+            </script>
         </div>
     </section>
 
 
 
-    <!-- Halls Report Section -->
-    <section id="view_hall_report" class="container-custom hidden">
+
+    <!-- Report Section -->
+    <section id="view_sold_report" class="container-custom hidden">
         <div class="container">
-            <button onclick="goBack('ViewReports')" class="btn btn-secondary mb-3">
+            <button onclick="goBack('sold_ViewReports')" class="btn btn-secondary mb-3">
                 <i class="bi bi-arrow-left"></i> Back
             </button>
+
             <!-- Search Bar Section -->
             <div class="d-flex justify-content-between mb-4">
-                <div class="d-flex">
-                    <input type="text" class="form-control me-2" placeholder="Search" />
-                    <button class="btn btn-primary">
+                <div class="d-flex flex-grow-1 gap-2">
+                    <input type="date" id="sold_searchDate" class="form-control" placeholder="Search by date">
+                    <button class="btn btn-primary btn-custom" onclick="searchByDate()">
                         <i class="bi bi-search me-2"></i>Search
                     </button>
                 </div>
-                <div class="d-flex">
-                    <button class="btn btn-outline-secondary me-2">
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-secondary btn-custom" onclick="goToPreviousPage()">
                         <i class="bi bi-chevron-left me-2"></i>Previous
                     </button>
-                    <button class="btn btn-outline-secondary">
-                        Next <i class="bi bi-chevron-right me-2"></i>
+                    <button class="btn btn-outline-secondary btn-custom" onclick="goToNextPage()">
+                        Next<i class="bi bi-chevron-right ms-2"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Hall Report Table Section -->
-            <div class="table-responsive">
-                <table class="table" style="width:100%; margin-bottom:30px;">
-                    <thead>
-                        <tr>
-                            <th>Beverage Name</th>
-                            <th>Beverage Type</th>
-                            <th>Quantity Sold</th>
-                            <th>Date Sold</th>
-                            <th>Other Info</th>
-                        </tr>
-                    </thead>
-                    <tbody id="soldBeverageTableBody"></tbody>
-                </table>
-            </div>
-            <!-- Button to Toggle More Details -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#hallDetails">
-                <i class="bi bi-info-circle me-2"></i>More Details
-            </button>
+            <style>
+                .btn-custom {
+                    width: 20%;
+                    min-width: 120px;
+                    /* Ensures readability on smaller screens */
+                }
 
-            <!-- Collapsible Details Section -->
-            <div id="hallDetails" class="collapse mt-3">
-                <p>This is halls details.</p>
+                /* Adds padding and a subtle shadow for a more modern look */
+                .btn-custom {
+                    padding: 10px 0;
+                    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+                    transition: background-color 0.3s, box-shadow 0.3s;
+                }
+
+                /* Hover effect for buttons */
+                .btn-custom:hover {
+                    background-color: #007bff !important;
+                    color: white !important;
+                    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+                }
+
+                .form-control {
+                    max-width: 60%;
+                }
+            </style>
+
+
+            <!-- Tab Styling -->
+            <style>
+                .tab {
+                    float: left;
+                    border: 1px solid #ccc;
+                    background-color: #f1f1f1;
+                    width: 30%;
+                    height: 300px;
+                }
+
+                .tab button {
+                    display: block;
+                    background-color: inherit;
+                    color: black;
+                    padding: 22px 16px;
+                    width: 100%;
+                    border: none;
+                    outline: none;
+                    text-align: left;
+                    cursor: pointer;
+                    transition: 0.3s;
+                    font-size: 17px;
+                }
+
+                .tab button:hover {
+                    background-color: #ddd;
+                }
+
+                .tab button.active {
+                    background-color: #ccc;
+                }
+
+                .tabcontent {
+                    float: left;
+                    padding: 0px 12px;
+                    border: 1px solid #ccc;
+                    width: 70%;
+                    border-left: none;
+                    height: 300px;
+                    display: none;
+                }
+
+                .tabcontent.active {
+                    display: block;
+                }
+            </style>
+
+            <!-- Tabs and Content Sections -->
+            <div class="tab">
+                <button class="tablinks" onclick="openTab(event, 'sold_SoftBeverage')" id="sold_defaultOpen">Soft
+                    Beverage</button>
+                <button class="tablinks" onclick="openTab(event, 'sold_AlcoholBeverage')">Alcohol Beverage</button>
+                <button class="tablinks" onclick="openTab(event, 'sold_BothBeverage')">Both Beverages</button>
             </div>
+
+            <div id="sold_SoftBeverage" class="tabcontent">
+                <!-- Report Table Section for Soft Beverage -->
+                <div class="table-responsive">
+                    <table class="table" style="width:100%; margin-bottom:30px;">
+                        <thead>
+                            <tr>
+                                <th>Beverage Name</th>
+                                <th>Beverage Type</th>
+                                <th>Measurement</th>
+                                <th>Quantity</th>
+                                <th>Date Added</th>
+                                <th>Added By</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sold_softBeverageTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="sold_AlcoholBeverage" class="tabcontent">
+                <!-- Report Table Section for Alcohol Beverage -->
+                <div class="table-responsive">
+                    <table class="table" style="width:100%; margin-bottom:30px;">
+                        <thead>
+                            <tr>
+                                <th>Beverage Name</th>
+                                <th>Beverage Type</th>
+                                <th>Measurement</th>
+                                <th>Quantity</th>
+                                <th>Date Added</th>
+                                <th>Added By</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sold_alcoholBeverageTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="sold_BothBeverage" class="tabcontent">
+                <!-- Report Table Section for Both Beverages -->
+                <div class="table-responsive">
+                    <table class="table" style="width:100%; margin-bottom:30px;">
+                        <thead>
+                            <tr>
+                                <th>Beverage Name</th>
+                                <th>Beverage Type</th>
+                                <th>Measurement</th>
+                                <th>Quantity</th>
+                                <th>Date Added</th>
+                                <th>Added By</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sold_bothBeverageTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- JavaScript for Tabs and Search -->
+            <script>
+                // Function to open selected tab and add 'active' class to the button
+                function openTab(evt, tabName) {
+                    const tabcontent = document.getElementsByClassName("tabcontent");
+                    for (let i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+
+                    const tablinks = document.getElementsByClassName("tablinks");
+                    for (let i = 0; i < tablinks.length; i++) {
+                        tablinks[i].classList.remove("active");
+                    }
+
+                    document.getElementById(tabName).style.display = "block";
+                    evt.currentTarget.classList.add("active");
+                }
+
+                // Click on default tab to open it
+                document.getElementById("sold_defaultOpen").click();
+
+                // Placeholder functions for search and pagination
+                function searchByDate() {
+                    const searchDate = document.getElementById("sold_searchDate").value;
+                    console.log("Searching by date:", searchDate);
+                    // Implement search functionality here
+                }
+
+                function goToPreviousPage() {
+                    console.log("Going to previous page");
+                    // Implement previous page functionality here
+                }
+
+                function goToNextPage() {
+                    console.log("Going to next page");
+                    // Implement next page functionality here
+                }
+            </script>
         </div>
     </section>
+
+
+
 
     <script>
         // Function to show a specific section and hide all others
@@ -253,12 +564,13 @@ session_start(); // Start the session
                 selectedSection.classList.remove('hidden');
             }
         }
-
         // Function to go back to the previous section
         function goBack(previousSectionId) {
             showSection(previousSectionId);
         }
     </script>
+
+
 
     <!-- CSS to hide the sections by default -->
     <style>
@@ -276,61 +588,130 @@ session_start(); // Start the session
 
 
     <!-- Write Reports Section -->
-    <section id="WriteReports" class="container-custom hidden">
+    <section id="new_inserted_WriteReports" class="container-custom hidden">
         <div class="container">
-            <button onclick="goBack('mainContainer')" class="btn btn-secondary mb-3">
+            <button onclick="goBack('new_inserted_mainContainer')" class="btn btn-secondary mb-3">
                 <i class="bi bi-arrow-left"></i> Back
             </button>
             <form action="submit_report.php" method="post">
-                <div class="d-flex justify-content-between mb-3">
-                    <div class="d-flex align-items-center">
-                        <label for="report_provider" class="me-2">Report Provider:</label>
-                        <input type="text" class="form-control" name="report_provider" id="report_provider"
+                <div class="row mb-3">
+                    <div class="col-md-4 col-12 d-flex align-items-center mb-3 mb-md-0">
+                        <label for="new_inserted_report_provider" class="me-2">Report Provider:</label>
+                        <input type="text" class="form-control" name="report_provider" id="new_inserted_report_provider"
                             value="<?php echo htmlspecialchars($report_provider_name); ?>" readonly required>
                     </div>
-                    <div class="d-flex align-items-center">
-                        <select name="report_about" id="report_about" style="padding:10px;" required>
+                    <div class="col-md-3 col-12 mb-3 mb-md-0">
+                        <select name="report_about" id="new_inserted_report_about" class="form-control" required>
                             <option value="">Select Report About</option>
-                            <option value="">Room Report</option>
-                            <option value="">Halls Report</option>
-                            <option value="">Other</option>
+                            <option value="room">Room Report</option>
+                            <option value="halls">Halls Report</option>
+                            <option value="other">Other</option>
                         </select>
                     </div>
-                    <div class="d-flex align-items-center">
-                        <select name="report_type" id="report_type" style="padding:10px;" required>
+                    <div class="col-md-2 col-12 mb-3 mb-md-0">
+                        <select name="report_type" id="new_inserted_report_type" class="form-control" required>
                             <option value="">Select Report Type</option>
-                            <option value="">Expense</option>
-                            <option value="">Income</option>
+                            <option value="expense">Expense</option>
+                            <option value="income">Income</option>
                         </select>
                     </div>
-                    <div class="d-flex align-items-center">
-                        <label for="reported_date" class="me-2">Reported Date:</label>
-                        <input type="date" class="form-control" name="reported_date" id="reported_date" readonly
-                            required>
+                    <div class="col-md-3 col-12 d-flex align-items-center">
+                        <label for="new_inserted_reported_date" class="me-2">Reported Date:</label>
+                        <input type="date" class="form-control" name="reported_date" id="new_inserted_reported_date"
+                            value="<?php echo date('Y-m-d'); ?>" required>
                     </div>
                 </div>
-                <table id="reportTable" class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>List</th>
-                            <th>Measurement</th>
-                            <th>Quantity</th>
-                            <th>Single Price</th>
-                            <th>Total Price</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Dynamic rows will be added here -->
-                    </tbody>
-                </table>
-                <button type="button" class="btn btn-primary" onclick="addRow()">Add Row</button>
-                <button type="submit" class="btn btn-success">Submit</button>
+
+                <!-- Table for Report Items -->
+                <div class="table-responsive">
+                    <table id="new_inserted_reportTable" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>List</th>
+                                <th>Measurement</th>
+                                <th>Quantity</th>
+                                <th>Single Price</th>
+                                <th>Total Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamic rows will be added here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-primary" onclick="addRow()">Add Row</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
             </form>
         </div>
     </section>
 
+    <!-- Styles for Responsiveness -->
+    <style>
+        .container-custom {
+            padding: 20px;
+        }
+
+        .btn-custom {
+            min-width: 120px;
+        }
+
+        /* Ensure form elements are responsive */
+        .form-control,
+        select {
+            width: 100%;
+        }
+
+        /* Add spacing to buttons */
+        .btn {
+            padding: 10px 15px;
+        }
+
+        /* Responsive table handling */
+        .table-responsive {
+            margin-bottom: 20px;
+        }
+
+        /* Ensure no overflow on mobile for long content */
+        table th,
+        table td {
+            word-wrap: break-word;
+        }
+
+        /* Small adjustments for tablet/mobile screens */
+        @media (max-width: 768px) {
+
+            .form-control,
+            select {
+                font-size: 14px;
+            }
+
+            .btn {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container-custom {
+                padding: 10px;
+            }
+
+            .d-flex {
+                flex-direction: column;
+            }
+
+            .mb-3 {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+
+
+    <!-- this is footer imported from other assets -->
     <?php include '../assets/footer.php'; ?>
 
 

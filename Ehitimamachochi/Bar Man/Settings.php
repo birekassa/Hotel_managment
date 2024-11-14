@@ -32,11 +32,10 @@
 <body>
 
     <?php include 'asset/navbar.php'; ?>
-
-     <!-- this is the main content of the page -->
     <div class="container mt-5" style="max-width: 600px;">
         <h2 class="text-center mb-4"><i class="bi bi-gear-fill me-2"></i>Account Settings</h2>
-        <div id="set_option" class="list-group">
+
+        <section id="set_option" class="list-group">
             <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
                 onclick="showSection('change_username')">
                 <span><i class="bi bi-person-fill me-2"></i>Change Username</span>
@@ -52,12 +51,15 @@
                 <span><i class="bi bi-box-arrow-right me-2"></i>Log out</span>
                 <i class="bi bi-chevron-right"></i>
             </a>
-        </div>
+        </section>
 
         <!-- Change Username Section -->
-        <div class="card" id="change_username" style="display:none;">
+        <section class="card mt-4" id="change_username" style="display:none;">
             <div class="card-body">
-                <h3 class="card-title"><i class="bi bi-person-fill me-2"></i>Change Username</h3>
+                <div class="section-header">
+                    <h3 class="card-title"><i class="bi bi-person-fill me-2"></i>Change Username</h3>
+                    <i class="bi bi-arrow-left back-arrow" onclick="showSection('')"></i>
+                </div>
                 <form action="change_username_process.php" method="post">
                     <div class="mb-3">
                         <label for="current_username" class="form-label">Current Username:</label>
@@ -83,12 +85,15 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </section>
 
         <!-- Change Password Section -->
-        <div class="card mt-4" id="change_password" style="display:none;">
+        <section class="card mt-4" id="change_password" style="display:none;">
             <div class="card-body">
-                <h3 class="card-title"><i class="bi bi-lock-fill me-2"></i>Change Password</h3>
+                <div class="section-header">
+                    <h3 class="card-title"><i class="bi bi-lock-fill me-2"></i>Change Password</h3>
+                    <i class="bi bi-arrow-left back-arrow" onclick="showSection('')"></i>
+                </div>
                 <form action="change_password_process.php" method="post">
                     <div class="mb-3">
                         <label for="current_username" class="form-label">Current Username:</label>
@@ -118,14 +123,45 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </section>
     </div>
-
-
     <?php include '../assets/footer.php'; ?>
-
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function showSection(id) {
+            // Get all sections
+            const sections = document.querySelectorAll('section.card');
 
+            // Hide all sections
+            sections.forEach(section => {
+                if (section.id !== id) {
+                    section.style.display = 'none';
+                }
+            });
+
+            // Toggle the selected section
+            const selectedSection = document.getElementById(id);
+            selectedSection.style.display = (selectedSection.style.display === 'none' || selectedSection.style.display === '') ? 'block' : 'none';
+        }
+
+        function confirmLogout(event) {
+            event.preventDefault(); // Prevent the default link behavior
+
+            Swal.fire({
+                icon: 'question',
+                title: 'Are you sure?',
+                text: 'Do you want to log out?',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, log out',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect to the specified URL
+                    window.location.href = "http://localhost/New/Ehitimamachochi/index/index.php";
+                }
+            });
+        }
+    </script>
 </html>

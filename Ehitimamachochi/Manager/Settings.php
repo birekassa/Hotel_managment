@@ -1,12 +1,75 @@
+
+<?php
+// Function to get hotel information from hotel_config.json
+function getHotelInfo(){
+    $filePath = '../assets/hotel_config.json'; // Adjust path if needed
+
+    if (file_exists($filePath)) {
+        $jsonData = file_get_contents($filePath);
+        if ($jsonData === false) {
+            echo "Error: Unable to read the configuration file.";
+            return null;
+        }
+
+        $data = json_decode($jsonData, true);
+        if ($data === null) {
+            echo "Error: Failed to decode JSON data.";
+            return null;
+        }
+
+        return $data;
+    } else {
+        echo "Error: Configuration file not found.";
+        return null;
+    }
+}
+
+// Function to update the hotel name in hotel_config.json
+function updateHotelInfo($newName,$newAddress ,$newPhone,$newEmail)
+{
+    $filePath = '../assets/hotel_config.json';
+    $data = getHotelInfo();
+
+    if ($data) {
+        $data['name'] = $newName; // Update the hotel name
+        $data['location'] = $newAddress; // Update the hotel Adress
+        $data['phone'] = $newPhone; // Update the hotel phone
+        $data['email'] = $newEmail; // Update the hotel Email
+
+
+        // Save the updated data back to the JSON file
+        file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT));
+    }
+}
+
+// Initialize a success message variable
+$successMessage = "";
+
+// Check if form is submitted via POST to update the hotel name
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['newName'])) {
+    $newName = $_POST['newName'];
+    $newAddress = $_POST['newAddress'];
+    $newPhone = $_POST['newPhone'];
+    $newEmail = $_POST['newEmail'];
+    updateHotelInfo($newName,$newAddress ,$newPhone,$newEmail);
+
+    // Set the success message to be displayed
+    $successMessage = "Hotel Information updated successfully!";
+}
+
+// Get the current hotel information
+$currentHotelInfo = getHotelInfo();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings Page</title>
+    <title>Reports</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         /* Internal CSS */
         html,
@@ -53,39 +116,29 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .navbar-nav .nav-link {
-            color: white !important;
-            font-size: 1rem;
-            text-decoration: none;
-            padding: 10px;
-        }
-
-        .container {
-            max-width: 600px;
-            margin-top: 100px;
-        }
-
-        .card {
+        .hidden {
             display: none;
         }
 
-        .list-group-item {
-            cursor: pointer;
-        }
-
-        .list-group-item .bi {
-            font-size: 1.2rem;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .comment-item {
+            background-color: rgb(85, 82, 82);
+            border-radius: 10px;
             margin-bottom: 1rem;
+            padding: 0.5rem;
+            color: white;
         }
 
-        .section-header button {
-            margin-left: 1rem;
+        .comment-item p {
+            margin: 0;
+        }
+
+        .comment-item p:first-child {
+            text-align: left;
+        }
+
+        .comment-item .date {
+            font-size: 0.9rem;
+            text-align: right;
         }
     </style>
 </head>
@@ -148,206 +201,137 @@
             </div>
         </div>
     </nav>
-
-    <div class="container">
-        <!-- Default Settings Menu -->
-        <div id="default_set">
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                onclick="showSection('system_settings')">
-                <span class="d-flex align-items-center"><i class="bi bi-tools me-2"></i>System Settings</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                onclick="showSection('account_settings')">
-                <span class="d-flex align-items-center"><i class="bi bi-person-gear me-2"></i>Account Settings</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-        </div>
-
-        <!-- System Settings Content -->
-        <div id="system_settings" class="card d-none">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="#" class="btn btn-link me-3" onclick="goBack()">
-                    <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
-                </a>
-                <h3 class="text-center flex-grow-1">System Settings</h3>
+    <!-- Main Container -->
+    <div class="container my-4">
+        <!-- Success Alert (conditionally displayed) -->
+        <?php if ($successMessage): ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?php echo htmlspecialchars($successMessage); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+        <?php endif; ?>
 
-            <!-- Change Hotel Name -->
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                data-bs-toggle="modal" data-bs-target="#changeNameModal">
-                <span><i class="bi bi-pencil-square me-2"></i>Change Name of Hotel</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-            <!-- Hotel Name Modal -->
-            <div class="modal fade" id="changeNameModal" tabindex="-1" aria-labelledby="changeNameModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="changeNameModalLabel">Change Hotel Name</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="changeNameForm">
-                                <div class="mb-3">
-                                    <label for="newName" class="form-label">Please Enter New Name</label>
-                                    <input type="text" class="form-control" id="newName" required>
+        <!-- Section for System Settings -->
+        <section id="systemSettings" class="collapse show">
+            <div class="section-header">System Settings</div>
+            <div class="list-group shadow-sm rounded">
+                <!-- Change Hotel Name Section -->
+                <a class="list-group-item list-group-item-action" data-bs-toggle="collapse" href="#changeNameSection">
+                    <i class="bi bi-pencil-square me-2"></i> Change Hotel Name
+                </a>
+                <div id="changeNameSection" class="collapse">
+                    <div class="card card-body border-0">
+                        <h2 style="text-align: center;">New Hotel Information</h2>
+                        <form method="POST" action="">
+                            <div class="row g-3">
+                                <!-- Column 1 -->
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="newName" class="form-label">New Hotel Name</label>
+                                        <input type="text" id="newName" name="newName" class="form-control"
+                                            value="<?php echo htmlspecialchars($currentHotelInfo['name']); ?>" required>
+                                    </div>
+                                </div>    
+                                <!-- Column 2 -->
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="newAddress" class="form-label">New Hotel Address</label>
+                                        <input type="text" id="newAddress" name="newAddress" class="form-control"
+                                            value="<?php echo htmlspecialchars($currentHotelInfo['location']); ?>" required>
+                                    </div>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="saveNameBtn">Save Changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Change Room Images -->
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                data-bs-toggle="modal" data-bs-target="#changeImageModal">
-                <span><i class="bi bi-house-door-fill me-2"></i>Change Image for Beds</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-            <!-- Room Image Modal -->
-            <div class="modal fade" id="changeImageModal" tabindex="-1" aria-labelledby="changeImageModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="changeImageModalLabel">Change Room Images</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-primary" onclick="changeImage('standard')">Change Standard Room Image</button>
-                                <button class="btn btn-primary" onclick="changeImage('deluxe')">Change Deluxe Room Image</button>
-                                <button class="btn btn-primary" onclick="changeImage('suite')">Change Suite Room Image</button>
-                                <button class="btn btn-primary" onclick="changeImage('luxury')">Change Luxury Room Image</button>
+                                <!-- Column 1 -->
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="newPhone" class="form-label">New Hotel Phone</label>
+                                        <input type="text" id="newPhone" name="newPhone" class="form-control" value="<?php echo htmlspecialchars($currentHotelInfo['phone']); ?>"
+                                            required>
+                                    </div>
+                                </div>
+
+                                <!-- Column 2 -->
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="newEmail" class="form-label">New Hotel Email</label>
+                                        <input type="email" id="newEmail" name="newEmail" class="form-control" value="<?php echo htmlspecialchars($currentHotelInfo['email']); ?>"
+                                            required>
+                                    </div>
+                                </div>
+
+                                <!-- Submit Buttons -->
+                                <div class="col-12 d-flex justify-content-center gap-10">
+                                    <div class="mb-3 col-12 col-md-4 d-flex justify-content-center gap-3">
+                                        <button type="reset" class="btn btn-secondary w-100">Clear</button>
+                                        <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </form>
+
                     </div>
                 </div>
-            </div>
 
-            <!-- Change Hall Images -->
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                data-bs-toggle="modal" data-bs-target="#changeHallImageModal">
-                <span><i class="bi bi-building me-2"></i>Change Image for Halls</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-            <!-- Hall Image Modal -->
-            <div class="modal fade" id="changeHallImageModal" tabindex="-1" aria-labelledby="changeHallImageModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="changeHallImageModalLabel">Change Hall Images</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-primary" onclick="changeHallImage('standard')">Change Standard Hall Image</button>
-                                <button class="btn btn-primary" onclick="changeHallImage('deluxe')">Change Deluxe Hall Image</button>
-                                <button class="btn btn-primary" onclick="changeHallImage('suite')">Change Suite Hall Image</button>
-                                <button class="btn btn-primary" onclick="changeHallImage('luxury')">Change Luxury Hall Image</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Off System for Employee -->
-            <a href="off_system.php" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                <span><i class="bi bi-power me-2"></i>Off System for Employee</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-        </div>
-
-        <!-- Account Settings Content -->
-        <div id="account_settings" class="card d-none">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="#" class="btn btn-link me-3" onclick="goBack()">
-                    <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
+                <!-- Change Room Image Section -->
+                <a class="list-group-item list-group-item-action" data-bs-toggle="collapse" href="#changeImageSection">
+                    <i class="bi bi-house-door-fill me-2"></i> Change Image for Beds
                 </a>
-                <h3 class="text-center flex-grow-1">Account Settings</h3>
+                <div id="changeImageSection" class="collapse">
+                    <div class="card card-body border-0">
+                        <div class="row g-3">
+                            <!-- Standard Room Button -->
+                            <div class="col-12 col-md-6">
+                                <button class="btn btn-primary w-100 fs-5 fw-bold" onclick="selectImage('Standard Room')">Standard Room</button>
+                            </div>
+                            <!-- Deluxe Room Button -->
+                            <div class="col-12 col-md-6">
+                                <button class="btn btn-primary w-100 fs-5 fw-bold" onclick="selectImage('Deluxe Room')">Deluxe Room</button>
+                            </div>
+                            <!-- Suite Room Button -->
+                            <div class="col-12 col-md-6">
+                                <button class="btn btn-primary w-100 fs-5 fw-bold" onclick="selectImage('Suite Room')">Suite Room</button>
+                            </div>
+                            <!-- Luxury Room Button -->
+                            <div class="col-12 col-md-6">
+                                <button class="btn btn-primary w-100 fs-5 fw-bold" onclick="selectImage('Luxury Room')">Luxury Room</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Change Hall Image Section -->
+                <a class="list-group-item list-group-item-action" data-bs-toggle="collapse"
+                    href="#changeHallImageSection">
+                    <i class="bi bi-building me-2"></i> Change Image for Halls
+                </a>
+                <div id="changeHallImageSection" class="collapse">
+                    <div class="card card-body border-0">
+                        <div class="d-grid gap-2">
+                            <!-- just this should be displayed in two column and should dispalyed in attractive way -->
+                            <button class="btn btn-primary">Standard Hall</button>
+                            <button class="btn btn-primary">Deluxe Hall</button>
+                            <button class="btn btn-primary">Suite Hall</button>
+                            <button class="btn btn-primary">Luxury Hall</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <a href="off_system.php" class="list-group-item list-group-item-action">
+                    <i class="bi bi-power me-2"></i> Switch System
+                </a>
             </div>
-
-            <!-- Change Username -->
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                onclick="toggleForm('change_username_form')">
-                <span><i class="bi bi-person-fill me-2"></i>Change Username</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-
-            <!-- Change Password -->
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                onclick="toggleForm('change_password_form')">
-                <span><i class="bi bi-lock-fill me-2"></i>Change Password</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-
-            <!-- Logout -->
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                onclick="confirmLogout()">
-                <span><i class="bi bi-box-arrow-right me-2"></i>Log Out</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-        </div>
+            <!-- Section for Account Settings -->
+            <div id="accountSettings">
+                <div class="section-header">Account Settings</div>
+                <p>Account-related settings will go here.</p>
+            </div>
+        </section>
     </div>
 
-    <script>
-        function showSection(id) {
-            document.querySelectorAll('.card').forEach(section => section.classList.add('d-none'));
-            document.getElementById(id).classList.remove('d-none');
-            document.getElementById('default_set').classList.add('d-none');
-        }
-
-        function goBack() {
-            document.querySelectorAll('.card').forEach(section => section.classList.add('d-none'));
-            document.getElementById('default_set').classList.remove('d-none');
-        }
-
-        function toggleForm(formId) {
-            const form = document.getElementById(formId);
-            form.classList.toggle('d-none');
-        }
-
-        function confirmLogout() {
-            Swal.fire({
-                icon: 'question',
-                title: 'Are you sure?',
-                text: 'You will be logged out.',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, log out',
-                cancelButtonText: 'Cancel'
-            }).then(result => {
-                if (result.isConfirmed) {
-                    window.location.href = 'logout.php';
-                }
-            });
-        }
-
-        function changeImage(roomType) {
-            // Implement your image upload logic here
-            Swal.fire({
-                icon: 'success',
-                title: 'Image upload started',
-                text: `Uploading image for ${roomType} room...`,
-                timer: 2000,
-                showConfirmButton: false
-            });
-        }
-
-        function changeHallImage(hallType) {
-            // Implement your image upload logic here
-            Swal.fire({
-                icon: 'success',
-                title: 'Image upload started',
-                text: `Uploading image for ${hallType} hall...`,
-                timer: 2000,
-                showConfirmButton: false
-            });
-        }
-    </script>
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

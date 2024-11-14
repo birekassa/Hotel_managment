@@ -40,13 +40,7 @@ session_start(); // Start the session
 
     <!-- Main Content -->
     <main class="container">
-        <div class="jumbotron py-5 px-4 ">
-            <div class="text-center" style="margin:0px;">
-                <h2>Welcome to the Bar Management System</h2>
-                <img src="https://th.bing.com/th/id/R.21d709538db479c09c2e8095a585ec92?rik=PneWsnYtlxGBtw&pid=ImgRaw&r=0"
-                    alt="Bar Management" class="img-fluid rounded shadow " style="width:1000px; height:400px;">
-            </div>
-        </div>
+       
     </main>
 
     <?php include '../assets/footer.php'; ?>

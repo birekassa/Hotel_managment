@@ -1,23 +1,3 @@
-<?php
-// Include database connection
-include '../assets/conn.php';
-session_start(); // Start the session
-
-// // Check if the user's position is 'casher'
-// if ($_SESSION['position'] !== 'casher' && $_SESSION['position'] !== 'Casher') {
-//     // Redirect to login page if the user is not a 'casher'
-//     header("Location: ../index/index.php");
-//     exit();
-// }
-
-// Check if the user is logged in
-// if (!isset($_SESSION['username'])) {
-//     // Redirect to login page if not logged in
-//     header("Location: ../index/index.php");
-//     exit();
-// }
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,18 +12,14 @@ session_start(); // Start the session
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;
-          
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
-        
 
         .navbar-nav {
             justify-content: center;
-            /* Center-align the nav items */
             width: 100%;
-            /* Ensure the ul takes full width to center items properly */
             gap: 10px;
         }
 
@@ -75,20 +51,16 @@ session_start(); // Start the session
     <!-- Navbar -->
     <?php include 'asset/navbar.php'; ?>
 
-
     <!-- Main content -->
     <main class="flex-fill">
         <!-- Sections -->
         <section id="defaultSection" class="container mt-5">
-            <h1>View Beverage</h1>
-            <p>Here you can view all beverage items currently in the menu.</p>
+            <h1>Here you can view all beverage items currently in the menu. </h1>
+           
             <div class="d-flex justify-content-center align-items-center gap-4 my-3">
-                <button style="width: 40%;" type="button" onclick="filterCategory('soft-drink')"
-                    class="btn btn-success">Soft-Drink</button>
-                <button style="width: 40%;" type="button" onclick="filterCategory('alcohol-drink')"
-                    class="btn btn-success">Alcohol-Drink</button>
-                <button style="width: 40%;" type="button" onclick="filterCategory('all')" class="btn btn-secondary">List
-                    All Beverages</button>
+                <button style="width: 40%;" type="button" onclick="filterCategory('soft-drink')" class="btn btn-success">Soft-Drink</button>
+                <button style="width: 40%;" type="button" onclick="filterCategory('alcohol-drink')" class="btn btn-success">Alcohol-Drink</button>
+                <button style="width: 40%;" type="button" onclick="filterCategory('all')" class="btn btn-secondary">List All Beverages</button>
             </div>
 
             <div id="viewBeverageTableContainer" class="table-responsive">
@@ -96,7 +68,6 @@ session_start(); // Start the session
             </div>
 
             <?php
-            // connection
             include '../assets/conn.php';
             $mysqli = $conn;
 
@@ -105,8 +76,7 @@ session_start(); // Start the session
             }
 
             // Fetch all beverage data from the table
-            $query = "SELECT `beverage_name`, `beverage_type`, `measurement`, `beverage_quantity` FROM `beverage_in_bar_man`";
-
+            $query = "SELECT * FROM `beverage_in_bar_man`";
             $result = $mysqli->query($query);
 
             $beverages = [];
@@ -129,57 +99,56 @@ session_start(); // Start the session
 
     <!-- JavaScript to handle row addition, removal, and dynamic data update -->
     <script>
-        // Example of initializing beverageData
-        const beverageData = []; // Fetch and initialize this array with PHP data if not already done
-
-        // Function to initialize beverage data
+        // Initialize the beverage data from PHP
+        const beverageData = [];
         function initializeBeverageData(data) {
-            beverageData.length = 0; // Clear existing data
+            beverageData.length = 0;
             beverageData.push(...data);
         }
 
-        // Set the data after PHP outputs it
+        // Load the data provided by PHP into beverageData
         initializeBeverageData(viewBeverageData);
 
-        // Function to generate table HTML for viewing beverages
+        // Generate table HTML based on the data provided
         function generateTable(data) {
             let tableHTML = `
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Item Name</th>
-                    <th>Category</th>
-                    <th>Measurment</th>
-                    <th>Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-        `;
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Category</th>
+                            <th>Measurement</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
 
             data.forEach(row => {
                 tableHTML += `
-            <tr>
-                <td>${row.beverage_name}</td>
-                <td>${row.beverage_type}</td>
-                <td>${row.measurement}</td>
-                <td>${row.beverage_quantity}</td>
-            </tr>
-        `;
+                    <tr>
+                        <td>${row.beverage_name}</td>
+                        <td>${row.beverage_type}</td>
+                        <td>${row.measurement}</td>
+                        <td>${row.beverage_quantity}</td>
+                    </tr>
+                `;
             });
 
             tableHTML += '</tbody></table>';
             document.getElementById('viewBeverageTableContainer').innerHTML = tableHTML;
         }
 
-        // Function to filter data by category
+        // Filter data based on the selected category
         function filterCategory(category) {
             let filteredData = viewBeverageData;
             if (category !== 'all') {
-                filteredData = viewBeverageData.filter(beverage => beverage.category === category);
+                filteredData = viewBeverageData.filter(beverage => beverage.beverage_type === category);
             }
             generateTable(filteredData);
         }
-        // Initial load: show all items
+
+        // Initially load all items
         filterCategory('all');
     </script>
 
