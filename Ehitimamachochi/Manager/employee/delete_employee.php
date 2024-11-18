@@ -1,13 +1,12 @@
 <?php
-// Enable error reporting for debugging
+// Enable error reporting for debugging purposes
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require 'vendor/autoload.php';
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+// Mail configuration
+include '../../assets/email_config.php';
 
-//include database connection
+// Include the database connection file
 include '../../assets/conn.php';
 
 $message = '';
@@ -16,7 +15,7 @@ $messageType = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $employee_id = $_POST['id'];
 
-    // Fetch the employee's email and name before deletion
+    // Step 1: Fetch employee's details (name, email) before deletion
     $sql = "SELECT f_name, l_name, email FROM employees WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $employee_id);
@@ -25,62 +24,83 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->fetch();
     $stmt->close();
 
-    // If employee exists, proceed with deletion
+    // Step 2: If employee exists, proceed with deletion process
     if ($email) {
-        // Prepare the delete query
-        $sql = "DELETE FROM employees WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $employee_id);
+        // Start transaction
+        $conn->begin_transaction();
 
-        if ($stmt->execute()) {
+        try {
+            // Step 2.1: Delete attendance records associated with this employee
+            $sql = "DELETE FROM attendance WHERE employee_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $employee_id);
+            if (!$stmt->execute()) {
+                throw new Exception("Error deleting attendance records: " . $conn->error);
+            }
+
+            // Step 2.2: Delete the employee record from employees table
+            $sql = "DELETE FROM employees WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $employee_id);
+            if (!$stmt->execute()) {
+                throw new Exception("Error deleting employee: " . $conn->error);
+            }
+
+            // Commit the transaction if both deletes are successful
+            $conn->commit();
+
             $message = "Employee with ID $employee_id was deleted successfully.";
             $messageType = 'success';
 
-            // Initialize PHPMailer
-            $mail = new PHPMailer(true);
+            // Step 3: Send notification email to the employee
+            sendEmail($email, $f_name, $l_name);
 
-            try {
-                // Server settings
-                $mail->isSMTP();
-                $mail->Host       = 'smtp.gmail.com';
-                $mail->SMTPAuth   = true;
-                $mail->Username   = 'birekassa1400@gmail.com';
-                $mail->Password   = 'miuc evkj fqhx lhxj'; // Use an app password or secure method
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port       = 587;
-
-                // Recipients
-                $mail->setFrom('birekassa1400@gmail.com', 'Ehitimamachochi Hotel');
-                $mail->addAddress($email);
-
-                // Content
-                $mail->isHTML(true);
-                $mail->Subject = 'You are removed from the system!';
-                $mail->Body    = "<p>Dear $f_name $l_name,</p>
-                                    <p>We regret to inform you that you have been removed from our system.</p>
-                                    <p>If you have any questions, feel free to contact us.</p>
-                                    <p>Best regards,<br>Ehitimamachochi Hotel</p>";
-                $mail->AltBody = "Dear $f_name $l_name,\n\nWe regret to inform you that you have been removed from our system.\n\nIf you have any questions, feel free to contact us.\n\nBest regards,\nEhitimamachochi Hotel";
-
-                $mail->send();
-
-            } catch (Exception $e) {
-                $message = "Employee deleted, but email could not be sent. Mailer Error: {$mail->ErrorInfo}";
-                $messageType = 'error';
-            }
-
-        } else {
-            $message = "Error deleting employee with ID $employee_id: " . $conn->error;
+        } catch (Exception $e) {
+            // If any error occurs, rollback the transaction
+            $conn->rollback();
+            $message = $e->getMessage();
             $messageType = 'error';
         }
     } else {
+        // If employee doesn't exist in the database
         $message = "Employee with ID $employee_id not found.";
         $messageType = 'error';
     }
 }
 
-// Close connection
+// Close the database connection
 $conn->close();
+
+/**
+ * Function to send email notification to the employee
+ */
+function sendEmail($email, $f_name, $l_name) {
+    // Initialize PHPMailer
+    $mail = getMailer();
+
+    try {
+        // Recipient settings
+        $mail->setFrom('birekassa1400@gmail.com', 'Ehitimamachochi Hotel');
+        $mail->addAddress($email);
+
+        // Content settings (HTML and Plain Text)
+        $mail->isHTML(true);
+        $mail->Subject = 'You have been removed from the system!';
+        $mail->Body    = "<p>Dear $f_name $l_name,</p>
+                          <p>We regret to inform you that you have been removed from our system.</p>
+                          <p>If you have any questions, feel free to contact us.</p>
+                          <p>Best regards,<br>Ehitimamachochi Hotel</p>";
+        $mail->AltBody = "Dear $f_name $l_name,\n\nWe regret to inform you that you have been removed from our system.\n\nIf you have any questions, feel free to contact us.\n\nBest regards,\nEhitimamachochi Hotel";
+
+        // Attempt to send the email
+        $mail->send();
+    } catch (Exception $e) {
+        // Handle email sending errors
+        global $message, $messageType;
+        $message = "Employee deleted, but email could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        $messageType = 'error';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -96,13 +116,14 @@ $conn->close();
 
 <?php if (!empty($message)) : ?>
     <script>
+        // Display a SweetAlert based on the result
         Swal.fire({
             icon: '<?php echo $messageType; ?>',
             title: '<?php echo ucfirst($messageType); ?>',
             text: '<?php echo $message; ?>',
         }).then((result) => {
             if (result.isConfirmed) {
-                window.history.back();
+                window.history.back();  // Go back to the previous page
             }
         });
     </script>

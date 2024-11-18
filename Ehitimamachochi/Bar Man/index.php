@@ -39,8 +39,15 @@ session_start(); // Start the session
     <?php include 'asset/navbar.php'; ?>
 
     <!-- Main Content -->
-    <main class="container">
-       
+    <main class="container mt-10px">
+        <div class="card">
+            <div class="card-title">
+                <h2>recently added </h2>
+                <div>
+                 
+                </div>
+            </div>
+        </div>
     </main>
 
     <?php include '../assets/footer.php'; ?>

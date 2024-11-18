@@ -52,8 +52,8 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Employees - Ehitimamachochi Hotel</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Include Footer -->
+    <?php include '../assets/header.php'; ?>
     <style>
         .section {
             display: none;
@@ -64,21 +64,23 @@ $conn->close();
             display: block;
             /* Show active section */
         }
-        #navbar{
-        height: 100px;
+
+        #navbar {
+            height: 100px;
         }
+
         .navbar-nav {
-        align-items: center;
-        padding-bottom: 0;
+            align-items: center;
+            padding-bottom: 0;
         }
+
         .nav-item:hover {
-        font-size: 18px;
+            font-size: 18px;
         }
     </style>
 </head>
 
 <body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; font-family: 'Times New Roman';">
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin-bottom: 20px;">
         <div class="container-xl">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
@@ -88,24 +90,30 @@ $conn->close();
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="width: 100%; justify-content: center;">
                     <li class="nav-item mx-3">
-                        <a class="nav-link" href="http://localhost/New/Ehitimamachochi/Manager/index.php"style="color: white !important; cursor: pointer;">
-                            <span style="font-size: 1.2rem; margin-right: 5px;" >&#8592;</span> Go Back
+                        <a class="nav-link" href="http://localhost/New/Ehitimamachochi/Manager/index.php"
+                            style="color: white !important; cursor: pointer;">
+                            <span style="font-size: 1.2rem; margin-right: 5px;">&#8592;</span> Go Back
                         </a>
                     </li>
                     <li class="nav-item mx-3">
-                        <a class="nav-link" href="#" onclick="showSection('default')"style="color: white !important;">Home</a>
+                        <a class="nav-link" href="#" onclick="showSection('default')"
+                            style="color: white !important;">Home</a>
                     </li>
                     <li class="nav-item mx-3">
-                        <a class="nav-link" href="#" onclick="showSection('register')"style="color: white !important;">Register Employee</a>
+                        <a class="nav-link" href="#" onclick="showSection('register')"
+                            style="color: white !important;">Register Employee</a>
                     </li>
                     <li class="nav-item mx-3">
-                        <a class="nav-link" href="#" onclick="showSection('update')"style="color: white !important;">Update Employee</a>
+                        <a class="nav-link" href="#" onclick="showSection('update')"
+                            style="color: white !important;">Update Employee</a>
                     </li>
                     <li class="nav-item mx-3">
-                        <a class="nav-link" href="#" onclick="showSection('view')"style="color: white !important;">View Employee</a>
+                        <a class="nav-link" href="#" onclick="showSection('view')" style="color: white !important;">View
+                            Employee</a>
                     </li>
                     <li class="nav-item mx-3">
-                        <a class="nav-link" href="#" onclick="showSection('delete')"style="color: white !important;">Delete Employee</a>
+                        <a class="nav-link" href="#" onclick="showSection('delete')"
+                            style="color: white !important;">Delete Employee</a>
                     </li>
                 </ul>
             </div>
@@ -113,84 +121,86 @@ $conn->close();
     </nav>
 
     <!-- Default Section (Home) -->
-<div id="default" class="section active">
-    <h3 class="text-center mt-4">Welcome to the Employee Management System</h3>
+    <div id="default" class="section active">
+        <h3 class="text-center mt-4">Welcome to the Employee Management System</h3>
 
-    <!-- Card displaying total number of employees -->
-    <div class="container mt-4">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
-                <div class="card text-center shadow-lg">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="card-title mb-0">Employee Summary</h5>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="text">We have <strong><?php echo $total_no_of_employee; ?></strong> total employees.</h3>
-                        <p class="card-text">Admins: <strong><?php echo $total_no_of_admin; ?></strong></p>
-                        <p class="card-text">Managers: <strong><?php echo $total_no_of_manager; ?></strong></p>
-                        <p class="card-text">Cashiers: <strong><?php echo $total_no_of_casher; ?></strong></p>
-                        <p class="card-text">Receptionists: <strong><?php echo $total_no_of_reception; ?></strong></p>
-                        <p class="card-text">Hosts: <strong><?php echo $total_no_of_host; ?></strong></p>
-                        <p class="card-text">Barmen: <strong><?php echo $total_no_of_barman; ?></strong></p>
-                        <p class="card-text">and more, manage them effectively.</p>
-                    </div>
-                    <div class="card-footer bg-light">
-                        <small class="text-muted">Last updated: <?php echo date("F j, Y, g:i a"); ?></small>
+        <!-- Card displaying total number of employees -->
+        <!-- <div class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="card text-center shadow-lg">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0">Employee Summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="text">We have <strong><?php echo $total_no_of_employee; ?></strong> total
+                                employees.</h3>
+                            <p class="card-text">Admins: <strong><?php echo $total_no_of_admin; ?></strong></p>
+                            <p class="card-text">Managers: <strong><?php echo $total_no_of_manager; ?></strong></p>
+                            <p class="card-text">Cashiers: <strong><?php echo $total_no_of_casher; ?></strong></p>
+                            <p class="card-text">Receptionists: <strong><?php echo $total_no_of_reception; ?></strong>
+                            </p>
+                            <p class="card-text">Hosts: <strong><?php echo $total_no_of_host; ?></strong></p>
+                            <p class="card-text">Barmen: <strong><?php echo $total_no_of_barman; ?></strong></p>
+                            <p class="card-text">and more, manage them effectively.</p>
+                        </div>
+                        <div class="card-footer bg-light">
+                            <small class="text-muted">Last updated: <?php echo date("F j, Y, g:i a"); ?></small>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
-</div>
 
-<style>
-    /* Custom CSS for added style */
-    .card {
-        border-radius: 0.75rem;
-        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        background: linear-gradient(135deg, #ffffff, #f7f7f7);
-    }
+    <style>
+        /* Custom CSS for added style */
+        .card {
+            border-radius: 0.75rem;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            background: linear-gradient(135deg, #ffffff, #f7f7f7);
+        }
 
-    .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
 
-    .card-header {
-        border-top-left-radius: 0.75rem;
-        border-top-right-radius: 0.75rem;
-        padding: 0.75rem 1rem;
-    }
+        .card-header {
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+        }
 
-    .card-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-    }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
 
-    .card-text {
-        text-align: left;
-        padding-left: 15px;
-        font-size: 1rem;
-        color: #333;
-    }
+        .card-text {
+            text-align: left;
+            padding-left: 15px;
+            font-size: 1rem;
+            color: #333;
+        }
 
-    .card-footer {
-        border-bottom-left-radius: 0.75rem;
-        border-bottom-right-radius: 0.75rem;
-        text-align: right;
-        padding: 0.5rem 1rem;
-    }
+        .card-footer {
+            border-bottom-left-radius: 0.75rem;
+            border-bottom-right-radius: 0.75rem;
+            text-align: right;
+            padding: 0.5rem 1rem;
+        }
 
-    body {
-        background: #f0f4f8;
-    }
+        body {
+            background: #f0f4f8;
+        }
 
-    h3 {
-        font-family: 'Arial', sans-serif;
-        font-weight: bold;
-        color: #34495e;
-    }
-</style>
+        h3 {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            color: #34495e;
+        }
+    </style>
 
 
     <div class="container" style="flex: 1; padding: 20px;">
@@ -280,8 +290,10 @@ $conn->close();
                     </div>
                 </div>
                 <div style="display: flex; justify-content: center; gap: 10%;">
-                    <button type="submit" style="width: 40%; background-color: #007bff; border: none; color: white; padding: 10px; border-radius: 5px; text-align: center; font-size: 16px; cursor: pointer;">Register</button>
-                    <button type="reset" style="width: 40%; background-color: #dc3545; border: none; color: white; padding: 10px; border-radius: 5px; text-align: center; font-size: 16px; cursor: pointer;">Clear</button>
+                    <button type="submit"
+                        style="width: 40%; background-color: #007bff; border: none; color: white; padding: 10px; border-radius: 5px; text-align: center; font-size: 16px; cursor: pointer;">Register</button>
+                    <button type="reset"
+                        style="width: 40%; background-color: #dc3545; border: none; color: white; padding: 10px; border-radius: 5px; text-align: center; font-size: 16px; cursor: pointer;">Clear</button>
                 </div>
             </form>
             <!--  -->
@@ -382,6 +394,12 @@ $conn->close();
             </script>
         </div>
 
+
+
+
+
+
+
         <!-- View Employee Section -->
         <div id="view" class="section">
             <h3 class="text-center">View Employee</h3>
@@ -421,8 +439,11 @@ $conn->close();
             </table>
         </div>
 
+
+
+
         <!-- Update Employee Section -->
-        <div class="container">
+        <div>
             <div id="update" class="section" style="max-width: 100%; margin: 0 auto;">
                 <h3 class="text-center">Update Employee</h3>
                 <form action="update_employees.php" method="post" enctype="multipart/form-data">
@@ -514,6 +535,9 @@ $conn->close();
 
 
 
+
+
+
         <!-- Delete Employee Section -->
         <div id="delete" class="section">
             <h3 class="text-center">Delete Employee</h3>
@@ -563,7 +587,9 @@ $conn->close();
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Include Footer -->
+    <?php include '../assets/footer.php'; ?>
+
     <script>
         function showSection(sectionId) {
             // Hide all sections

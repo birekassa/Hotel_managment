@@ -41,7 +41,6 @@ if ($result && $result->num_rows > 0) {
         $hallData[$type]['quantity'] += $quantity;
     }
 }
-
 // Close the database connection
 $conn->close();
 ?>
@@ -67,31 +66,24 @@ $conn->close();
     }
 
     .navbar {
-        height: 100px;
+        height: 90px;
         margin-bottom: 10px;
         font-size: 18px;
     }
 
-    .nav-link,
-    .dropdown-item {
-        color: #ffffff !important;
-        /* Ensure text color is white */
+    .nav-link,.dropdown-item {
+        color: #ffffff !important;/* Ensure text color is white */
         transition: color 0.3s;
     }
 
-    .nav-link:hover,
-    .dropdown-item:hover {
-        border-bottom: 2px solid blue;
-        /* Slightly thicker border */
-        color: lightblue !important;
-        /* Change text color on hover */
+    .nav-link:hover,.dropdown-item:hover {
+        border-bottom: 2px solid blue;/* Slightly thicker border */
+        color: lightblue !important; /* Change text color on hover */
     }
 
     .navbar-nav {
-        flex: 1;
-        /* Make the navbar items take up available space */
-        justify-content: center;
-        /* Center the items horizontally */
+        flex: 1;/* Make the navbar items take up available space */
+        justify-content: center;/* Center the items horizontally */
     }
 
     .dropdown-item {
@@ -101,32 +93,24 @@ $conn->close();
     }
 
     .dropdown-item:hover {
-        color: lightblue !important;
-        /* Change text color on hover */
-        background-color: #495057;
-        /* Optional: change background color on hover */
+        color: lightblue !important; /* Change text color on hover */
+        background-color: #495057; /* Optional: change background color on hover */
     }
 
     /* Mobile-specific styles */
     @media (max-width: 576px) {
         .navbar {
-            height: auto;
-            /* Allow navbar to expand for better touch targets */
-            padding: 10px;
-            /* Add padding for mobile */
+            height: auto; /* Allow navbar to expand for better touch targets */
+            padding: 10px; /* Add padding for mobile */
         }
 
         .navbar-nav {
-            text-align: center;
-            /* Center align items */
+            text-align: center;/* Center align items */
         }
 
-        .nav-link,
-        .dropdown-item {
-            padding: 15px;
-            /* Increase padding for better touch area */
-            font-size: 16px;
-            /* Slightly smaller font size */
+        .nav-link,.dropdown-item {
+            padding: 15px;/* Increase padding for better touch area */
+            font-size: 16px; /* Slightly smaller font size */
         }
     }
 </style>
@@ -168,32 +152,35 @@ $conn->close();
         </div>
     </nav>
 
-
-
-    <!-- Main content -->
-    <div class="container mt-5 pt-5" style="flex: 1;">
-        <h1 class="text-center mb-4">Select Meeting Halls</h1>
-        <div class="d-flex flex-wrap justify-content-center">
-            <?php
-            // Define background colors for each hall type
-            $backgroundColors = [
-                'standard' => 'black',
-                'lexury' => '',
-                // Add more hall types and their corresponding colors here
-            ];
-            ?>
-            <?php foreach ($hallData as $type => $data): ?>
-                <div class="card m-2" style="width: 18rem; background-color: <?php echo isset($backgroundColors[$type]) ? $backgroundColors[$type] : 'white'; ?>;">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo htmlspecialchars($type); ?></h5>
-                        <p class="card-text">Price: <?php echo htmlspecialchars($data['price']); ?> ETB</p>
-                        <p class="card-text">Available: <?php echo htmlspecialchars($data['quantity']); ?> halls</p>
-                        <button class="btn btn-primary" onclick="openReservationModal('<?php echo htmlspecialchars($type); ?>', '<?php echo htmlspecialchars($data['price']); ?>')">Reserve Now</button>
-                    </div>
+<!-- Main content -->
+<div class="container mt-5 pt-5" style="flex: 1;">
+    <h1 class="text-center mb-4">Select Meeting Halls</h1>
+    <div class="d-flex flex-wrap justify-content-center">
+        <?php
+        // Define images for each hall type
+        $backgroundimg = [
+            'standard' => 'image1.png',
+            'lexury' => 'image2.png',
+        ];
+        ?>
+        <?php foreach ($hallData as $type => $data): ?>
+            <div class="card m-4 d-flex flex-row align-items-center" style="width: 30rem; padding:0; height: 20rem;">
+                <!-- Hall properties on the left (35%) -->
+                <div class="card-body bg-dark" style="width: 35%;height: 100%; color:white; ">
+                    <h2 class="card-title"><?php echo htmlspecialchars($type); ?></h2>
+                    <p class="card-text">Price: <?php echo htmlspecialchars($data['price']); ?> ETB</p>
+                    <p class="card-text">Available: <?php echo htmlspecialchars($data['quantity']); ?></p>
+                    <button class="btn btn-primary" onclick="openReservationModal('<?php echo htmlspecialchars($type); ?>', '<?php echo htmlspecialchars($data['price']); ?>')">Reserve Now</button>
                 </div>
-            <?php endforeach; ?>
-        </div>
+                <!-- Image on the right (65%) -->
+                <div  class="card-image" style="width: 65%; height: 100%; background: url('<?php echo htmlspecialchars($backgroundimg[$type]); ?>') center/cover no-repeat;">
+                </div>
+            </div>
+        <?php endforeach; ?>
     </div>
+</div>
+
+
 
 
 

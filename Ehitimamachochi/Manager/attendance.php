@@ -1,5 +1,5 @@
 <?php
-//include database connection
+// Include database connection
 include '../assets/conn.php';
 
 // Retrieve form data for attendance
@@ -101,173 +101,158 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['take_attendance'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager Panel</title>
-    <!-- Bootstrap 5.1.3 CSS -->
+    <!-- Include Header with all the resources -->
+    <?php include 'assets/header.php'; ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+               /* Internal CSS */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .input-group-text {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-xl">
-            <a class="navbar-brand" href="#">Manager Panel</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <!-- Home -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">
-                            <i class="bi bi-house-door me-2"></i>Home
-                        </a>
-                    </li>
-                    <!-- Manage Inventory -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="manageInventory.php">
-                            <i class="bi bi-boxes me-2"></i>Manage Inventory
-                        </a>
-                    </li>
-                    <!-- Manage Employee -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="manage_employees.php">
-                            <i class="bi bi-person-badge me-2"></i>Manage Employee
-                        </a>
-                    </li>
-                    <!-- Sales Reports -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="reports.php">
-                            <i class="bi bi-bar-chart-line me-2"></i>Reports
-                        </a>
-                    </li>
-                    <!-- Other Operation -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="otherOperation.php">
-                            <i class="bi bi-tools me-2"></i>Other Operation
-                        </a>
-                    </li>
-                    <!-- Settings -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="Settings.php">
-                            <i class="bi bi-gear me-2"></i>Settings
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<body class="d-flex flex-column">
+  <!-- Navbar -->
+  <?php include "assets/navbar.php"; ?>
 
-    <!-- Search Form -->
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card shadow-sm">
-                    <div class="card-body p-4">
-                        <h5 class="card-title text-center mb-4">Search Employee</h5>
-                        <form class="d-flex">
-                            <div class="input-group">
-                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-person"></i></span>
-                                <input type="search" class="form-control" name="emp_id" id="emp_id" placeholder="Enter Employee ID" aria-label="Search" aria-describedby="basic-addon1">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="bi bi-search"></i> Search
-                                </button>
-                            </div>
-                        </form>
-                        <!-- Search Results -->
-                        <div id="search-results" class="mt-3"></div>
-                    </div>
+  <!-- Search Form -->
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center mb-4">Search Employee</h5>
+                    <form class="d-flex">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person"></i></span>
+                            <input type="search" class="form-control" name="emp_id" id="emp_id" placeholder="Enter Employee ID" aria-label="Search" aria-describedby="basic-addon1">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-search"></i> Search
+                            </button>
+                        </div>
+                    </form>
+                    <!-- Search Results -->
+                    <div id="search-results" class="mt-3"></div>
                 </div>
             </div>
         </div>
     </div>
+  </div>
 
-    <!-- Bootstrap JS and Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-    <script>
-        // JavaScript for real-time search
-        document.getElementById('emp_id').addEventListener('input', function() {
-            var empId = this.value;
+    <!-- Include Footer -->
+    <?php include '../assets/footer.php'; ?>
+  <script>
+    // JavaScript for real-time search
+    document.getElementById('emp_id').addEventListener('input', function() {
+        var empId = this.value;
 
-            if (empId.length > 0) {
-                fetch('fetch_employee.php?emp_id=' + encodeURIComponent(empId))
-                    .then(response => response.json())
-                    .then(data => {
-                        let output = '';
+        if (empId.length > 0) {
+            fetch('fetch_employee.php?emp_id=' + encodeURIComponent(empId))
+                .then(response => response.json())
+                .then(data => {
+                    let output = '';
 
-                        // Create table structure
-                        output += `
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Position</th>
-                                        <th>Email</th>
-                                        <th>is_present</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                        `;
+                    // Create table structure
+                    output += `
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Position</th>
+                                    <th>Email</th>
+                                    <th>is_present</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
 
-                        if (data.length > 0) {
-                            data.forEach(employee => {
-                                output += `
-                                    <tr>
-                                        <td><b>${employee.id}</b></td>
-                                        <td>${employee.f_name}</td>
-                                        <td>${employee.l_name}</td>
-                                        <td>${employee.position}</td>
-                                        <td>${employee.email}</td>
-                                        <td>
-                                            <button class="btn btn-secondary" onclick="submitEmployeeForm('${employee.id}', '${employee.is_present}')">
-                                                ${employee.is_present === 'yes' ? 'Present' : 'Absent'}
-                                            </button>
-                                        </td>
-                                    </tr>
-                                `;
-                            });
-                        } else {
-                            output += '<tr><td colspan="6">No employees found</td></tr>';
-                        }
+                    if (data.length > 0) {
+                        data.forEach(employee => {
+                            output += `
+                                <tr>
+                                    <td><b>${employee.id}</b></td>
+                                    <td>${employee.f_name}</td>
+                                    <td>${employee.l_name}</td>
+                                    <td>${employee.position}</td>
+                                    <td>${employee.email}</td>
+                                    <td>
+                                        <button class="btn btn-success" onclick="submitEmployeeForm('${employee.id}', '${employee.is_present}')">
+                                            ${employee.is_present === 'yes' ? 'Present' : 'Mark Present'}
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    } else {
+                        output += '<tr><td colspan="6">No employees found</td></tr>';
+                    }
 
-                        output += `
-                                </tbody>
-                            </table>
-                        `;
+                    output += `
+                            </tbody>
+                        </table>
+                    `;
 
-                        document.getElementById('search-results').innerHTML = output;
-                    })
-                    .catch(error => console.error('Error fetching employee data:', error));
-            } else {
-                document.getElementById('search-results').innerHTML = '';
-            }
-        });
+                    document.getElementById('search-results').innerHTML = output;
+                })
+                .catch(error => console.error('Error fetching employee data:', error));
+        } else {
+            document.getElementById('search-results').innerHTML = '';
+        }
+    });
 
-        // Function to create and submit a form with employee details
-        function submitEmployeeForm(id, is_present) {
-            if (is_present === 'yes') {
-                alert("The employee is already marked as present today.");
-                return;
-            }
-
-            // Create a form element
-            var form = document.createElement('form');
-            form.method = 'post';
-            // Create hidden inputs for each piece of data
-            form.innerHTML = `
-                <input type="hidden" name="emp_id" value="${id}">
-                <input type="hidden" name="is_present" value="yes">
-                <input type="hidden" name="take_attendance" value="1">
-            `;
-            
-            // Append the form to the body and submit it
-            document.body.appendChild(form);
-            form.submit();
+    // Function to create and submit a form with employee details
+    function submitEmployeeForm(id, is_present) {
+        if (is_present === 'yes') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Employee Already Present',
+                text: 'This employee has already been marked as present today.',
+                confirmButtonText: 'OK'
+            });
+            return;
         }
 
-    </script>
+        // Create a form element
+        var form = document.createElement('form');
+        form.method = 'post';
+        form.innerHTML = `
+            <input type="hidden" name="emp_id" value="${id}">
+            <input type="hidden" name="is_present" value="yes">
+            <input type="hidden" name="take_attendance" value="1">
+        `;
+        
+        // Append the form and submit it
+        document.body.appendChild(form);
+        form.submit();
+    }
+  </script>
 </body>
 </html>

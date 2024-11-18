@@ -1,148 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Attendance</title>
+    <!-- Include Header with all the resources -->
+    <?php include 'assets/header.php'; ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+
     <style>
-       /* Internal CSS */
+        /* Internal CSS */
         html,
         body {
             height: 100%;
             margin: 0;
             display: flex;
             flex-direction: column;
-            font-family: 'Times New Roman', Times, serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .content {
             flex: 1;
         }
 
-        footer {
-            margin-top: auto;
+        .list-group-item {
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .navbar-nav .nav-link::after {
-            content: '';
-            display: block;
-            height: 2px;
-            background-color: white;
-            width: 0;
+        .list-group-item:hover {
+            background-color: #e9f6fd;
+            transform: translateX(5px);
+        }
+
+        .list-group-item i {
+            font-size: 1.3rem;
+            color: #007bff;
+            transition: color 0.3s ease;
+        }
+
+        .list-group-item:hover i {
+            color: #0056b3;
+        }
+
+        .list-group-item span {
+            flex-grow: 1;
+            font-size: 1rem;
+        }
+
+        .list-group-item .bi-chevron-right {
+            color: #007bff;
+            transition: transform 0.3s ease;
+        }
+
+        .list-group-item:hover .bi-chevron-right {
+            transform: translateX(5px);
+        }
+
+        /* Tooltip styling */
+        .list-group-item span i {
+            position: relative;
+        }
+
+        .list-group-item span i::after {
+            content: attr(data-bs-title);
+            display: none;
             position: absolute;
-            left: 0;
-            bottom: 0;
-            transition: width 0.3s;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            white-space: nowrap;
         }
 
-        .navbar-nav .nav-link:hover::after {
-            width: 100%;
+        .list-group-item span i:hover::after {
+            display: block;
         }
 
-        .navbar {
-            height: 100px;
-            margin-top: 1rem;
+        /* Container styling */
+        .container-fluid {
+            padding: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 767px) {
+            .list-group-item {
+                font-size: 1rem;
+            }
+            .list-group-item i {
+                font-size: 1.1rem;
+            }
         }
 
         .card {
             border: 1px solid #ddd;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
-        .navbar {
-            margin-bottom: 20px; /* Adjust the margin as needed */
-        }
-        .list-group-item {
-            cursor: pointer;
+
+        .container {
+            margin-top: 30px;
         }
     </style>
 </head>
-<body>
-      <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark position-relative" style="background-color: #343a40;">
-        <div class="container-xl">
-            <a class="navbar-brand" href="#" style="padding-left: 10px;">Manager Panel</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0"
-                    style="display: flex; justify-content: center; flex-grow: 1;">
-                    <!-- Home Dropdown -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php"
-                            style="color: white !important; font-size: 1rem; text-decoration: none; padding: 10px; position: relative;">
-                            <i class="bi bi-house-door me-2"></i>Home
-                        </a>
-                    </li>
-                    <!-- Manage Inventory -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="inventory/manageInventory.php"
-                            style="color: white !important; font-size: 1rem; text-decoration: none; padding: 10px; position: relative;">
-                            <i class="bi bi-boxes me-2"></i>Manage Inventory
-                        </a>
-                    </li>
-                    <!-- Manage Employee -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="employee/manage_employees.php"
-                            style="color: white !important; font-size: 1rem; text-decoration: none; padding: 10px; position: relative;">
-                            <i class="bi bi-person-badge me-2"></i>Manage Employee
-                        </a>
-                    </li>
-                    <!-- Sales Reports -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="reports.php"
-                            style="color: white !important; font-size: 1rem; text-decoration: none; padding: 10px; position: relative;">
-                            <i class="bi bi-bar-chart-line me-2"></i>Reports
-                        </a>
-                    </li>
-                    <!-- Other Operations -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="otherOperation.php"
-                            style="color: white !important; font-size: 1rem; text-decoration: none; padding: 10px; position: relative;">
-                            <i class="bi bi-tools me-2"></i>Other Operations
-                        </a>
-                    </li>
-                    <!-- Settings -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="settings.php"
-                            style="color: white !important; font-size: 1rem; text-decoration: none; padding: 10px; position: relative;">
-                            <i class="bi bi-gear me-2"></i>Settings
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <div class="container-fluid">
+<body>
+    <!-- Navbar -->
+    <?php include "assets/navbar.php"; ?>
+
+    <div class="container">
         <div id="set_option" class="list-group">
-            <a href="attendance.php" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" onclick="showSection('attendance')">
-                <span><i class="bi bi-person-fill me-2"></i> Take Attendance</span>
+            <!-- Take Attendance Option -->
+            <a href="attendance.php" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" onclick="showSection('attendance')" data-bs-toggle="tooltip" data-bs-placement="right" title="Mark attendance for employees">
+                <span><i class="bi bi-person-fill me-2" data-bs-title="Take Attendance"></i> Take Attendance</span>
                 <i class="bi bi-chevron-right"></i>
             </a>
-            <a href="view attendance.php" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" onclick="showSection('view-attendance')">
-                <span><i class="bi bi-eye-fill me-2"></i> View Attendance</span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" onclick="showSection('pay')">
-                <span><i class="bi bi-cash-coin me-2"></i> approve request</span>
+            <br>
+            <!-- View Attendance Option -->
+            <a href="view attendance.php" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" onclick="showSection('view-attendance')" data-bs-toggle="tooltip" data-bs-placement="right" title="View attendance reports">
+                <span><i class="bi bi-eye-fill me-2" data-bs-title="View Attendance"></i> View Attendance</span>
                 <i class="bi bi-chevron-right"></i>
             </a>
         </div>
     </div>
 
-    <!-- Include Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <!-- Include Footer -->
+    <?php include '../assets/footer.php'; ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function showSection(section) {
-            // Implement functionality to show and hide sections based on the 'section' argument
+            // This function can be used to manage visibility of content
             console.log('Show section:', section);
         }
+
+        // Initialize Bootstrap tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
     </script>
 </body>
+
 </html>

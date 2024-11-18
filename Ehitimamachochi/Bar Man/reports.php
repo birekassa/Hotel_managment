@@ -1,83 +1,10 @@
-<?php
-// Include database connection
-include '../assets/conn.php';
-
-// Initialize arrays
-$Reports = [];
-$hall_report = [];
-
-// Fetch inventory data for rooms
-$sql = "SELECT * FROM `rooms_reports` WHERE 1";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $Reports[] = $row;
-    }
-}
-
-// Fetch inventory data for halls
-$hall_sql = "SELECT * FROM `halls_reports` WHERE 1";
-$result = $conn->query($hall_sql);
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $hall_report[] = $row;
-    }
-}
-
-// Close the connection
-$conn->close();
-?>
-
-
-
-
-<?php
-// Include database connection
-include '../assets/conn.php';
-session_start(); // Start the session
-
-// Check if the user is logged in
-// if (!isset($_SESSION['username'])) {
-//     // Redirect to login page if not logged in
-//     header("Location: index/index.php");
-//     exit();
-// }
-
-// // Access the session variables
-// $username = $_SESSION['username'];
-// $position = $_SESSION['position'];
-// $report_provider_name = ''; // Initialize variable
-
-// // Prepare and execute statement to fetch first name, last name, and ID number based on the username
-// $stmt = $conn->prepare("SELECT f_name, l_name, id FROM employees WHERE username = ?");
-// if (!$stmt) {
-//     die("Prepare failed: " . $conn->error);
-// }
-
-// $stmt->bind_param("s", $username);
-// $stmt->execute();
-// $stmt->bind_result($f_name, $l_name, $id);
-// $stmt->fetch();
-
-// // Check if names and ID were retrieved successfully
-// if ($f_name && $l_name && $id) {
-//     $report_provider_name = 'ID: '.$id.',   Name : '.$f_name.' '.$l_name; // Combine first name, last name, and ID
-// } else {
-//     $report_provider_name = 'Unknown Provider'; // Fallback if no name or ID is found
-// }
-
-// // Close the statement and connection
-// $stmt->close();
-// $conn->close();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reports</title>
+    <title>Barman-Report-page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="asset/report.css" class="css">
@@ -87,271 +14,283 @@ session_start(); // Start the session
     <!-- Navbar -->
     <?php include 'asset/navbar.php'; ?>
 
-<!-- Main Container -->
-<div id="mainContainer" class="container-custom">
-    <div class="container">
-        <div class="list-group">
-            <!-- View Reports (Dropdown) -->
-<!-- View Reports (Dropdown) -->
-<a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 rounded-3 mb-2 bg-light"
-   data-bs-toggle="collapse" data-bs-target="#viewReportsContent" aria-expanded="false" aria-controls="viewReportsContent">
-    <span><i class="bi bi-file-earmark-text me-2"></i><strong>View Reports</strong></span>
-    <i class="bi bi-chevron-down"></i>
-</a>
-
-<!-- Collapsible Dropdown Content -->
-<div id="viewReportsContent" class="collapse">
-    <div class="list-group ms-3">
-        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 mb-2 bg-light"
-           onclick="showSection('view_received_report')">
-            <span><i class="bi bi-archive me-2"></i>Received Items Reports</span>
-            <i class="bi bi-chevron-right"></i>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 mb-2 bg-light"
-           onclick="showSection('view_sold_report')">
-            <span><i class="bi bi-building me-2"></i>Sold Items Reports</span>
-            <i class="bi bi-chevron-right"></i>
-        </a>
-    </div>
-</div>
-
-
-            <!-- Write Reports -->
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 rounded-3 mb-2 bg-light"
-                onclick="showSection('new_inserted_WriteReports')">
-                <span><i class="bi bi-pencil me-2"></i><strong>Write Reports</strong></span>
-                <i class="bi bi-chevron-right"></i>
-            </a>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-    <!-- View Received Report Section -->
-    <section id="view_received_report" class="container-custom hidden">
+    <!-- Main Container -->
+    <div id="mainContainer" class="container-custom">
         <div class="container">
-            <button onclick="goBack('ViewReports')" class="btn btn-secondary mb-3">
-                <i class="bi bi-arrow-left"></i> Back
-            </button>
-
-            <!-- Search Bar Section -->
-            <div class="d-flex justify-content-between mb-4">
-                <div class="d-flex flex-grow-1 gap-2">
-                    <input type="date" id="searchDate" class="form-control" placeholder="Search by date">
-                    <button class="btn btn-primary btn-custom" onclick="searchByDate()">
-                        <i class="bi bi-search me-2"></i>Search
-                    </button>
+            <div class="list-group">
+                <!-- View Reports (Dropdown) -->
+                <a href="#"
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 rounded-3 mb-2 bg-light"
+                    data-bs-toggle="collapse" data-bs-target="#viewReportsContent" aria-expanded="false"
+                    aria-controls="viewReportsContent">
+                    <span><i class="bi bi-file-earmark-text me-2"></i><strong>View Reports</strong></span>
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+                <!-- Collapsible Dropdown Content -->
+                <div id="viewReportsContent" class="collapse">
+                    <div class="list-group ms-3">
+                        <a href="#"
+                            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 mb-2 bg-light"
+                            onclick="showSection('view_received_report')">
+                            <span><i class="bi bi-archive me-2"></i>Received Items Reports</span>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                        <a href="#"
+                            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 mb-2 bg-light"
+                            onclick="showSection('view_sold_report')">
+                            <span><i class="bi bi-building me-2"></i>Sold Items Reports</span>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-outline-secondary btn-custom" onclick="goToPreviousPage()">
-                        <i class="bi bi-chevron-left me-2"></i>Previous
-                    </button>
-                    <button class="btn btn-outline-secondary btn-custom" onclick="goToNextPage()">
-                        Next<i class="bi bi-chevron-right ms-2"></i>
-                    </button>
-                </div>
+
+                <!-- Write Reports -->
+                <a href="#"
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 rounded-3 mb-2 bg-light"
+                    onclick="showSection('new_inserted_WriteReports')">
+                    <span><i class="bi bi-pencil me-2"></i><strong>Write Reports</strong></span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
             </div>
-
-            <style>
-                .btn-custom {
-                    width: 20%;
-                    min-width: 120px;
-                    /* Ensures readability on smaller screens */
-                }
-
-                /* Adds padding and a subtle shadow for a more modern look */
-                .btn-custom {
-                    padding: 10px 0;
-                    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-                    transition: background-color 0.3s, box-shadow 0.3s;
-                }
-
-                /* Hover effect for buttons */
-                .btn-custom:hover {
-                    background-color: #007bff !important;
-                    color: white !important;
-                    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
-                }
-
-                .form-control {
-                    max-width: 60%;
-                }
-            </style>
-
-
-            <!-- Tab Styling -->
-            <style>
-                .tab {
-                    float: left;
-                    border: 1px solid #ccc;
-                    background-color: #f1f1f1;
-                    width: 30%;
-                    height: 300px;
-                }
-
-                .tab button {
-                    display: block;
-                    background-color: inherit;
-                    color: black;
-                    padding: 22px 16px;
-                    width: 100%;
-                    border: none;
-                    outline: none;
-                    text-align: left;
-                    cursor: pointer;
-                    transition: 0.3s;
-                    font-size: 17px;
-                    gap:5px;
-                    
-                }
-
-                .tab button:hover {
-                    background-color: #ddd;
-                }
-
-                .tab button.active {
-                    background-color: #ccc;
-                }
-
-                .tabcontent {
-                    float: left;
-                    padding: 0px 12px;
-                    border: 1px solid #ccc;
-                    width: 70%;
-                    border-left: none;
-                    height: 300px;
-                    display: none;
-                }
-
-                .tabcontent.active {
-                    display: block;
-                }
-                
-            </style>
-
-            <!-- Tabs and Content Sections -->
-            <div class="tab">
-                <button class="tablinks" onclick="openTab(event, 'SoftBeverage')" id="defaultOpen">Soft
-                    Beverage</button>
-                <button class="tablinks" onclick="openTab(event, 'AlcoholBeverage')">Alcohol Beverage</button>
-                <button class="tablinks" onclick="openTab(event, 'BothBeverage')">Both Beverages</button>
-            </div>
-
-            <div id="SoftBeverage" class="tabcontent">
-                <!-- Report Table Section for Soft Beverage -->
-                <div class="table-responsive">
-                    <table class="table" style="width:100%; margin-bottom:30px;">
-                        <thead>
-                            <tr>
-                                <th>Beverage Name</th>
-                                <th>Beverage Type</th>
-                                <th>Measurement</th>
-                                <th>Quantity</th>
-                                <th>Date Added</th>
-                                <th>Added By</th>
-                            </tr>
-                        </thead>
-                        <tbody id="softBeverageTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div id="AlcoholBeverage" class="tabcontent">
-                <!-- Report Table Section for Alcohol Beverage -->
-                <div class="table-responsive">
-                    <table class="table" style="width:100%; margin-bottom:30px;">
-                        <thead>
-                            <tr>
-                                <th>Beverage Name</th>
-                                <th>Beverage Type</th>
-                                <th>Measurement</th>
-                                <th>Quantity</th>
-                                <th>Date Added</th>
-                                <th>Added By</th>
-                            </tr>
-                        </thead>
-                        <tbody id="alcoholBeverageTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div id="BothBeverage" class="tabcontent">
-                <!-- Report Table Section for Both Beverages -->
-                <div class="table-responsive">
-                    <table class="table" style="width:100%; margin-bottom:30px;">
-                        <thead>
-                            <tr>
-                                <th>Beverage Name</th>
-                                <th>Beverage Type</th>
-                                <th>Measurement</th>
-                                <th>Quantity</th>
-                                <th>Date Added</th>
-                                <th>Added By</th>
-                            </tr>
-                        </thead>
-                        <tbody id="bothBeverageTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- JavaScript for Tabs and Search -->
-            <script>
-                // Function to open selected tab and add 'active' class to the button
-                function openTab(evt, tabName) {
-                    const tabcontent = document.getElementsByClassName("tabcontent");
-                    for (let i = 0; i < tabcontent.length; i++) {
-                        tabcontent[i].style.display = "none";
-                    }
-
-                    const tablinks = document.getElementsByClassName("tablinks");
-                    for (let i = 0; i < tablinks.length; i++) {
-                        tablinks[i].classList.remove("active");
-                    }
-
-                    document.getElementById(tabName).style.display = "block";
-                    evt.currentTarget.classList.add("active");
-                }
-
-                // Click on default tab to open it
-                document.getElementById("defaultOpen").click();
-
-                // Placeholder functions for search and pagination
-                function searchByDate() {
-                    const searchDate = document.getElementById("searchDate").value;
-                    console.log("Searching by date:", searchDate);
-                    // Implement search functionality here
-                }
-
-                function goToPreviousPage() {
-                    console.log("Going to previous page");
-                    // Implement previous page functionality here
-                }
-
-                function goToNextPage() {
-                    console.log("Going to next page");
-                    // Implement next page functionality here
-                }
-            </script>
         </div>
-    </section>
+    </div>
+ <!-- CSS to hide the sections by default -->
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .container-custom,
+        .report-section {
+            margin-top: 20px;
+        }
+    </style>
 
 
 
 
-    <!-- Report Section -->
-    <section id="view_sold_report" class="container-custom hidden">
+
+    <!-- in this section i have to display number of beverage inserted at specific date on beverage-in-barman tble -->
+    <!-- automatically search for todays date data and displayed according to searched date  -->
+    <!-- when user clicks the next and previous date button search from table if previous date cliked date = date-1  and if current date and the searched date==todaays date make next day table disable -->
+    <!-- and search accordinglly and display in attractive and smart way -->
+
+    <!-- View Received item  Report Section -->
+    <section id="view_received_report" class="container-custom hidden">
+    <div class="container">
+        <!-- Back Button -->
+        <button onclick="goBack('ViewReports')" class="btn btn-secondary mb-3">
+            <i class="bi bi-arrow-left"></i> Back
+        </button>
+
+        <!-- Search and Navigation Section -->
+        <div class="d-flex justify-content-between mb-4">
+            <!-- Search Date Section -->
+            <div class="d-flex flex-grow-1 gap-2">
+                <input type="date" id="searchDate" class="form-control" placeholder="Search by date">
+                <button class="btn btn-primary btn-custom" onclick="searchByDate()">
+                    <i class="bi bi-search me-2"></i> Search
+                </button>
+            </div>
+
+            <!-- Date Navigation Section -->
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-secondary btn-custom" onclick="goToPreviousPage()"> 
+                    <i class="bi bi-chevron-left me-2"></i> Previous Day
+                </button>
+                <button class="btn btn-outline-secondary btn-custom" onclick="goToNextPage()" id="nextDayButton"> 
+                    Next Day <i class="bi bi-chevron-right ms-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Tab Section -->
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'SoftBeverage')" id="defaultOpen">Soft Beverage</button>
+            <button class="tablinks" onclick="openTab(event, 'AlcoholBeverage')">Alcohol Beverage</button>
+            <button class="tablinks" onclick="openTab(event, 'BothBeverage')">Both Beverages</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="SoftBeverage" class="tabcontent">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Beverage Name</th>
+                            <th>Beverage Type</th>
+                            <th>Measurement</th>
+                            <th>Quantity</th>
+                            <th>Date Added</th>
+                            <th>Added By</th>
+                        </tr>
+                    </thead>
+                    <tbody id="softBeverageTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="AlcoholBeverage" class="tabcontent">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Beverage Name</th>
+                            <th>Beverage Type</th>
+                            <th>Measurement</th>
+                            <th>Quantity</th>
+                            <th>Date Added</th>
+                            <th>Added By</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alcoholBeverageTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="BothBeverage" class="tabcontent">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Beverage Name</th>
+                            <th>Beverage Type</th>
+                            <th>Measurement</th>
+                            <th>Quantity</th>
+                            <th>Date Added</th>
+                            <th>Added By</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bothBeverageTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const today = new Date().toISOString().split('T')[0];
+        const searchDateInput = document.getElementById("searchDate");
+
+        searchDateInput.value = today;
+        searchByDate(today); // Automatically load today's data
+        toggleNextDayButton(today);
+    });
+
+    function searchByDate(date = null) {
+        const selectedDate = date || document.getElementById("searchDate").value;
+
+        fetch(`/getBeveragesByDate?date=${selectedDate}`)
+            .then(response => response.json())
+            .then(data => updateTables(data))
+            .catch(err => console.error("Error fetching data:", err));
+
+        toggleNextDayButton(selectedDate);
+    }
+
+    function updateTables(data) {
+        // Clear table content
+        ["softBeverageTableBody", "alcoholBeverageTableBody", "bothBeverageTableBody"].forEach(id => {
+            document.getElementById(id).innerHTML = "";
+        });
+
+        data.forEach(beverage => {
+            const row = `
+                <tr>
+                    <td>${beverage.name}</td>
+                    <td>${beverage.type}</td>
+                    <td>${beverage.measurement}</td>
+                    <td>${beverage.quantity}</td>
+                    <td>${beverage.date}</td>
+                    <td>${beverage.added_by}</td>
+                </tr>`;
+            
+            if (beverage.type === "Soft Beverage") {
+                document.getElementById("softBeverageTableBody").innerHTML += row;
+            } else if (beverage.type === "Alcohol Beverage") {
+                document.getElementById("alcoholBeverageTableBody").innerHTML += row;
+            }
+
+            document.getElementById("bothBeverageTableBody").innerHTML += row;
+        });
+    }
+
+    function goToPreviousPage() {
+        const searchDateInput = document.getElementById("searchDate");
+        const currentDate = new Date(searchDateInput.value);
+
+        currentDate.setDate(currentDate.getDate() - 1);
+        const formattedDate = currentDate.toISOString().split('T')[0];
+        searchDateInput.value = formattedDate;
+
+        searchByDate(formattedDate);
+    }
+
+    function goToNextPage() {
+        const searchDateInput = document.getElementById("searchDate");
+        const currentDate = new Date(searchDateInput.value);
+
+        currentDate.setDate(currentDate.getDate() + 1);
+        const formattedDate = currentDate.toISOString().split('T')[0];
+        searchDateInput.value = formattedDate;
+
+        searchByDate(formattedDate);
+    }
+
+    function toggleNextDayButton(selectedDate) {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById("nextDayButton").disabled = (selectedDate === today);
+    }
+</script>
+
+<style>
+    .btn-custom {
+        min-width: 120px;
+        padding: 10px 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .btn-custom:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+</style>
+ <script>
+        // Function to show a specific section and hide all others
+        function showSection(sectionId) {
+            // Hide all sections
+            const allSections = document.querySelectorAll('.container-custom, .report-section');
+            allSections.forEach(section => section.classList.add('hidden'));
+
+            // Show the selected section
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.remove('hidden');
+            }
+        }
+        // Function to go back to the previous section
+        function goBack(previousSectionId) {
+            showSection(previousSectionId);
+        }
+    </script>
+
+<!--  this is the the end of the 1st section -->
+
+
+
+
+
+
+
+
+
+    <!-- view sold report Section  this is from different table and from  different table -->
+    <!-- <section id="view_sold_report" class="container-custom hidden">
         <div class="container">
             <button onclick="goBack('sold_ViewReports')" class="btn btn-secondary mb-3">
                 <i class="bi bi-arrow-left"></i> Back
-            </button>
-
+            </button> -->
             <!-- Search Bar Section -->
-            <div class="d-flex justify-content-between mb-4">
+            <!-- <div class="d-flex justify-content-between mb-4">
                 <div class="d-flex flex-grow-1 gap-2">
                     <input type="date" id="sold_searchDate" class="form-control" placeholder="Search by date">
                     <button class="btn btn-primary btn-custom" onclick="searchByDate()">
@@ -362,13 +301,15 @@ session_start(); // Start the session
                     <button class="btn btn-outline-secondary btn-custom" onclick="goToPreviousPage()">
                         <i class="bi bi-chevron-left me-2"></i>Previous
                     </button>
-                    <button class="btn btn-outline-secondary btn-custom" onclick="goToNextPage()">
-                        Next<i class="bi bi-chevron-right ms-2"></i>
+                    <button class="btn btn-outline-secondary btn-custom" onclick="goToNextPage()"> Next<i
+                            class="bi bi-chevron-right ms-2"></i>
                     </button>
                 </div>
-            </div>
+            </div> -->
 
-            <style>
+
+            <!-- js -->
+            <!-- <style>
                 .btn-custom {
                     width: 20%;
                     min-width: 120px;
@@ -392,12 +333,12 @@ session_start(); // Start the session
                 .form-control {
                     max-width: 60%;
                 }
-            </style>
+            </style> -->
 
 
             <!-- Tab Styling -->
             <style>
-                .tab {
+                /* .tab {
                     float: left;
                     border: 1px solid #ccc;
                     background-color: #f1f1f1;
@@ -417,9 +358,9 @@ session_start(); // Start the session
                     cursor: pointer;
                     transition: 0.3s;
                     font-size: 17px;
-                }
+                } */
 
-                .tab button:hover {
+                /* .tab button:hover {
                     background-color: #ddd;
                 }
 
@@ -439,19 +380,21 @@ session_start(); // Start the session
 
                 .tabcontent.active {
                     display: block;
-                }
+                } */
             </style>
 
-            <!-- Tabs and Content Sections -->
-            <div class="tab">
+
+<!-- Tabs buttons of sold item  Sections -->
+            <!-- <div class="tab">
                 <button class="tablinks" onclick="openTab(event, 'sold_SoftBeverage')" id="sold_defaultOpen">Soft
                     Beverage</button>
                 <button class="tablinks" onclick="openTab(event, 'sold_AlcoholBeverage')">Alcohol Beverage</button>
                 <button class="tablinks" onclick="openTab(event, 'sold_BothBeverage')">Both Beverages</button>
-            </div>
+            </div> -->
 
-            <div id="sold_SoftBeverage" class="tabcontent">
-                <!-- Report Table Section for Soft Beverage -->
+
+<!-- Report Table Section for Soft Beverage -->
+            <!-- <div id="sold_SoftBeverage" class="tabcontent">
                 <div class="table-responsive">
                     <table class="table" style="width:100%; margin-bottom:30px;">
                         <thead>
@@ -467,10 +410,12 @@ session_start(); // Start the session
                         <tbody id="sold_softBeverageTableBody"></tbody>
                     </table>
                 </div>
-            </div>
+            </div> -->
+            <!-- this is searching sold soft beverage reports -->
 
-            <div id="sold_AlcoholBeverage" class="tabcontent">
-                <!-- Report Table Section for Alcohol Beverage -->
+
+            <!-- this is about sold bevereage report -->
+            <!-- <div id="sold_AlcoholBeverage" class="tabcontent">
                 <div class="table-responsive">
                     <table class="table" style="width:100%; margin-bottom:30px;">
                         <thead>
@@ -486,10 +431,12 @@ session_start(); // Start the session
                         <tbody id="sold_alcoholBeverageTableBody"></tbody>
                     </table>
                 </div>
-            </div>
+            </div> -->
+            <!-- i need js around here -->
 
-            <div id="sold_BothBeverage" class="tabcontent">
-                <!-- Report Table Section for Both Beverages -->
+
+            <!-- this is table to display both beverge sold report  -->
+            <!-- <div id="sold_BothBeverage" class="tabcontent">
                 <div class="table-responsive">
                     <table class="table" style="width:100%; margin-bottom:30px;">
                         <thead>
@@ -505,10 +452,13 @@ session_start(); // Start the session
                         <tbody id="sold_bothBeverageTableBody"></tbody>
                     </table>
                 </div>
-            </div>
+            </div> -->
+            <!-- i need js to display the report arouund here ! -->
+
+
 
             <!-- JavaScript for Tabs and Search -->
-            <script>
+            <!-- <script>
                 // Function to open selected tab and add 'active' class to the button
                 function openTab(evt, tabName) {
                     const tabcontent = document.getElementsByClassName("tabcontent");
@@ -531,58 +481,26 @@ session_start(); // Start the session
                 // Placeholder functions for search and pagination
                 function searchByDate() {
                     const searchDate = document.getElementById("sold_searchDate").value;
-                    console.log("Searching by date:", searchDate);
-                    // Implement search functionality here
+                    alert("this is search on sold item value")
                 }
 
                 function goToPreviousPage() {
-                    console.log("Going to previous page");
-                    // Implement previous page functionality here
+                    alert("this is on constraction")
                 }
 
                 function goToNextPage() {
-                    console.log("Going to next page");
-                    // Implement next page functionality here
+                    alert("this is on constraction");
                 }
-            </script>
-        </div>
-    </section>
+            </script> -->
+        <!-- </div>
+    </section> -->
 
 
 
 
-    <script>
-        // Function to show a specific section and hide all others
-        function showSection(sectionId) {
-            // Hide all sections
-            const allSections = document.querySelectorAll('.container-custom, .report-section');
-            allSections.forEach(section => section.classList.add('hidden'));
-
-            // Show the selected section
-            const selectedSection = document.getElementById(sectionId);
-            if (selectedSection) {
-                selectedSection.classList.remove('hidden');
-            }
-        }
-        // Function to go back to the previous section
-        function goBack(previousSectionId) {
-            showSection(previousSectionId);
-        }
-    </script>
 
 
-
-    <!-- CSS to hide the sections by default -->
-    <style>
-        .hidden {
-            display: none;
-        }
-
-        .container-custom,
-        .report-section {
-            margin-top: 20px;
-        }
-    </style>
+   
 
 
 
@@ -715,6 +633,10 @@ session_start(); // Start the session
     <?php include '../assets/footer.php'; ?>
 
 
+
+
+
+
     <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -823,12 +745,11 @@ session_start(); // Start the session
         }
     </script>
 
-    <script>
 
+    <script>
         // Get the current date
         let currentDate = new Date();
         const nextDayButton = document.getElementById('nextDayButton');
-
         // Function to search for beverages
         function searchBeverage() {
             let searchValue = document.getElementById('searchInput').value;
@@ -863,13 +784,11 @@ session_start(); // Start the session
         // Function to load data for the next day
         function loadNextDay() {
             currentDate.setDate(currentDate.getDate() + 1);
-
             let today = new Date();
             if (formatDate(currentDate) >= formatDate(today)) {
                 currentDate = today;
                 nextDayButton.disabled = true; // Disable "Next Day" button if today is reached
             }
-
             fetchDataForDate(currentDate);
         }
 
@@ -877,7 +796,6 @@ session_start(); // Start the session
         function fetchDataForDate(date) {
             let formattedDate = formatDate(date);
             console.log("Fetching data for:", formattedDate);
-
             fetch('fetch_beverages.php')
                 .then(response => response.json())
                 .then(data => {
@@ -896,7 +814,6 @@ session_start(); // Start the session
         function populateTable(data) {
             const tableBody = document.getElementById('beverageTableBody');
             tableBody.innerHTML = ''; // Clear existing rows
-
             data.forEach(item => {
                 let row = `<tr>
                 <td>${item.beverage_name}</td>
@@ -909,7 +826,6 @@ session_start(); // Start the session
                 tableBody.innerHTML += row;
             });
         }
-
         // Initialize by loading today's data or the most recent available data
         fetchDataForDate(currentDate);
     </script>
