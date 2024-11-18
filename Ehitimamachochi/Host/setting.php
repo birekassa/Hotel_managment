@@ -31,38 +31,7 @@ session_start(); // Start the session
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #343a40; height: 100px;">
-        <a class="navbar-brand" href="#" style="padding-left:20px;">Ehitimamachochi Hotel Host </a>
-        <div class="container-xl h-100 d-flex align-items-center">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"
-                style="border-color: white;">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center w-100 bg-dark">
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://localhost/New/Ehitimamachochi/Host/index.php" role="button"
-                            aria-expanded="false" style="color: white !important;"> Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="Available_Foods.php" class="nav-link"  id="" style="color: white !important; cursor:pointer;"> Available Foods </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="Available_Beverages.php" class="nav-link" id="" style="color: white !important; cursor:pointer;"> Available Beverages</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="AuthorizeCustomer.php" class="nav-link" id="" style="color: white !important; cursor:pointer;"> Authorize Customer </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="setting.php" role="button" style="color: white !important; cursor:pointer;"> Account Settings </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+     <?php include 'asset/navbar.php' ?>
     <!-- Account Settings Section -->
     <div class="container mt-5" style="max-width: 600px;">
         <h2 class="text-center mb-4"><i class="bi bi-gear-fill me-2"></i>Account Settings</h2>

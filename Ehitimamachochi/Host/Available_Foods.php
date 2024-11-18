@@ -52,8 +52,6 @@ $conn->close();
         <!-- Navbar -->
     <?php include 'asset/navbar.php' ?>
 
-
-
     <!-- Food List Modal -->
     <div class="container my-4">
         <h2 style="text-align:centetr;">FOOD LIST</h2>

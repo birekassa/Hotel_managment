@@ -16,9 +16,7 @@
 <body>
     <!-- Navbar -->
     <?php include 'asset/navbar.php' ?>
-
-
-
+    
     <!-- Form for Authorize Customer -->
     <div class="container my-5">
         <h5 style="text-align: center; margin-bottom: 20px;">Authorize Customer Reservation</h5>
