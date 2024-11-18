@@ -5,10 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bar Management - Ehototmamachochi Hotel</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <?php include 'asset/header_links.php'; ?>
+
     <link rel="stylesheet" href="asset/index.css" class="css">
     <style>
         /* Ensures the footer is at the bottom of the page */
@@ -127,8 +125,8 @@
     </div>
     <?php include '../assets/footer.php'; ?>
 </body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Include the shared footer scripts -->
+<?php include 'asset/footer_scripts.php'; ?>
     <script>
         function showSection(id) {
             // Get all sections

@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barman-Report-page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+    <?php include 'asset/header_links.php'; ?>
     <link rel="stylesheet" href="asset/report.css" class="css">
 </head>
 
@@ -632,11 +631,6 @@
     <!-- this is footer imported from other assets -->
     <?php include '../assets/footer.php'; ?>
 
-
-
-
-
-
     <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -829,8 +823,8 @@
         // Initialize by loading today's data or the most recent available data
         fetchDataForDate(currentDate);
     </script>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Include the shared footer scripts -->
+<?php include 'asset/footer_scripts.php'; ?>
 </body>
 
 </html>

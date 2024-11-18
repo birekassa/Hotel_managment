@@ -24,27 +24,42 @@
             box-sizing: border-box;
         }
 
-        /* Navbar styling */
         .navbar {
-            background-color: #343a40; /* Dark background for navbar */
+            margin-bottom: 0;
+            background-color: #343a40;
+            height: 100px;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* Navbar item styling */
+        .nav-item {
+            margin: 10px;
+        }
+
+        .nav-item:hover {
+            font-size: 17px;
+            border-bottom: 1px blue solid;
+            background-color: #333;
+        }
+
         .navbar-nav .nav-link {
-            font-size: 16px;
-            margin-right: 15px;
-            color: white; /* Set text color to white */
+            color: #ffffff !important;
         }
 
-        /* Active link color */
+        .nav-link:hover {
+            font-size: 18px;
+        }
+
         .navbar-nav .nav-link.active {
-            color: #f8f9fa; /* Light color when active */
+            color: #ff5722 !important;
         }
 
-        /* Ensure navbar items are spaced well */
         .navbar-nav {
-            background-color: #343a40; /* Dark background for navbar items */
-            border-radius: 5px; /* Rounded corners for the background */
+            justify-content: center;
+            /* Center-align the nav items */
+            width: 100%;
+            /* Ensure the ul takes full width to center items properly */
+            gap: 10px;
         }
 
         /* Adjust navbar on mobile devices */

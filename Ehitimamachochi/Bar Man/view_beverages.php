@@ -6,43 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bar Management - Ehototmamachochi Hotel</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <?php include 'asset/header_links.php'; ?>
+
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-        }
-
-        .navbar-nav {
-            justify-content: center;
-            width: 100%;
-            gap: 10px;
-        }
-
-        .navbar {
-            margin-bottom: 0;
-            background-color: #343a40;
-            height: 100px;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-item {
-            margin: 10px;
-        }
-
-        .nav-item:hover {
-            font-size: 17px;
-            border-bottom: 1px blue solid;
-            background-color: #333;
-        }
-
-        .navbar-nav .nav-link {
-            color: #ffffff !important;
         }
     </style>
 </head>
@@ -152,8 +123,8 @@
         filterCategory('all');
     </script>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Include the shared footer scripts -->
+<?php include 'asset/footer_scripts.php'; ?>
 </body>
 
 </html>
