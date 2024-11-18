@@ -25,19 +25,17 @@ function getHotelInfo()
 }
 
 // Function to update the hotel information
-function updateHotelInfo($newName, $newAddress, $newPhone, $newEmail)
+function updateHotelInfo($updatedData)
 {
     $filePath = '../assets/hotel_config.json';
-    $data = getHotelInfo();
+    $currentData = getHotelInfo();
 
-    if ($data) {
-        $data['name'] = $newName;
-        $data['location'] = $newAddress;
-        $data['phone'] = $newPhone;
-        $data['email'] = $newEmail;
+    if ($currentData) {
+        $newData = array_merge($currentData, $updatedData);
 
-        // Save the updated data back to the JSON file
-        file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT));
+        if (file_put_contents($filePath, json_encode($newData, JSON_PRETTY_PRINT)) === false) {
+            echo "Error: Failed to save the updated data to the configuration file.";
+        }
     }
 }
 
@@ -45,12 +43,21 @@ function updateHotelInfo($newName, $newAddress, $newPhone, $newEmail)
 $successMessage = "";
 
 // Check if form is submitted via POST to update the hotel information
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['newName'])) {
-    $newName = $_POST['newName'];
-    $newAddress = $_POST['newAddress'];
-    $newPhone = $_POST['newPhone'];
-    $newEmail = $_POST['newEmail'];
-    updateHotelInfo($newName, $newAddress, $newPhone, $newEmail);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $updatedData = [
+        'name' => $_POST['name'] ?? '',
+        'adress' => $_POST['address'] ?? '',
+        'town' => $_POST['town'] ?? '',
+        'regin' => $_POST['region'] ?? '',
+        'Countery' => $_POST['country'] ?? '',
+        'phone' => $_POST['phone'] ?? '',
+        'email' => $_POST['email'] ?? '',
+        'facebook' => $_POST['facebook'] ?? '',
+        'twitter' => $_POST['twitter'] ?? '',
+        'instagram' => $_POST['instagram'] ?? '',
+    ];
+
+    updateHotelInfo($updatedData);
 
     // Set success message
     $successMessage = "Hotel Information updated successfully!";
@@ -60,6 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['newName'])) {
 $currentHotelInfo = getHotelInfo();
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,103 +77,7 @@ $currentHotelInfo = getHotelInfo();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Settings</title>
     <?php include 'assets/header.php'; ?>
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-        }
-
-        .accordion-button {
-            background-color: #007bff;
-            color: white;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            padding: 15px;
-            transition: background-color 0.3s ease;
-        }
-
-        .accordion-button:focus {
-            box-shadow: none;
-        }
-
-        .accordion-button:not(.collapsed) {
-            background-color: #0056b3;
-        }
-
-        .accordion-button:hover {
-            background-color: #0056b3;
-        }
-
-        .accordion-body {
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .collapsible-section {
-            margin-bottom: 20px;
-        }
-
-        .section-header {
-            font-size: 1.3rem;
-            color: #333;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .form-label {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .form-control {
-            font-size: 1rem;
-            padding: 10px;
-            border-radius: 8px;
-        }
-
-        .form-control:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-
-        .btn-primary {
-            font-size: 1.1rem;
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-primary:focus {
-            box-shadow: none;
-        }
-
-        .logout-btn {
-            background-color: #dc3545;
-            color: white;
-            border-radius: 8px;
-            font-size: 1rem;
-            padding: 12px 20px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-        }
-
-        .logout-btn i {
-            margin-right: 10px;
-        }
-
-        .logout-btn:hover {
-            background-color: #c82333;
-        }
-    </style>
+    <link rel="stylesheet" href="setting.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>

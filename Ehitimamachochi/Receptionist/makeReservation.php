@@ -8,9 +8,16 @@ $hall_report = [];
 $Total_no_of_reserved_rooms = 0;
 $Total_no_of_reserved_halls = 0;
 
+// Get the current date
+$current_date = date('Y-m-d');
+
 // Fetch inventory data for rooms
-$sql = "SELECT * FROM `rooms_reports` WHERE 1";
-$result = $conn->query($sql);
+$sql = "SELECT * FROM `rooms_reports` WHERE reserved_date = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('s', $current_date);
+$stmt->execute();
+$result = $stmt->get_result();
+
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $Reports[] = $row;
@@ -23,8 +30,11 @@ foreach ($Reports as $roomReport) {
 }
 
 // Fetch inventory data for halls
-$hall_sql = "SELECT * FROM `halls_reports` WHERE 1";
-$result = $conn->query($hall_sql);
+$hall_sql = "SELECT * FROM `halls_reports`";
+$stmt = $conn->prepare($hall_sql);
+$stmt->execute();
+$result = $stmt->get_result();
+
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $hall_report[] = $row;
@@ -33,40 +43,13 @@ if ($result->num_rows > 0) {
 
 // Calculate total number of reserved halls
 foreach ($hall_report as $hall_reports) {
-    $Total_no_of_reserved_halls += $hall_reports['no_of_reserved_room'];
+    $Total_no_of_reserved_halls += $hall_reports['no_of_reserved_hall']; // Assumes column name is `no_of_reserved_room`
 }
 
 // Close the connection
 $conn->close();
-
-// // Output total values (optional)
-// echo "Total reserved rooms: " . $Total_no_of_reserved_rooms . "<br>";
-// echo "Total reserved halls: " . $Total_no_of_reserved_halls . "<br>";
 ?>
 
-
-
-<?php
-// Include database connection
-include '../assets/conn.php';
-session_start(); // Start the session
-
-// // Check if the user's position is 'casher'
-// if ($_SESSION['position'] !== 'casher' && $_SESSION['position'] !== 'Casher') {
-//     // Redirect to login page if the user is not a 'casher'
-//     header("Location: ../index/index.php");
-//     exit();
-// }
-
-// Check if the user is logged in
-// if (!isset($_SESSION['username'])) {
-//     // Redirect to login page if not logged in
-//     header("Location: ../index/index.php");
-//     exit();
-// }
-
-$conn->close();
-?>
 
 <!DOCTYPE html>
 <html lang="en">
