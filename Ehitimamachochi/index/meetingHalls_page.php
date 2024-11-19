@@ -71,19 +71,26 @@ $conn->close();
         font-size: 18px;
     }
 
-    .nav-link,.dropdown-item {
-        color: #ffffff !important;/* Ensure text color is white */
+    .nav-link,
+    .dropdown-item {
+        color: #ffffff !important;
+        /* Ensure text color is white */
         transition: color 0.3s;
     }
 
-    .nav-link:hover,.dropdown-item:hover {
-        border-bottom: 2px solid blue;/* Slightly thicker border */
-        color: lightblue !important; /* Change text color on hover */
+    .nav-link:hover,
+    .dropdown-item:hover {
+        border-bottom: 2px solid blue;
+        /* Slightly thicker border */
+        color: lightblue !important;
+        /* Change text color on hover */
     }
 
     .navbar-nav {
-        flex: 1;/* Make the navbar items take up available space */
-        justify-content: center;/* Center the items horizontally */
+        flex: 1;
+        /* Make the navbar items take up available space */
+        justify-content: center;
+        /* Center the items horizontally */
     }
 
     .dropdown-item {
@@ -93,24 +100,32 @@ $conn->close();
     }
 
     .dropdown-item:hover {
-        color: lightblue !important; /* Change text color on hover */
-        background-color: #495057; /* Optional: change background color on hover */
+        color: lightblue !important;
+        /* Change text color on hover */
+        background-color: #495057;
+        /* Optional: change background color on hover */
     }
 
     /* Mobile-specific styles */
     @media (max-width: 576px) {
         .navbar {
-            height: auto; /* Allow navbar to expand for better touch targets */
-            padding: 10px; /* Add padding for mobile */
+            height: auto;
+            /* Allow navbar to expand for better touch targets */
+            padding: 10px;
+            /* Add padding for mobile */
         }
 
         .navbar-nav {
-            text-align: center;/* Center align items */
+            text-align: center;
+            /* Center align items */
         }
 
-        .nav-link,.dropdown-item {
-            padding: 15px;/* Increase padding for better touch area */
-            font-size: 16px; /* Slightly smaller font size */
+        .nav-link,
+        .dropdown-item {
+            padding: 15px;
+            /* Increase padding for better touch area */
+            font-size: 16px;
+            /* Slightly smaller font size */
         }
     }
 </style>
@@ -152,40 +167,44 @@ $conn->close();
         </div>
     </nav>
 
-<!-- Main content -->
-<div class="container mt-5 pt-5" style="flex: 1;">
-    <h1 class="text-center mb-4">Select Meeting Halls</h1>
-    <div class="d-flex flex-wrap justify-content-center">
-        <?php
-        // Define images for each hall type
-        $backgroundimg = [
-            'standard' => 'image1.png',
-            'lexury' => 'image2.png',
-        ];
-        ?>
-        <?php foreach ($hallData as $type => $data): ?>
-            <div class="card m-4 d-flex flex-row align-items-center" style="width: 30rem; padding:0; height: 20rem;">
-                <!-- Hall properties on the left (35%) -->
-                <div class="card-body bg-dark" style="width: 35%;height: 100%; color:white; ">
-                    <h2 class="card-title"><?php echo htmlspecialchars($type); ?></h2>
-                    <p class="card-text">Price: <?php echo htmlspecialchars($data['price']); ?> ETB</p>
-                    <p class="card-text">Available: <?php echo htmlspecialchars($data['quantity']); ?></p>
-                    <button class="btn btn-primary" onclick="openReservationModal('<?php echo htmlspecialchars($type); ?>', '<?php echo htmlspecialchars($data['price']); ?>')">Reserve Now</button>
+    <!-- Main content -->
+    <div class="container mt-5 pt-5" style="flex: 1;">
+        <h1 class="text-center mb-4">Select Meeting Halls</h1>
+        <div class="d-flex flex-wrap justify-content-center">
+            <?php
+            // Define images for each hall type
+            $backgroundimg = [
+                'standard' => 'image1.png',
+                'lexury' => 'image2.png',
+            ];
+            ?>
+            <?php foreach ($hallData as $type => $data): ?>
+                <div class="card m-4 d-flex flex-row align-items-center" style="width: 30rem; padding:0; height: 20rem;">
+                    <!-- Hall properties on the left (35%) -->
+                    <div class="card-body bg-dark" style="width: 35%;height: 100%; color:white; ">
+                        <h2 class="card-title"><?php echo htmlspecialchars($type); ?></h2>
+                        <p class="card-text">Price: <?php echo htmlspecialchars($data['price']); ?> ETB</p>
+                        <p class="card-text">Available: <?php echo htmlspecialchars($data['quantity']); ?></p>
+                        <button class="btn btn-primary"
+                            onclick="openReservationModal('<?php echo htmlspecialchars($type); ?>', '<?php echo htmlspecialchars($data['price']); ?>')">Reserve
+                            Now</button>
+                    </div>
+                    <!-- Image on the right (65%) -->
+                    <div class="card-image"
+                        style="width: 65%; height: 100%; background: url('<?php echo htmlspecialchars($backgroundimg[$type]); ?>') center/cover no-repeat;">
+                    </div>
                 </div>
-                <!-- Image on the right (65%) -->
-                <div  class="card-image" style="width: 65%; height: 100%; background: url('<?php echo htmlspecialchars($backgroundimg[$type]); ?>') center/cover no-repeat;">
-                </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
-</div>
 
 
 
 
 
     <!-- Reservation Modal -->
-    <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" style="flex: 1;" aria-hidden="true">
+    <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" style="flex: 1;"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -207,7 +226,7 @@ $conn->close();
                                 </div>
                                 <div class="mb-3">
                                     <label for="sex" class="form-label">Sex:</label><br>
-                                    <select name="sex" id="sex" style="padding:8px" required>
+                                    <select name="sex" id="sex" class="form-select" required>
                                         <option value="" selected>Select your sex</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
@@ -260,8 +279,7 @@ $conn->close();
                             <ul style="list-style-type: disc; padding-left: 0; padding-left:10%;">
                                 <li>Reservations can be canceled within 1 hour of booking.</li>
                                 <li>You will receive half of 75% of your payment, either in person or by contacting
-                                    us
-                                    through the phone.</li>
+                                    us through the phone.</li>
                             </ul>
                         </fieldset>
                         <div style="display:flex; justify-content:center; gap:5%;">
@@ -273,6 +291,9 @@ $conn->close();
             </div>
         </div>
     </div>
+ 
+
+
 
 
     <script>

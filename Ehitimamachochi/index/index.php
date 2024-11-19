@@ -1,6 +1,7 @@
 <?php
 // Function to get hotel information from the assets folder
-function getHotelInfo() {
+function getHotelInfo()
+{
     $jsonData = file_get_contents('../assets/hotel_config.json'); // Ensure this path is correct
     return json_decode($jsonData, true);
 }
@@ -214,7 +215,8 @@ $hotelInfo = getHotelInfo();
                                 <a id="mapLink"
                                     href="https://www.google.com/maps/place/Ehitmamachoch+Hotel/@7.1987875,35.4256296,13z/data=!4m6!3m5!1s0x17a913f104bddabd:0xe94caf4f7ead4a4d!8m2!3d7.2012757!4d35.4155521!16s%2Fg%2F11tbxhd1hg?entry=ttu&g_ep=EgoyMDI0MTAyMy4wIKXMDSoASAFQAw%3D%3D"
                                     target="_blank" style="color: #000; text-decoration: none; font-size: 18px;">South
-                                  <span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span> <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span></a>
+                                    <span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span>
+                                    <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span></a>
                             </div>
                         </div>
 
@@ -284,12 +286,13 @@ $hotelInfo = getHotelInfo();
             // Check for existing cookie
             $username = isset($_COOKIE['username']) ? htmlspecialchars($_COOKIE['username']) : '';
             ?>
-            
+
             <!-- Login Form -->
             <form method="post" action="loginprocess.php" style="padding: 10px;" id="loginform">
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label for="username" style="display: block; margin-bottom: 5px; color: #555;">Username:</label>
-                    <input type="text" id="username" name="username" required value="<?php echo $username; ?>" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    <input type="text" id="username" name="username" required value="<?php echo $username; ?>"
+                        style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label for="password" style="display: block; margin-bottom: 5px; color: #555;">Password:</label>
@@ -340,10 +343,11 @@ $hotelInfo = getHotelInfo();
     </div>
     <!-- End of Login Form Modal -->
     <div class="loader" id="loader"></div>
- <style>
+    <style>
         /* Loader style */
         .loader {
-            display: none; /* Hide initially */
+            display: none;
+            /* Hide initially */
             border: 16px solid #f3f3f3;
             border-radius: 50%;
             border-top: 16px solid #3498db;
@@ -358,16 +362,21 @@ $hotelInfo = getHotelInfo();
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
-<script>
-    // Show loader on form submission
-    document.getElementById('loginForm').addEventListener('submit', function() {
-        document.getElementById('loader').style.display = 'block';
-    });
-</script>
+    <script>
+        // Show loader on form submission
+        document.getElementById('loginForm').addEventListener('submit', function () {
+            document.getElementById('loader').style.display = 'block';
+        });
+    </script>
 
     <script>
         // Get elements
@@ -412,7 +421,7 @@ $hotelInfo = getHotelInfo();
         <div class="container">
             <h1 class="display-4"
                 style="color: #007bff; font-weight: bold; font-family: 'Times New Roman', serif;  text-align: center;">
-               Welcome <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span>
+                Welcome <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span>
             </h1>
             <hr class="my-4" style="border-top: 2px solid #000000;">
             <h2 style="font-size: 24px; font-weight: bold; font-family: 'Times New Roman', serif; color: #000000;">
@@ -559,7 +568,8 @@ $hotelInfo = getHotelInfo();
 
             <!-- Left-Aligned Text with Margin -->
             <p class="lead" style="margin-bottom: 1rem; text-align: left; margin-left: 20px;">
-                Enjoy traditional Ethiopian dishes at <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span> in <span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span>. Our menu offers a real taste
+                Enjoy traditional Ethiopian dishes at <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span>
+                in <span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span>. Our menu offers a real taste
                 of local cuisine.
             </p>
             <p style="margin-bottom: 1rem; text-align: left; margin-left: 20px;">
@@ -711,8 +721,10 @@ $hotelInfo = getHotelInfo();
                     </ul>
                 </div>
             </div>
-            <p> Each beer offers a unique taste of Ethiopian brewing tradition. Visit us at <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span> and
-                enjoy a memorable experience!</p>
+            <p> Each beer offers a unique taste of Ethiopian brewing tradition. Visit us at
+                <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span> and
+                enjoy a memorable experience!
+            </p>
             <!-- Centered Button -->
             <div style="text-align: center; margin-top: 1rem;">
                 <a href="restaurant_page.php" class="btn btn-primary rounded-pill shadow-sm" role="button">
@@ -782,7 +794,8 @@ $hotelInfo = getHotelInfo();
                     </p>
 
                     <p style="font-size: 18px; color: #000; margin-bottom: 18px;">
-                        Book your meeting hall today and enjoy our professional service at <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span>.
+                        Book your meeting hall today and enjoy our professional service at
+                        <span><?php echo htmlspecialchars($hotelInfo['name']); ?></span>.
                     </p>
                 </div>
                 <!-- Centered Button for Reservation -->
@@ -836,16 +849,20 @@ $hotelInfo = getHotelInfo();
             <div
                 style="flex: 1; min-width: 25%; background-color: #222; color: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); font-family: 'Times New Roman', serif; font-size: 12px;">
                 <h2 style="color: #007bff; text-align: center; font-size: 18px;">About Us</h2>
-                <p>Welcome to <strong><span><?php echo htmlspecialchars($hotelInfo['name']); ?></span></strong>, a charming getaway nestled in <span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span>.</p>
-                <p>Established on <strong>September 2, 2014</strong>, we are located near<span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span>
+                <p>Welcome to <strong><span><?php echo htmlspecialchars($hotelInfo['name']); ?></span></strong>, a
+                    charming getaway nestled in <span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span>.</p>
+                <p>Established on <strong>September 2, 2014</strong>, we are located
+                    near<span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span>
                     Academy.</p>
                 <p>Enjoy weddings, relaxation, and live music concerts at our venue.</p>
             </div>
 
             <!-- Our Services -->
-            <div style="flex: 1; min-width: 25%; background-color: #222; color: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); font-family: 'Times New Roman', serif; font-size: 12px;">
+            <div
+                style="flex: 1; min-width: 25%; background-color: #222; color: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); font-family: 'Times New Roman', serif; font-size: 12px;">
                 <h2 style="color: #007bff; text-align: center; font-size: 18px;">Our Services</h2>
-                <a href="#"style="display: flex; align-items: center; color: white; text-decoration: none; padding: 10px; border-bottom: 1px solid #444;">
+                <a href="#"
+                    style="display: flex; align-items: center; color: white; text-decoration: none; padding: 10px; border-bottom: 1px solid #444;">
                     <i class="fas fa-house-user" style="color: #00c8ff; margin-right: 8px;"></i> Room Reservation
                 </a>
                 <a href="#"
@@ -871,28 +888,34 @@ $hotelInfo = getHotelInfo();
                 <h2 style="color: #007bff; text-align: center; font-size: 18px;">Contact Us</h2>
                 <p style="margin-bottom: 10px;">
                     <i class="fas fa-phone" style="color: #00c8ff; margin-right: 8px;"></i>
-                    <a href="tel:+251917828062" style="color: white; text-decoration: none;"><span><?php echo htmlspecialchars($hotelInfo['phone']); ?></span></a>
+                    <a href="tel:+251917828062"
+                        style="color: white; text-decoration: none;"><span><?php echo htmlspecialchars($hotelInfo['phone']); ?></span></a>
                 </p>
                 <p style="margin-bottom: 10px;">
                     <i class="fas fa-envelope" style="color: #00c8ff; margin-right: 8px;"></i>
-                    <a href="mailto:Ehitimamachochi@gmail.com" style="color: white; text-decoration: none;"><span><?php echo htmlspecialchars($hotelInfo['email']); ?></span></a>
+                    <a href="mailto:Ehitimamachochi@gmail.com"
+                        style="color: white; text-decoration: none;"><span><?php echo htmlspecialchars($hotelInfo['email']); ?></span></a>
                 </p>
                 <p style="margin-bottom: 10px;">
                     <i class="fab fa-facebook-f" style="color: #00c8ff; margin-right: 8px;"></i>
-                    <a href="https://facebook.com" style="color: white; text-decoration: none;"> <span><?php echo htmlspecialchars($hotelInfo['facebook']); ?></span></a>
+                    <a href="https://facebook.com" style="color: white; text-decoration: none;">
+                        <span><?php echo htmlspecialchars($hotelInfo['facebook']); ?></span></a>
                 </p>
                 <p style="margin-bottom: 10px;">
                     <i class="fab fa-twitter" style="color: #00c8ff; margin-right: 8px;"></i>
-                    <a href="https://twitter.com" style="color: white; text-decoration: none;"><span><?php echo htmlspecialchars($hotelInfo['twitter']); ?></span></a>
+                    <a href="https://twitter.com"
+                        style="color: white; text-decoration: none;"><span><?php echo htmlspecialchars($hotelInfo['twitter']); ?></span></a>
                 </p>
                 <p style="margin-bottom: 10px;">
                     <i class="fab fa-instagram" style="color: #00c8ff; margin-right: 8px;"></i>
-                    <a href="https://instagram.com" style="color: white; text-decoration: none;"><span><?php echo htmlspecialchars($hotelInfo['instagram']); ?></span></a>
+                    <a href="https://instagram.com"
+                        style="color: white; text-decoration: none;"><span><?php echo htmlspecialchars($hotelInfo['instagram']); ?></span></a>
                 </p>
                 <p style="margin-bottom: 10px;">
                     <i class="fas fa-map-marker-alt" style="color: #00c8ff; margin-right: 8px;"></i>
                     <a href="https://www.google.com/maps/place/Ehitmamachoch+Hotel/@7.1987875,35.4256296,13z/data=!4m6!3m5!1s0x17a913f104bddabd:0xe94caf4f7ead4a4d!8m2!3d7.2012757!4d35.4155521!16s%2Fg%2F11tbxhd1hg?entry=ttu&g_ep=EgoyMDI0MTAyMy4wIKXMDSoASAFQAw%3D%3D"
-                        style="color: white; text-decoration: none;" target="_blank"><span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span><span><?php echo htmlspecialchars($hotelInfo['town']); ?></span><span><?php echo htmlspecialchars($hotelInfo['regin']); ?></span><span><?php echo htmlspecialchars($hotelInfo['Countery']); ?></span></a>
+                        style="color: white; text-decoration: none;"
+                        target="_blank"><span><?php echo htmlspecialchars($hotelInfo['adress']); ?></span><span><?php echo htmlspecialchars($hotelInfo['town']); ?></span><span><?php echo htmlspecialchars($hotelInfo['regin']); ?></span><span><?php echo htmlspecialchars($hotelInfo['Countery']); ?></span></a>
                 </p>
                 <p style="margin-bottom: 0;">
                     <i class="fas fa-question-circle" style="color: #00c8ff; margin-right: 8px;"></i>
@@ -904,12 +927,16 @@ $hotelInfo = getHotelInfo();
             <div
                 style="flex: 1; min-width: 25%; background-color: #222; color: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); font-family: 'Times New Roman', serif; font-size: 12px;">
                 <h2 style="color: #007bff; text-align: center; font-size: 18px;">We Value Your Feedback</h2>
+                <span id="error_comment_form"
+                    style="color: red; display: none; text-align: center; margin-bottom: 15px;"></span>
+
                 <center>
-                    <form action="comment_handler.php" method="post"
-                        style="text-align: center; width:25%; display: flex; flex-direction: column;">
+                    <form id="commentForm" action="comment_handler.php" method="post"
+                        style="text-align: center; width: 25%; display: flex; flex-direction: column;">
                         <div style="margin-bottom: 15px;">
                             <label for="Username" style="display: block; margin-bottom: 5px;"><i class="fas fa-user"
                                     style="color: #007bff;"></i> Your Name:</label>
+                            <span style="color: red; display: none;" id="errorUsername"></span>
                             <input type="text" id="Username" name="Username" placeholder="Enter your name"
                                 style="width: 100%; padding: 8px; font-size: 12px; border-radius: 4px; border: 1px solid #ccc;"
                                 required>
@@ -917,6 +944,7 @@ $hotelInfo = getHotelInfo();
                         <div style="margin-bottom: 15px;">
                             <label for="message" style="display: block; margin-bottom: 5px;"><i
                                     class="fas fa-pencil-alt" style="color: #007bff;"></i> Comment:</label>
+                            <span style="color: red; display: none;" id="errorMessage"></span>
                             <textarea id="message" name="message" rows="5" placeholder="Write your comment here!"
                                 style="width: 100%; padding: 8px; font-size: 12px; color: black; border-radius: 4px; border: 1px solid #ccc;"
                                 required></textarea>
@@ -928,6 +956,70 @@ $hotelInfo = getHotelInfo();
                                 style="width: 45%; color: white; background-color: red; border: none; padding: 10px; font-size: 12px; border-radius: 4px;">Clear</button>
                         </div>
                     </form>
+
+                    <!-- Add this element for the form-wide error message -->
+                    <span id="error_comment_form"
+                        style="color: red; display: none; text-align: center; margin-bottom: 15px;"></span>
+
+                    <script>
+                        const form = document.getElementById('commentForm');
+                        const inputName = document.getElementById('Username');
+                        const inputMessage = document.getElementById('message');
+                        const errorUsername = document.getElementById('errorUsername');
+                        const errorMessage = document.getElementById('errorMessage');
+                        const errorCommentForm = document.getElementById('error_comment_form');
+
+                        function validateUsername() {
+                            const username = inputName.value.trim();
+                            const regex = /^[a-zA-Z\s]{2,}$/; // Only letters and spaces, at least 2 characters
+                            if (!regex.test(username)) {
+                                errorUsername.style.display = 'block';
+                                errorUsername.textContent = "Username must contain only letters and be at least 2 characters long.";
+                                return false;
+                            }
+                            errorUsername.style.display = 'none';
+                            return true;
+                        }
+
+                        function validateMessage() {
+                            const message = inputMessage.value.trim();
+                            const sentenceRegex = /\b\w+\b.*?\./g; // Matches sentences with words ending in a period
+                            const wordCount = message.split(/\s+/).filter(word => word.length > 0).length;
+
+                            if (message.length < 10 || !sentenceRegex.test(message) || wordCount < 3) {
+                                errorMessage.style.display = 'block';
+                                errorMessage.textContent = "Message must be at least 10 characters long and contain at least one sentence with 3 words.";
+                                return false;
+                            }
+                            errorMessage.style.display = 'none';
+                            return true;
+                        }
+
+                        // Validate dynamically
+                        inputName.addEventListener('input', validateUsername);
+                        inputMessage.addEventListener('input', validateMessage);
+
+                        // Validate on submit
+                        form.addEventListener('submit', function (e) {
+                            const isNameValid = validateUsername();
+                            const isMessageValid = validateMessage();
+
+                            if (!isNameValid || !isMessageValid) {
+                                e.preventDefault(); // Prevent form submission
+
+                                // Reset inputs (optional)
+                                inputName.value = "";
+                                inputMessage.value = "";
+
+                                // Show global error message
+                                errorCommentForm.style.display = 'block';
+                                errorCommentForm.textContent = "Invalid comment submission. Please correct the errors above.";
+                            } else {
+                                errorCommentForm.style.display = 'none'; // Hide global error message
+                            }
+                        });
+                    </script>
+
                 </center>
             </div>
         </div>
@@ -1099,7 +1191,7 @@ $hotelInfo = getHotelInfo();
             &copy; 2024 EHITIMAMACHOCHI HOTEL. All rights reserved.<br>Powered by MTU Department of SE Group 1 Members
         </p>
     </footer>
-     <!-- the following are Popper.js (required for Bootstrap's JavaScript components) -->
+    <!-- the following are Popper.js (required for Bootstrap's JavaScript components) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
