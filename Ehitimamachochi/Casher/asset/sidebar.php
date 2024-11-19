@@ -46,8 +46,8 @@
                 <!-- Profile Section -->
                 <div class="profile-section text-white">
                     <img src="image.png" alt="Profile Picture" class="rounded-circle" width="80" height="80">
-                    <p class="mt-2 mb-0 fw-bold">Casher Name</p>
-                    <small>ID: 12345</small>
+                    <!-- <p class="mt-2 mb-0 fw-bold">Casher Name</p>
+                    <small>ID: 12345</small> -->
                 </div>
 
                 <!-- Navigation Menu with Collapsible Sections -->

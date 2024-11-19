@@ -78,8 +78,6 @@ $currentHotelInfo = getHotelInfo();
     <title>Hotel Settings</title>
     <?php include 'assets/header.php'; ?>
     <link rel="stylesheet" href="setting.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column">
