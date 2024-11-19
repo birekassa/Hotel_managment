@@ -46,7 +46,7 @@
                     <a class="nav-link text-white" href="outstock_items.php" style="margin: 0 1rem;">Out-Stock Items</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#" style="margin: 0 1rem;">Display all Items</a>
+                    <a class="nav-link text-white" href="display_item.php" style="margin: 0 1rem;">Display all Items</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="reports.php" style="margin: 0 1rem;">Reports</a>
