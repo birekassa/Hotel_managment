@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Write Report - Ehototmamachochi Hotel</title>
-    <? include 'asset/bootstrap_links.php'; ?>
+     <?php include 'asset/bootstrap_links.php'; ?>
     <style>
         .report-section {
             margin-top: 20px;
@@ -28,8 +28,8 @@
 
 <body style="font-family: 'Times New Roman', Times, serif;">
     <div class="d-flex flex-column min-vh-100">
-        <!-- Navbar -->
-        <? include 'asset/nav-bar.php'; ?>
+        <!-- Navigation Bar -->
+        <?php include 'asset/nav-bar.php'; ?>
 
         <!-- Category Buttons -->
         <section id="Category_btn" class="my-3">
@@ -118,7 +118,8 @@
             </form>
         </section>
         
-        <? include 'asset/footer.php'; ?>
+        <!-- Footer -->
+        <?php include 'asset/footer.php'; ?>
         <script>
             // Show the Write Reports section when a category button is clicked
             document.querySelectorAll('.w_r').forEach(button => {

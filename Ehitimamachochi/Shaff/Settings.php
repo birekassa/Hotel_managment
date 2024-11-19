@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings Page</title>
-    <? include 'asset/bootstrap_links.php'; ?>
+     <?php include 'asset/bootstrap_links.php'; ?>
     <style>
         /* Internal CSS */
         html,
@@ -55,7 +55,8 @@
 
 <body>
     <div class="d-flex flex-column min-vh-100">
-        <? include 'asset/nav-bar.php'; ?>
+        <!-- Navigation Bar -->
+        <?php include 'asset/nav-bar.php'; ?>
         
         <div class="container">
             <!-- Default Settings Menu -->
@@ -154,7 +155,8 @@
             </div>
         </div>
     </div>
-    <? include 'asset/footer.php'; ?>
+    <!-- Footer -->
+    <?php include 'asset/footer.php'; ?>
 
     <script>
         // Show selected section and hide others

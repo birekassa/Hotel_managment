@@ -25,7 +25,10 @@
                                 onclick="showSection('defaultSection')">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="perchase.php" style="margin: 0 1rem;">Write Reports </a>
+                            <a class="nav-link text-white" href="perchase.php" style="margin: 0 1rem;">Other Expense </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="add_beverage.php" style="margin: 0 1rem;">Instock Beverage </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="Reports.php" style="margin: 0 1rem;">View reports</a>

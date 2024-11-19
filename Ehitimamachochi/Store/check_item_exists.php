@@ -1,32 +1,58 @@
 <?php
+// Database connection (update with your credentials)
 //include database connection
 include '../assets/conn.php';
 
-// Get the JSON input from the fetch request
-$data = json_decode(file_get_contents("php://input"), true);
+$conn = new mysqli($host, $username, $password, $database);
 
-if (isset($data['item_name'])) {
-    $itemName = $conn->real_escape_string($data['item_name']);
-
-    // Query to get item details if the item exists in the specified format
-    $sql = "SELECT item_name, measurement, quantity AS available_quantity, single_price 
-            FROM wechi 
-            WHERE item_name = '$itemName' LIMIT 1";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        // Fetch item details
-        $itemData = $result->fetch_assoc();
-        $itemData['exists'] = true; // Include exists flag
-        echo json_encode($itemData);
-    } else {
-        echo json_encode(['exists' => false]);
-    }
-} else {
-    // If item_name is not provided in the JSON input
-    echo json_encode(['error' => 'No item name provided.']);
+if ($conn->connect_error) {
+    die('Connection failed: ' . $conn->connect_error);
 }
 
-// Close the database connection
+// Get JSON input
+$data = json_decode(file_get_contents('php://input'), true);
+
+$itemName = $data['item_name'] ?? '';
+$itemType = $_POST['report_type'] ?? ''; // Ensure to pass the item type in the request
+
+$response = [];
+
+// Validate item type and name
+if (!empty($itemName) && !empty($itemType)) {
+    // Query based on item type
+    if ($itemType === 'beverages') {
+        $query = "SELECT measurement, quantity AS available_quantity, price AS single_price FROM table_beverages WHERE item_name = ?";
+    } elseif ($itemType === 'other_expenditure') {
+        $query = "SELECT measurement, quantity AS available_quantity, price AS single_price FROM table_expenditures WHERE item_name = ?";
+    } else {
+        $response['exists'] = false;
+        echo json_encode($response);
+        exit;
+    }
+
+    // Prepare statement
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('s', $itemName);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $item = $result->fetch_assoc();
+        $response = [
+            'exists' => true,
+            'measurement' => $item['measurement'],
+            'available_quantity' => $item['available_quantity'],
+            'single_price' => $item['single_price']
+        ];
+    } else {
+        $response['exists'] = false;
+    }
+
+    $stmt->close();
+} else {
+    $response['exists'] = false;
+}
+
+echo json_encode($response);
 $conn->close();
 ?>

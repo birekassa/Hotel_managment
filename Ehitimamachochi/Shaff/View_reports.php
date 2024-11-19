@@ -1,37 +1,3 @@
-<?php
-//include database connection
-include '../assets/conn.php';
-
-// Check for an AJAX request with a search date
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search_date'])) {
-    $searchDate = $_POST['search_date'];
-    $response = [];
-
-    // Query to fetch report details by date and specific To_Which values
-    $sql = "SELECT `report_provider`, `item_type`, `reported_date`, 
-            item_name, item_measurement, item_quantity, item_single_price, item_total_price
-            FROM `transferred_items`
-            WHERE `To_Which` ='shaff' AND `reported_date` = ?";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $searchDate);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    while ($row = $result->fetch_assoc()) {
-        $response[] = $row;
-    }
-
-    $stmt->close();
-    $conn->close();
-
-    // Return response as JSON and exit
-    header("Content-Type: application/json");
-    echo json_encode($response);
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search_date'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shaff Page - Ehototmamachochi Hotel</title>
-    <? include 'asset/bootstrap_links.php'; ?>
+     <?php include 'asset/bootstrap_links.php'; ?>
     <style>
 
         .section {
@@ -60,8 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search_date'])) {
 <body style="font-family: 'Times New Roman', Times, serif;">
 
     <div class="d-flex flex-column min-vh-100">
-        <? include 'asset/nav-bar.php'; ?>
-
+       <!-- Navigation Bar -->
+        <?php include 'asset/nav-bar.php'; ?>
 
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -93,7 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search_date'])) {
         </div>
     </div>
 
-<? include 'asset/footer.php'; ?>
+    <!-- Footer -->
+    <?php include 'asset/footer.php'; ?>
 
 
     <script>

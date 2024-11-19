@@ -12,7 +12,7 @@
     <?php include 'asset/navbar.php'; ?> <!-- Include Navbar -->
     <div class="container-fluid" style="margin-top: 50px;">
         <div class="row">
-             <?php include 'asset/sidebar.php'; ?> <!-- Include Sidebar -->
+            <?php include 'asset/sidebar.php'; ?> <!-- Include Sidebar -->
             <div class="col-md-9 ms-sm-auto col-lg-10 main-content">
                 <h1 class="text-center mt-4">Welcome to the Cashier Page</h1>
 
@@ -39,7 +39,28 @@
                             <i class="bi bi-arrow-left"></i> Back
                         </button>
                         <h3>Daily Report</h3>
-                        <p>Details of daily transactions go here.</p>
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>John Doe</td>
+                                    <td>28</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Jane Smith</td>
+                                    <td>34</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                     </div>
 
                     <!-- Weekly Report Section -->
@@ -49,7 +70,28 @@
                         </button>
 
                         <h3>Weekly Report</h3>
-                        <p>Details of weekly transactions go here.</p>
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>John Doe</td>
+                                    <td>28</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Jane Smith</td>
+                                    <td>34</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                     </div>
 
                     <!-- Monthly Report Section -->
@@ -58,7 +100,28 @@
                             <i class="bi bi-arrow-left"></i> Back
                         </button>
                         <h3>Monthly Report</h3>
-                        <p>Details of monthly transactions go here.</p>
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>John Doe</td>
+                                    <td>28</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Jane Smith</td>
+                                    <td>34</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                     </div>
 
                     <!-- Write Report Section -->
@@ -304,4 +367,5 @@
         </div>
     </div>
 </body>
+
 </html>

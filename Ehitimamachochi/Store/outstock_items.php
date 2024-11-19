@@ -50,19 +50,6 @@
                         <input type="text" class="form-control" name="report_provider" id="report_provider"value="<?php echo htmlspecialchars($report_provider_name); ?>" readonly required>
                     </div>
                     <div class="d-flex align-items-center">
-                        <label for="to_whom" class="me-2">To Which Staff:</label>
-                        <select name="to_whom" id="to_whom" style="padding: 5px;" required aria-label="To Which Staff">
-                            <option value="" selected>Select Staff</option>
-                            <option value="Manager">Manager</option>
-                            <option value="Casher">Casher</option>
-                            <option value="Bar_man">Bar man</option>
-                            <option value="host">Host</option>
-                            <option value="Perchaser">Perchaser</option>
-                            <option value="Reception">Reception</option>
-                            <option value="shaff">Shaff</option>
-                        </select>
-                    </div>
-                    <div class="d-flex align-items-center">
                         <label for="report_type" class="me-2">Item Type:</label>
                         <select name="report_type" id="report_type" style="padding: 5px;" required
                             aria-label="Report Type">

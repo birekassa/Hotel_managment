@@ -77,3 +77,25 @@
         </div>
     </div>
 </nav>
+
+<!-- Include SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+        function confirmLogout(event) {
+    event.preventDefault(); // Prevent the default behavior of the link (no page reload)
+
+    Swal.fire({
+        icon: 'question',  // Icon for the dialog box
+        title: 'Are you sure?',  // Title of the confirmation modal
+        text: 'Do you want to log out?',  // Text displayed under the title
+        showCancelButton: true,  // Show a cancel button
+        confirmButtonText: 'Yes, log out',  // Confirm button text
+        cancelButtonText: 'Cancel'  // Cancel button text
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // If the user confirms the logout, redirect to the login page or home page
+            window.location.href = "http://localhost/New/Ehitimamachochi/index/index.php";
+        }
+    });
+}
+</script>
